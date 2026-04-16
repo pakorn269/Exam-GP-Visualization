@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Sarabun', sans-serif;
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+@layer components {
+  /* Gradient text helper */
+  .text-gradient-hero {
+    background: linear-gradient(135deg, #fff, #c3b1ff, #ff9eb5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-gradient-btn {
+    background: linear-gradient(135deg, #6C63FF, #FF6584);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Math inline badge */
+  .math {
+    @apply inline-block bg-pri/15 rounded px-1.5 text-[#c3b1ff] font-semibold;
+  }
+
+  /* Step number */
+  .sn {
+    @apply text-pri font-bold mr-1;
+  }
+
+  /* Viz box */
+  .vbox {
+    @apply bg-black/25 border border-white/[0.08] rounded-2xl p-5 my-4
+           min-h-40 flex flex-col items-center justify-center gap-2.5 overflow-x-auto;
+  }
+
+  /* Anim term tiles */
+  .at {
+    @apply bg-pri/20 border-2 border-pri/45 rounded-xl w-13 h-13 flex items-center
+           justify-center text-[1.05rem] font-bold opacity-0 scale-50
+           transition-all duration-[350ms] ease-out;
+  }
+  .at.show { @apply opacity-100 scale-100; }
+  .at.blank {
+    @apply bg-white/[0.04] border-dashed border-white/30 text-white/30 animate-blink-border;
+  }
+
+  /* Diff-chain nodes */
+  .dterm {
+    @apply bg-white/[0.07] border border-white/[0.12] rounded-lg px-2.5 py-1
+           text-[.88rem] font-semibold opacity-0 transition-opacity duration-300;
+  }
+  .dterm.show { @apply opacity-100; }
+  .dterm.l1 { @apply bg-ac2/10 border-ac2/30 text-ac2 text-[.76rem]; }
+  .dterm.l2 { @apply bg-ac1/10 border-ac1/30 text-ac1 text-[.7rem]; }
+
+  /* Fibonacci boxes */
+  .fbox {
+    @apply bg-white/[0.07] border-[1.5px] border-white/15 rounded-[9px] w-11 h-11
+           flex items-center justify-center text-[.95rem] font-bold opacity-0 transition-opacity duration-300;
+  }
+  .fbox.show { @apply opacity-100; }
+  .fbox.fa { @apply bg-pri/25 border-pri; }
+  .fbox.fb { @apply bg-sec/25 border-sec; }
+  .fbox.fc { @apply bg-ac1/25 border-ac1; }
+
+  /* Square cells */
+  .sqc {
+    @apply w-[13px] h-[13px] rounded-[2px] opacity-0 scale-0 transition-all duration-150 ease-out;
+  }
+  .sqc.on  { @apply opacity-100 scale-100 bg-pri; }
+  .sqc.nw  { @apply bg-sec; }
+
+  /* Triangle dots */
+  .tdot {
+    @apply w-[11px] h-[11px] rounded-full opacity-0 scale-0 transition-all duration-[180ms] ease-out;
+  }
+  .tdot.on { @apply opacity-100 scale-100 bg-ac1; }
+  .tdot.nw { @apply bg-sec; }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(108,99,255,.4); border-radius: 9px; }
+
+/* Confetti particle */
+.cf {
+  position: fixed;
+  pointer-events: none;
+  z-index: 999;
+  top: -20px;
+  animation: cfall linear forwards;
+}

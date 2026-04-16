@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /c/VSCODE/Exam-Visualization/src -type f \\\\\\( -name \"*.css\" -o -name \"*.scss\" \\\\\\) -exec ls -lh {} \\\\;)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run:*)"
+    ]
+  }
+}
