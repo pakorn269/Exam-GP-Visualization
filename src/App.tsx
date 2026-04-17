@@ -12,7 +12,7 @@ import Result from './components/exam/Result';
 export default function App() {
   return (
     <AppProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/exam">
         <Nav />
         <Routes>
           <Route path="/" element={<Home />} />
