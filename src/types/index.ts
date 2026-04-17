@@ -1,9 +1,10 @@
 export interface Example {
   q: string;
   seq: (number | string)[];
-  ops: string[];
+  ops?: string[];
   ans: number | string;
   steps: string[];
+  tableHtml?: string;
 }
 
 export interface Lesson {
@@ -16,7 +17,7 @@ export interface Lesson {
   seq: (number | string)[];
   dlbl: string;
   ans: number | string;
-  vt: 'ar' | 'geo' | 'sq' | 'tri' | 'fib' | 'dif' | 'math';
+  vt: 'ar' | 'geo' | 'sq' | 'tri' | 'fib' | 'dif' | 'math' | 'sym';
   def: string;
   rule: string;
   fm: string;

@@ -40,8 +40,8 @@ export default function LessonDetail() {
 
         {/* Formula — secondary, with explicit "when to use" context */}
         <div className="mt-3">
-          <div className="text-[.72rem] text-white/45 mb-1.5">
-            🔢 สูตร — ใช้เมื่อโจทย์ถามว่า <em>"พจน์ที่ 50 คืออะไร?"</em> (ไม่ต้องนับทีละขั้น)
+          <div className="text-[.72rem] text-white/45 mb-1.5 flex items-center gap-1.5">
+            📌 สูตร / โครงสร้าง / ข้อควรรู้
           </div>
           <div className="bg-pri/10 border border-pri/25 rounded-[9px] px-4 py-2.5 text-[.9rem]
                           font-semibold text-[#c3b1ff] text-center"
@@ -67,7 +67,10 @@ export default function LessonDetail() {
             <div className="text-[.72rem] font-bold text-white/55 uppercase tracking-wide mb-1.5">
               ตัวอย่าง
             </div>
-            <div className="text-[.86rem] mb-1.5">{ex.q}</div>
+            <div className="text-[.86rem] mb-1.5 whitespace-pre-wrap">{ex.q}</div>
+            {ex.tableHtml && (
+              <div className="overflow-x-auto w-full my-3" dangerouslySetInnerHTML={{ __html: ex.tableHtml }} />
+            )}
             <div className="flex flex-wrap gap-1.5 items-center my-1.5">
               {ex.seq.map((v, j) => (
                 <span key={j} className="flex items-center gap-1">

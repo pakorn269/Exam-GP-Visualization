@@ -43,7 +43,12 @@ export default function Exam() {
   const handleAnswer = useCallback((val: string) => {
     if (!qState || qState.answered) return;
     const q = examQ[idx];
-    const ok = val === String(q.ans);
+    let actualAnsText = String(q.ans);
+    if (!q.opts.some(o => String(o) === String(q.ans))) {
+      const i = Number(q.ans) - 1;
+      if (i >= 0 && i < q.opts.length) actualAnsText = String(q.opts[i]);
+    }
+    const ok = val === actualAnsText;
     if (ok) setCorrect((c) => c + 1);
     else setWrong((w) => w + 1);
     setQState((prev) => prev ? { ...prev, answered: true, selected: val } : prev);
@@ -63,6 +68,13 @@ export default function Exam() {
 
   const q = examQ[idx];
   const fmt = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+
+  // Resolve the string text of the correct answer
+  let actualAnsText = String(q.ans);
+  if (!q.opts.some(o => String(o) === String(q.ans))) {
+    const i = Number(q.ans) - 1;
+    if (i >= 0 && i < q.opts.length) actualAnsText = String(q.opts[i]);
+  }
 
   return (
     <main className="max-w-[860px] mx-auto px-4 py-8 pb-16 animate-fade-in">
@@ -100,7 +112,7 @@ export default function Exam() {
         {q.instr ? (
           /* Word-problem layout */
           <div className="bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3.5 mb-5
-                          text-[.93rem] leading-[1.8]">
+                          text-[.93rem] leading-[1.8] whitespace-pre-wrap">
             {q.instr}
           </div>
         ) : (
@@ -124,10 +136,10 @@ export default function Exam() {
         )}
 
         {/* Options */}
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
           {qState.shuffled.map((v, i) => {
             const val = String(v);
-            const isCorrect = val === String(q.ans);
+            const isCorrect = val === actualAnsText;
             const isSelected = val === qState.selected;
             let cls = 'bg-white/[0.05] border-white/10 hover:-translate-y-0.5 hover:bg-pri/20 hover:border-pri';
             if (qState.answered) {
@@ -148,7 +160,7 @@ export default function Exam() {
                                  : 'bg-white/10'}`}>
                   {LETTERS[i]}
                 </div>
-                <span>{v}</span>
+                <span>{String(v).replace(/^[1-4]\)\s*/, '')}</span>
               </button>
             );
           })}
@@ -158,19 +170,49 @@ export default function Exam() {
         {qState.answered && (
           <div className="mt-4 animate-fade-in">
             <div className={`flex items-center gap-2.5 px-4 py-3 rounded-t-[11px]
-              ${qState.selected === String(q.ans)
+              ${qState.selected === actualAnsText
                 ? 'bg-ok/10 border border-ok/27' : 'bg-err/10 border border-err/27'}`}>
-              <span className="text-2xl">{qState.selected === String(q.ans) ? '🎉' : '😅'}</span>
+              <span className="text-2xl">{qState.selected === actualAnsText ? '🎉' : '😅'}</span>
               <div>
                 <div className="text-[.92rem] font-semibold">
-                  {qState.selected === String(q.ans) ? 'ถูกต้อง! 🎉' : `ยังไม่ใช่ — คำตอบคือ ${q.ans}`}
+                  {qState.selected === actualAnsText ? 'ถูกต้อง! 🎉' : `ยังไม่ใช่ — คำตอบคือ ${actualAnsText.replace(/^[1-4]\)\s*/, '')}`}
                 </div>
                 <div className="text-[.74rem] text-white/55">
-                  {qState.selected === String(q.ans) ? 'ดูวิธีคิดด้านล่างเพื่อความแม่นยำ' : 'ทบทวนวิธีคิดได้ด้านล่าง'}
+                  {qState.selected === actualAnsText ? 'ดูวิธีคิดด้านล่างเพื่อความแม่นยำ' : 'ทบทวนวิธีคิดได้ด้านล่าง'}
                 </div>
               </div>
             </div>
-            <div className="bg-white/[0.04] border border-white/[0.07] border-t-0 px-4 py-3 text-[.83rem] leading-[1.75]">
+
+            {(() => {
+              if (!q.instr) return null;
+              const lines = q.instr.split('\n');
+              const blankRegex = /_{3,}/;
+              const lineWithBlank = lines.find(l => blankRegex.test(l));
+              if (!lineWithBlank) return null;
+              
+              const cleanAnsText = String(actualAnsText).replace(/^[1-4]\)\s*/, '');
+              const parts = lineWithBlank.split(blankRegex);
+              
+              return (
+                <div className="bg-white/[0.04] border border-white/[0.07] border-t-0 px-4 py-3 text-[.88rem] leading-[1.6]">
+                  <strong>💡 ประโยคที่สมบูรณ์:</strong>
+                  <div className="mt-1.5 p-2.5 bg-black/20 rounded-lg text-white/90 font-medium italic border-l-[3px] border-ok/60">
+                    {parts.map((part, i) => (
+                      <span key={i}>
+                        {part}
+                        {i < parts.length - 1 && (
+                          <span className="text-ok font-bold underline decoration-ok underline-offset-[3px] mx-1">
+                            {cleanAnsText}
+                          </span>
+                        )}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
+
+            <div className="bg-white/[0.04] border border-white/[0.07] border-t-0 px-4 py-3 text-[.83rem] leading-[1.75] whitespace-pre-wrap">
               <strong>📐 วิธีคิด:</strong> {q.expl}
             </div>
             <div className="bg-ac2/[0.06] border border-ac2/17 border-t-0 rounded-b-[11px]

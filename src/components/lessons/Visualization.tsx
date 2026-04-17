@@ -170,9 +170,9 @@ export default function Visualization({ lesson: l }: Props) {
       });
     }
 
-    /* ── Math (formula flow) ── */
-    else if (l.vt === 'math') {
-      const ops = new Set(['+', '−', '×', '÷', '=', '→']);
+    /* ── Math / Sym (formula flow) ── */
+    else if (l.vt === 'math' || l.vt === 'sym') {
+      const ops = new Set(['+', '−', '×', '÷', '=', '→', '>', '<', '≥', '≤', '!', '!=', '!>', '!<', '↕️']);
       box.innerHTML = `
         <div class="flex items-center gap-2 flex-wrap justify-center">
           ${l.seq.map((v, i) => ops.has(String(v))

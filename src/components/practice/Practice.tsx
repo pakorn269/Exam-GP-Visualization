@@ -34,7 +34,7 @@ export default function Practice() {
             <div className="mb-2.5 rounded-xl overflow-hidden border border-white/[0.1] bg-white/[0.03] px-3 pt-2.5 pb-1"
                  dangerouslySetInnerHTML={{ __html: p.tableHtml }} />
           )}
-          <div className="text-[.97rem] font-medium mb-2.5 leading-snug">{p.q}</div>
+          <div className="text-[.97rem] font-medium mb-2.5 leading-snug whitespace-pre-wrap">{p.q}</div>
 
           {/* Sequence */}
           <div className="flex flex-wrap gap-1.5 items-center mb-3.5">
