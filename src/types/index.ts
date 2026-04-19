@@ -17,7 +17,16 @@ export interface Lesson {
   seq: (number | string)[];
   dlbl: string;
   ans: number | string;
-  vt: 'ar' | 'geo' | 'sq' | 'tri' | 'fib' | 'dif' | 'math' | 'sym';
+  vt: 'ar' | 'geo' | 'sq' | 'tri' | 'fib' | 'dif' | 'math' | 'sym' | 'svg_layer';
+  svgConfig?: {
+    viewBox: string;
+    layers: {
+      id: string;
+      content: string;
+      animation: 'fade-in' | 'draw-line' | 'pop' | 'slide-up' | 'none';
+      delayMs: number;
+    }[];
+  };
   def: string;
   rule: string;
   fm: string;
