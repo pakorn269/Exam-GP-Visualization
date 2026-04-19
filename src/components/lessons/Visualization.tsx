@@ -192,6 +192,46 @@ export default function Visualization({ lesson: l }: Props) {
       });
     }
 
+    /* ── SVG Layer Animation ── */
+    else if (l.vt === 'svg_layer' && l.svgConfig) {
+      const cfg = l.svgConfig;
+      let svgHtml = `<svg viewBox="${cfg.viewBox}" class="w-full h-auto max-h-56 overflow-visible font-sans">`;
+      
+      cfg.layers.forEach((layer) => {
+        svgHtml += `<g id="layer_${layer.id}" class="opacity-0" style="transform-box: fill-box; transform-origin: center;">${layer.content}</g>`;
+      });
+      svgHtml += `</svg>`;
+
+      box.innerHTML = svgHtml;
+
+      cfg.layers.forEach((layer) => {
+        T(() => {
+          const el = box.querySelector<HTMLElement>(`#layer_${layer.id}`);
+          if (el) {
+            el.classList.remove('opacity-0');
+            if (layer.animation === 'draw-line') {
+              const paths = el.querySelectorAll<SVGPathElement>('path');
+              paths.forEach(p => {
+                const len = p.getTotalLength();
+                p.style.strokeDasharray = len.toString();
+                p.style.strokeDashoffset = len.toString();
+                p.style.animation = 'draw-line 0.8s ease-in-out forwards';
+              });
+              el.style.animation = 'fadeIn 0.1s forwards'; // Just to show the group immediately
+            } else if (layer.animation === 'fade-in') {
+              el.style.animation = 'fadeIn 0.5s ease-out forwards';
+            } else if (layer.animation === 'pop') {
+              el.style.animation = 'pop-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+            } else if (layer.animation === 'slide-up') {
+              el.style.animation = 'slide-up-fade 0.5s ease-out forwards';
+            } else if (layer.animation === 'none') {
+              el.style.opacity = '1';
+            }
+          }
+        }, layer.delayMs);
+      });
+    }
+
     return () => timers.forEach(clearTimeout);
   }, [l]);
 
