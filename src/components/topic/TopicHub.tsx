@@ -4,10 +4,18 @@ import { useApp } from '../../context/AppContext';
 import { TOPICS } from '../../data/topics';
 
 const modes = [
-  { ico: '📚', label: 'บทเรียน',  path: 'lessons',  color: '#6C63FF', tagColor: 'rgba(108,99,255,.15)', tagBorder: 'rgba(108,99,255,.3)', tagText: '#c3b1ff', tag: 'แนะนำเริ่มต้น' },
-  { ico: '✏️', label: 'ฝึกโจทย์', path: 'practice', color: '#43B89C', tagColor: 'rgba(67,184,156,.15)',  tagBorder: 'rgba(67,184,156,.3)',  tagText: '#43B89C', tag: 'มีคำใบ้ + เฉลย' },
-  { ico: '🎯', label: 'จำลองสอบ', path: 'exam',     color: '#FF6584', tagColor: 'rgba(255,101,132,.15)', tagBorder: 'rgba(255,101,132,.3)', tagText: '#FF6584', tag: 'เหมาะหลังเรียนครบ' },
+  { ico: '📚', label: 'บทเรียน',  path: 'lessons',  color: '#FFD166', tag: 'แนะนำเริ่มต้น' },
+  { ico: '✏️', label: 'ฝึกโจทย์', path: 'practice', color: '#43B89C', tag: 'มีคำใบ้ + เฉลย' },
+  { ico: '🎯', label: 'จำลองสอบ', path: 'exam',     color: '#FF6B5A', tag: 'เหมาะหลังเรียนครบ' },
 ];
+
+const vocabTrainerCategories = [
+  { id: 'all', label: 'ทั้งหมด' },
+  { id: 'work', label: 'การทำงาน' },
+  { id: 'change', label: 'การเปลี่ยนแปลง' },
+  { id: 'desc', label: 'คุณลักษณะ' },
+  { id: 'think', label: 'การคิด' },
+] as const;
 
 export default function TopicHub() {
   const { topicId } = useParams<{ topicId: string }>();
@@ -15,6 +23,22 @@ export default function TopicHub() {
   const { setCurrentTopic } = useApp();
 
   const topic = topicId ? TOPICS[topicId] : null;
+  const featuredLessons = topic?.lessons
+    .map((lesson, index) => ({ lesson, index }))
+    .filter(({ lesson }) => lesson.template);
+  const vocabTrainerEntry = topic?.lessons
+    .map((lesson, index) => ({ lesson, index }))
+    .find(({ lesson }) => lesson.template === 'vocab_trainer');
+  const stats = topic
+    ? [
+        { label: 'บทเรียน', count: topic.lessons.length },
+        { label: 'ฝึกโจทย์', count: topic.practice.length },
+        { label: 'ข้อสอบ', count: topic.exam.length },
+      ].filter((item) => item.count > 0)
+    : [];
+  const availableModes = topic
+    ? modes.filter((mode) => topic[mode.path as 'lessons' | 'practice' | 'exam'].length > 0)
+    : [];
 
   useEffect(() => {
     if (topicId && TOPICS[topicId]) setCurrentTopic(topicId);
@@ -24,34 +48,43 @@ export default function TopicHub() {
   if (!topic) return null;
 
   return (
-    <main className="max-w-[860px] mx-auto px-4 py-8 pb-16 animate-fade-in">
-      {/* Breadcrumb */}
+    <main className="page-shell-narrow">
       <button
         onClick={() => navigate('/')}
-        className="text-white/55 text-[.82rem] cursor-pointer mb-1 hover:text-white
-                   transition-colors flex items-center gap-1.5 bg-transparent border-none"
+        className="ghost-action mb-4 cursor-pointer bg-transparent"
       >
         ← เลือกหมวดวิชา
       </button>
 
-      {/* Hero */}
-      <div className="text-center py-5 pb-6">
-        <span className="inline-block rounded-full px-3.5 py-1 text-[.75rem] font-bold tracking-wide uppercase
-                         bg-pri/20 border border-pri/40 text-[#c3b1ff]">
-          {topic.subtitle}
-        </span>
-        <h1 className="text-gradient-hero text-[clamp(2rem,6vw,3.2rem)] font-bold leading-tight my-3">
-          {topic.ico}<br />{topic.title}
-        </h1>
-        <p className="text-white/55 text-[.93rem] max-w-[460px] mx-auto mb-8 leading-relaxed">
-          {topic.desc}
-        </p>
-      </div>
+      <section
+        className="exam-panel-warm relative overflow-hidden p-5 md:p-7"
+        style={{ '--accent': topic.color } as React.CSSProperties}
+      >
+        <div className="absolute right-4 top-4 hidden h-28 w-28 rotate-12 border border-[color-mix(in_srgb,var(--accent)_32%,transparent)] md:block" />
+        <div className="grid gap-5 md:grid-cols-[auto_1fr] md:items-center">
+          <div className="topic-glyph text-4xl md:h-20 md:w-20 md:text-5xl">{topic.ico}</div>
+          <div>
+            <div className="section-kicker">{topic.subtitle}</div>
+            <h1 className="display-title mt-2 text-[2.2rem] font-bold leading-tight text-gradient-hero md:text-[3.3rem]">
+              {topic.title}
+            </h1>
+            <p className="muted-copy mt-3 max-w-[620px] text-[0.98rem] leading-[1.8]">
+              {topic.desc}
+            </p>
+          </div>
+        </div>
+        <div className="mt-5 grid gap-2" style={{ gridTemplateColumns: `repeat(${Math.max(stats.length, 1)}, minmax(0, 1fr))` }}>
+          {stats.map((item) => (
+            <div key={item.label} className="stat-tile">
+              <span className="stat-value">{item.count}</span>
+              <div className="stat-label">{item.label}</div>
+            </div>
+          ))}
+        </div>
+      </section>
 
-      {/* Mode cards */}
-      <div className="grid gap-3.5 max-w-[760px] mx-auto"
-           style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>
-        {modes.map((m) => {
+      <section className="mt-4 grid gap-3.5" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))' }}>
+        {availableModes.map((m) => {
           const count = topic[m.path as 'lessons' | 'practice' | 'exam'].length;
           const desc = m.path === 'lessons'
             ? `${count} บทเรียน พร้อม Animation อธิบายทีละขั้นตอน`
@@ -63,24 +96,96 @@ export default function TopicHub() {
             <button
               key={m.path}
               onClick={() => navigate(`/topic/${topicId}/${m.path}`)}
-              className="bg-white/[0.07] border border-white/[0.12] rounded-[20px] p-6 text-center
-                         cursor-pointer transition-all duration-300 relative overflow-hidden group
-                         hover:-translate-y-1.5 hover:shadow-[0_16px_40px_rgba(0,0,0,.3)]
-                         hover:border-pri/35 text-left"
+              style={{ '--accent': m.color } as React.CSSProperties}
+              className="exam-card min-h-[210px] cursor-pointer p-5 text-left"
             >
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                   style={{ background: `linear-gradient(135deg,${m.color}1a,transparent)` }} />
-              <div className="text-[2.6rem] mb-2.5">{m.ico}</div>
-              <div className="text-base font-bold mb-1 text-white">{m.label}</div>
-              <div className="text-[.8rem] text-white/55 leading-relaxed">{desc}</div>
-              <div className="inline-block mt-3 px-2.5 py-0.5 text-[.7rem] rounded-full font-bold"
-                   style={{ background: m.tagColor, border: `1px solid ${m.tagBorder}`, color: m.tagText }}>
-                {m.tag}
+              <div className="relative z-10 flex h-full flex-col">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="mode-icon">{m.ico}</div>
+                  <span className="display-title text-[0.78rem] font-bold text-[color-mix(in_srgb,var(--accent)_88%,white)]">
+                    {String(count).padStart(2, '0')}
+                  </span>
+                </div>
+                <div className="mt-4 text-lg font-bold">{m.label}</div>
+                <p className="muted-copy mt-2 text-[0.84rem] leading-relaxed">{desc}</p>
+                <div className="mt-auto pt-5">
+                  <span className="exam-badge border-[color-mix(in_srgb,var(--accent)_34%,transparent)] text-[0.66rem]">
+                    {m.tag}
+                  </span>
+                </div>
               </div>
             </button>
           );
         })}
-      </div>
+      </section>
+
+      {featuredLessons && featuredLessons.length > 0 && (
+        <section className="mt-5">
+          <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <div className="section-kicker">Quick Access</div>
+              <h2 className="display-title mt-1 text-2xl font-bold">เครื่องมือเรียนแบบอินเทอร์แอ็กทีฟ</h2>
+            </div>
+            <div className="exam-badge">เปิดตรงได้เลย</div>
+          </div>
+
+          <div className="grid gap-3.5" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))' }}>
+            {featuredLessons.map(({ lesson, index }) => (
+              <button
+                key={lesson.id}
+                onClick={() => navigate(`/topic/${topicId}/lessons/${index}`)}
+                style={{ '--accent': topic.color } as React.CSSProperties}
+                className="exam-card min-h-[200px] cursor-pointer p-5 text-left"
+              >
+                <div className="relative z-10 flex h-full flex-col">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="mode-icon">{lesson.ico}</div>
+                    <span className="exam-badge border-[rgba(122,184,255,0.28)] bg-[rgba(122,184,255,0.08)] text-[0.66rem]">
+                      {lesson.template === 'vocab_trainer' ? 'Trainer' : 'Masterclass'}
+                    </span>
+                  </div>
+                  <div className="mt-4 text-lg font-bold">{lesson.tt}</div>
+                  <p className="muted-copy mt-2 text-[0.84rem] leading-relaxed">{lesson.desc}</p>
+                  <div className="mt-auto pt-5">
+                    <span className="exam-badge border-[color-mix(in_srgb,var(--accent)_34%,transparent)] text-[0.66rem]">
+                      {lesson.template === 'vocab_trainer' ? 'เลือกหมวดศัพท์ได้ในแท็บแฟลชการ์ด' : 'สรุปใหญ่ก่อนลุยบทแยก'}
+                    </span>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {vocabTrainerEntry && (
+        <section className="mt-5">
+          <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <div className="section-kicker">Category Jump</div>
+              <h2 className="display-title mt-1 text-2xl font-bold">เลือกหมวดศัพท์แล้วเข้า Trainer ตรง ๆ</h2>
+            </div>
+            <div className="exam-badge">Vocabulary Trainer</div>
+          </div>
+
+          <div className="exam-panel p-5">
+            <div className="flex flex-wrap gap-2.5">
+              {vocabTrainerCategories.map((category) => (
+                <button
+                  key={category.id}
+                  onClick={() => navigate(`/topic/${topicId}/lessons/${vocabTrainerEntry.index}?category=${category.id}`)}
+                  className="ghost-action cursor-pointer"
+                >
+                  {category.label}
+                </button>
+              ))}
+            </div>
+            <p className="muted-copy mt-3 text-[0.84rem] leading-[1.75]">
+              กดหมวดที่ต้องการ ระบบจะเปิด `Vocabulary Trainer` พร้อมกรองคำศัพท์ให้เลยในแท็บแฟลชการ์ด
+            </p>
+          </div>
+        </section>
+      )}
     </main>
   );
 }

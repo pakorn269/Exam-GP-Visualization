@@ -26,7 +26,7 @@ export default function Visualization({ lesson: l }: Props) {
             <div class="at${v === '?' ? ' blank' : ''}" id="at${i}">${v}</div>
             ${i < l.seq.length - 1 ? `
               <div class="flex flex-col items-center gap-0.5">
-                <div id="ad${i}" class="text-[.67rem] font-bold text-ac2 bg-ac2/10 rounded px-1 py-0.5
+                <div id="ad${i}" class="text-[.67rem] font-bold text-[var(--gold)] bg-[rgba(255,209,102,0.1)] rounded px-1 py-0.5
                                          opacity-0 -translate-y-1 transition-all duration-300 delay-200">
                   ${diffs[i] ?? l.dlbl}
                 </div>
@@ -34,7 +34,7 @@ export default function Visualization({ lesson: l }: Props) {
               </div>` : ''}
           `).join('')}
         </div>
-        <div class="text-[.77rem] text-white/55 mt-1">
+        <div class="text-[.77rem] text-[rgba(248,239,216,0.58)] mt-1">
           ผลต่าง${l.vt === 'ar' ? 'ร่วม' : 'อัตราส่วน'} = <strong>${l.dlbl}</strong> ทุกช่อง
         </div>`;
 
@@ -58,11 +58,11 @@ export default function Visualization({ lesson: l }: Props) {
               <div class="grid gap-0.5" style="grid-template-columns:repeat(${n},1fr)">
                 ${Array.from({ length: n * n }, (_, c) => `<div class="sqc" id="sc${n}_${c}"></div>`).join('')}
               </div>
-              <div class="text-[.73rem] text-white/55">${n}²=${n * n}</div>
+              <div class="text-[.73rem] text-[rgba(248,239,216,0.58)]">${n}²=${n * n}</div>
             </div>`;
           }).join('')}
         </div>
-        <div class="text-[.77rem] text-white/55 mt-1">ผลต่างชั้น 1: <strong>3, 5, 7, 9, 11</strong> (เลขคี่เรียง)</div>`;
+        <div class="text-[.77rem] text-[rgba(248,239,216,0.58)] mt-1">ผลต่างชั้น 1: <strong>3, 5, 7, 9, 11</strong> (เลขคี่เรียง)</div>`;
 
       let n = 1;
       (function step() {
@@ -94,11 +94,11 @@ export default function Visualization({ lesson: l }: Props) {
             }
             return `<div class="flex flex-col items-center gap-1">
               <div class="flex flex-col gap-0.5 items-center">${rows}</div>
-              <div class="text-[.73rem] text-white/55">${val}</div>
+              <div class="text-[.73rem] text-[rgba(248,239,216,0.58)]">${val}</div>
             </div>`;
           }).join('')}
         </div>
-        <div class="text-[.77rem] text-white/55 mt-1">ผลต่างชั้น 1: <strong>2, 3, 4, 5, 6</strong> (เพิ่มทีละ 1)</div>`;
+        <div class="text-[.77rem] text-[rgba(248,239,216,0.58)] mt-1">ผลต่างชั้น 1: <strong>2, 3, 4, 5, 6</strong> (เพิ่มทีละ 1)</div>`;
 
       let n = 1;
       (function step() {
@@ -126,10 +126,10 @@ export default function Visualization({ lesson: l }: Props) {
         <div class="flex items-center gap-1.5 flex-wrap justify-center">
           ${F.map((v, i) => `
             <div class="fbox ${cls[i]}" id="fb${i}">${v}</div>
-            ${i < F.length - 1 ? `<div class="text-white/55 opacity-0 transition-opacity duration-300" id="fo${i}">${i >= 1 ? '+' : '›'}</div>` : ''}
+            ${i < F.length - 1 ? `<div class="text-[rgba(248,239,216,0.58)] opacity-0 transition-opacity duration-300" id="fo${i}">${i >= 1 ? '+' : '›'}</div>` : ''}
           `).join('')}
         </div>
-        <div class="text-[.77rem] text-white/55 mt-1">พจน์ถัดไป = <strong>สองพจน์ก่อนรวมกัน</strong> เช่น 5+8=13</div>`;
+        <div class="text-[.77rem] text-[rgba(248,239,216,0.58)] mt-1">พจน์ถัดไป = <strong>สองพจน์ก่อนรวมกัน</strong> เช่น 5+8=13</div>`;
 
       F.forEach((_, i) => {
         T(() => box.querySelector<HTMLElement>(`#fb${i}`)?.classList.add('show'), i * 230);
@@ -149,11 +149,11 @@ export default function Visualization({ lesson: l }: Props) {
           <div class="flex items-center gap-1 flex-wrap justify-center">
             ${S.map((v, i) => `<div class="dterm" id="d0_${i}">${v}</div>${i < S.length - 1 ? `<div class="text-white/20 text-[.78rem] opacity-0 transition-opacity duration-300" id="da0_${i}">›</div>` : ''}`).join('')}
           </div>
-          <div class="text-[.71rem] text-ac2 self-start pl-1">ผลต่างชั้น 1</div>
+          <div class="text-[.71rem] text-[var(--gold)] self-start pl-1">ผลต่างชั้น 1</div>
           <div class="flex items-center gap-1 flex-wrap justify-center">
             ${D1.map((v, i) => `<div class="dterm l1" id="d1_${i}">${v}</div>${i < D1.length - 1 ? `<div class="text-white/20 text-[.78rem] opacity-0 transition-opacity duration-300" id="da1_${i}">›</div>` : ''}`).join('')}
           </div>
-          <div class="text-[.71rem] text-ac1 self-start pl-1">ผลต่างชั้น 2 = คงที่! ✅</div>
+          <div class="text-[.71rem] text-[var(--mint)] self-start pl-1">ผลต่างชั้น 2 = คงที่! ✅</div>
           <div class="flex items-center gap-1 flex-wrap justify-center">
             ${D2.map((v, i) => `<div class="dterm l2" id="d2_${i}">${v}</div>${i < D2.length - 1 ? `<div class="text-white/20 text-[.78rem] opacity-0 transition-opacity duration-300" id="da2_${i}">›</div>` : ''}`).join('')}
           </div>
@@ -176,13 +176,13 @@ export default function Visualization({ lesson: l }: Props) {
       box.innerHTML = `
         <div class="flex items-center gap-2 flex-wrap justify-center">
           ${l.seq.map((v, i) => ops.has(String(v))
-            ? `<div id="mt${i}" class="text-ac2 text-[1.3rem] font-bold opacity-0 transition-opacity duration-300">${v}</div>`
-            : `<div id="mt${i}" class="bg-pri/20 border border-pri/40 rounded-xl px-3 py-2
+            ? `<div id="mt${i}" class="text-[var(--gold)] text-[1.3rem] font-bold opacity-0 transition-opacity duration-300">${v}</div>`
+            : `<div id="mt${i}" class="bg-[rgba(255,209,102,0.1)] border border-[rgba(255,209,102,0.28)] rounded-lg px-3 py-2
                                         text-[.85rem] font-bold opacity-0 transition-opacity duration-300
                                         text-center leading-snug">${v}</div>`
           ).join('')}
         </div>
-        <div class="text-[.77rem] text-white/55 mt-2">${l.dlbl}</div>`;
+        <div class="text-[.77rem] text-[rgba(248,239,216,0.58)] mt-2">${l.dlbl}</div>`;
 
       l.seq.forEach((_, i) => {
         T(() => {
@@ -237,7 +237,7 @@ export default function Visualization({ lesson: l }: Props) {
 
   return (
     <div ref={ref} className="vbox">
-      <div className="text-white/55 text-[.85rem]">กำลังโหลด visualization...</div>
+      <div className="muted-copy text-[.85rem]">กำลังโหลด visualization...</div>
     </div>
   );
 }

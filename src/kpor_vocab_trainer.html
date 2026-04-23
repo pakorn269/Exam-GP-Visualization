@@ -1,0 +1,349 @@
+
+<h2 class="sr-only">Interactive vocabulary trainer for ก.พ. English exam — flashcards and quiz with 40 common words</h2>
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); }
+  .trainer { padding: 1rem 0; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 1.5rem; }
+  .tab-btn { flex: 1; padding: 10px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); background: var(--color-background-primary); color: var(--color-text-secondary); cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.15s; }
+  .tab-btn.active { background: var(--color-background-info); color: var(--color-text-info); border-color: var(--color-border-info); }
+  .tab-btn:hover:not(.active) { background: var(--color-background-secondary); }
+  .cat-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.5rem; }
+  .cat-btn { padding: 5px 14px; border-radius: 99px; border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); color: var(--color-text-secondary); cursor: pointer; font-size: 13px; transition: all 0.15s; }
+  .cat-btn.sel { background: var(--color-background-success); color: var(--color-text-success); border-color: var(--color-border-success); }
+  .progress-bar { height: 5px; border-radius: 99px; background: var(--color-border-tertiary); margin-bottom: 1.5rem; overflow: hidden; }
+  .progress-fill { height: 100%; background: #378ADD; border-radius: 99px; transition: width 0.3s; }
+  .progress-label { font-size: 12px; color: var(--color-text-tertiary); margin-bottom: 6px; }
+  .card-wrap { perspective: 1000px; height: 220px; margin-bottom: 1.5rem; cursor: pointer; }
+  .card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.5s; transform-style: preserve-3d; }
+  .card-inner.flipped { transform: rotateY(180deg); }
+  .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: var(--border-radius-lg); border: 0.5px solid var(--color-border-secondary); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem; background: var(--color-background-primary); }
+  .card-back { transform: rotateY(180deg); background: var(--color-background-secondary); }
+  .card-word { font-size: 32px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+  .card-pos { font-size: 13px; color: var(--color-text-tertiary); margin-bottom: 12px; }
+  .card-hint { font-size: 13px; color: #185FA5; border: 0.5px solid #B5D4F4; border-radius: var(--border-radius-md); padding: 4px 10px; margin-bottom: 4px; }
+  .card-meaning { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+  .card-example { font-size: 13px; color: var(--color-text-secondary); text-align: center; line-height: 1.6; }
+  .card-example em { color: #185FA5; font-style: normal; }
+  .card-tip { font-size: 12px; color: var(--color-text-success); margin-top: 10px; background: var(--color-background-success); border-radius: var(--border-radius-md); padding: 4px 10px; }
+  .flip-hint { text-align: center; font-size: 12px; color: var(--color-text-tertiary); margin-bottom: 1.5rem; }
+  .nav-row { display: flex; gap: 10px; justify-content: center; }
+  .nav-btn { padding: 8px 24px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); cursor: pointer; font-size: 14px; color: var(--color-text-primary); transition: all 0.15s; }
+  .nav-btn:hover { background: var(--color-background-secondary); }
+  .nav-btn.primary { background: var(--color-background-info); color: var(--color-text-info); border-color: var(--color-border-info); }
+  .quiz-card { border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-lg); padding: 1.5rem; background: var(--color-background-primary); margin-bottom: 1.5rem; }
+  .quiz-meta { font-size: 12px; color: var(--color-text-tertiary); margin-bottom: 12px; }
+  .quiz-q { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+  .quiz-sentence { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 1.5rem; line-height: 1.7; }
+  .quiz-sentence strong { color: var(--color-text-primary); font-weight: 500; }
+  .options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .opt-btn { padding: 12px 16px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); cursor: pointer; font-size: 14px; color: var(--color-text-primary); text-align: left; transition: all 0.15s; }
+  .opt-btn:hover:not(:disabled) { background: var(--color-background-secondary); }
+  .opt-btn.correct { background: var(--color-background-success); color: var(--color-text-success); border-color: var(--color-border-success); }
+  .opt-btn.wrong { background: var(--color-background-danger); color: var(--color-text-danger); border-color: var(--color-border-danger); }
+  .opt-btn:disabled { cursor: default; }
+  .explain { margin-top: 1rem; padding: 12px; border-radius: var(--border-radius-md); background: var(--color-background-secondary); font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; display: none; }
+  .explain.show { display: block; }
+  .score-box { text-align: center; padding: 2rem; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-lg); background: var(--color-background-primary); }
+  .score-big { font-size: 56px; font-weight: 500; color: var(--color-text-primary); }
+  .score-label { font-size: 16px; color: var(--color-text-secondary); margin-bottom: 1.5rem; }
+  .score-msg { font-size: 15px; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+  .tip-section { margin-top: 2rem; }
+  .tip-card { border: 0.5px solid #B5D4F4; border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; background: var(--color-background-info); margin-bottom: 1rem; }
+  .tip-title { font-size: 13px; font-weight: 500; color: var(--color-text-info); margin-bottom: 6px; }
+  .tip-body { font-size: 13px; color: var(--color-text-secondary); line-height: 1.7; }
+  .tip-body span { color: #185FA5; font-weight: 500; }
+  .section-title { font-size: 14px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 12px; }
+  .word-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+  .word-chip { border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 10px 14px; background: var(--color-background-primary); cursor: pointer; transition: all 0.15s; }
+  .word-chip:hover { background: var(--color-background-secondary); }
+  .word-chip .w { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+  .word-chip .m { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
+  .word-chip.cat-work .w { color: #185FA5; }
+  .word-chip.cat-change .w { color: #3B6D11; }
+  .word-chip.cat-desc .w { color: #993556; }
+  .word-chip.cat-think .w { color: #854F0B; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1rem; }
+  .leg { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--color-text-secondary); }
+  .leg-dot { width: 10px; height: 10px; border-radius: 50%; }
+</style>
+
+<div class="trainer">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('flash')">แฟลชการ์ด</button>
+    <button class="tab-btn" onclick="switchTab('quiz')">แบบทดสอบ</button>
+    <button class="tab-btn" onclick="switchTab('list')">รายการคำศัพท์</button>
+  </div>
+
+  <div id="tab-flash">
+    <div class="cat-row" id="cat-filter"></div>
+    <div class="progress-label" id="prog-label">คำที่ 1 / 10</div>
+    <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:10%"></div></div>
+    <div class="card-wrap" onclick="flipCard()" id="card-wrap">
+      <div class="card-inner" id="card-inner">
+        <div class="card-face" id="card-front">
+          <div class="card-pos" id="cf-pos"></div>
+          <div class="card-word" id="cf-word"></div>
+          <div class="card-hint" id="cf-hint"></div>
+        </div>
+        <div class="card-face card-back">
+          <div class="card-meaning" id="cb-meaning"></div>
+          <div class="card-example" id="cb-example"></div>
+          <div class="card-tip" id="cb-tip"></div>
+        </div>
+      </div>
+    </div>
+    <div class="flip-hint">แตะการ์ดเพื่อดูความหมาย</div>
+    <div class="nav-row">
+      <button class="nav-btn" onclick="prevCard()">← ก่อนหน้า</button>
+      <button class="nav-btn primary" onclick="nextCard()">ถัดไป →</button>
+    </div>
+  </div>
+
+  <div id="tab-quiz" style="display:none">
+    <div id="quiz-area"></div>
+  </div>
+
+  <div id="tab-list" style="display:none">
+    <div class="legend">
+      <div class="leg"><div class="leg-dot" style="background:#185FA5"></div>การทำงาน/ราชการ</div>
+      <div class="leg"><div class="leg-dot" style="background:#3B6D11"></div>การเปลี่ยนแปลง</div>
+      <div class="leg"><div class="leg-dot" style="background:#993556"></div>คุณลักษณะ</div>
+      <div class="leg"><div class="leg-dot" style="background:#854F0B"></div>การคิด/วิเคราะห์</div>
+    </div>
+    <div class="word-grid" id="word-grid"></div>
+  </div>
+</div>
+
+<script>
+const vocab = [
+  { w:"allocate", pos:"v.", th:"จัดสรร", cat:"work", hint:"allo + cate = แบ่งให้", ex:"The government <em>allocates</em> budget to each department.", tip:"จำง่าย: 'allo' เหมือน 'allow' = อนุญาตให้มีทรัพยากร" },
+  { w:"facilitate", pos:"v.", th:"อำนวยความสะดวก", cat:"work", hint:"facil = easy (ง่าย)", ex:"Technology <em>facilitates</em> communication between agencies.", tip:"รากศัพท์ facilis (ละติน) = ง่าย → ทำให้ง่ายขึ้น" },
+  { w:"implement", pos:"v.", th:"ดำเนินการ / นำไปใช้", cat:"work", hint:"implement = เอาไปใส่จริง ๆ", ex:"The policy was <em>implemented</em> last year.", tip:"ต่างจาก 'plan' — implement = ลงมือทำแล้ว!" },
+  { w:"monitor", pos:"v./n.", th:"ตรวจสอบ / ติดตาม", cat:"work", hint:"มองดูอยู่ตลอดเวลา", ex:"Officials <em>monitor</em> the project's progress.", tip:"เหมือนจอ monitor — คอยดูอยู่" },
+  { w:"negotiate", pos:"v.", th:"เจรจาต่อรอง", cat:"work", hint:"nego + tiate = ต่อรองกัน", ex:"Both parties <em>negotiate</em> the terms of the agreement.", tip:"Negotiation ที่ ก.พ. ชอบออก = สถานการณ์ทางการ" },
+  { w:"evaluate", pos:"v.", th:"ประเมิน", cat:"work", hint:"e + value = หาค่า", ex:"The committee will <em>evaluate</em> all applications.", tip:"มี 'value' อยู่ข้างใน = หาว่ามีคุณค่าแค่ไหน" },
+  { w:"propose", pos:"v.", th:"เสนอ / เสนอแนะ", cat:"work", hint:"pro + pose = ยื่นออกไปข้างหน้า", ex:"She <em>proposed</em> a new system for tracking expenses.", tip:"Propose ≠ impose (บังคับ) — อย่าสับสน!" },
+  { w:"deteriorate", pos:"v.", th:"เสื่อมโทรม / แย่ลง", cat:"change", hint:"de = ลง + terior = เลวลง", ex:"The condition of old bridges continues to <em>deteriorate</em>.", tip:"ขึ้นต้น de- มักหมายถึง 'ลง/แย่ลง'" },
+  { w:"diminish", pos:"v.", th:"ลดลง / ด้อยค่า", cat:"change", hint:"di + minish = ทำให้เล็กลง", ex:"Investment in rural areas has <em>diminished</em> significantly.", tip:"mini อยู่ข้างใน = เล็กลง, น้อยลง" },
+  { w:"enhance", pos:"v.", th:"เพิ่มพูน / ปรับปรุง", cat:"change", hint:"en + hance = ทำให้สูงขึ้น", ex:"Training programs <em>enhance</em> employee performance.", tip:"ตรงข้ามกับ diminish — enhance = ดีขึ้น" },
+  { w:"fluctuate", pos:"v.", th:"ผันผวน / ขึ้น ๆ ลง ๆ", cat:"change", hint:"fluctu = คลื่น (wave)", ex:"Prices <em>fluctuate</em> depending on supply and demand.", tip:"นึกภาพคลื่นทะเลขึ้น ๆ ลง ๆ = fluctuate" },
+  { w:"generate", pos:"v.", th:"ก่อให้เกิด / สร้าง", cat:"change", hint:"gen = เกิด (genesis)", ex:"Renewable energy <em>generates</em> less pollution.", tip:"genesis, gene, generate — รากเดียวกัน = 'เกิด'" },
+  { w:"modify", pos:"v.", th:"ปรับเปลี่ยน", cat:"change", hint:"modi + fy = ทำให้เปลี่ยนรูป", ex:"The plan was <em>modified</em> to meet new requirements.", tip:"คล้าย 'mode' = รูปแบบ — เปลี่ยนรูปแบบ" },
+  { w:"promote", pos:"v.", th:"ส่งเสริม / โปรโมท", cat:"change", hint:"pro + mote = ผลักดันออกไปข้างหน้า", ex:"The campaign <em>promotes</em> healthy lifestyle habits.", tip:"promote ≠ แค่เลื่อนตำแหน่ง — ออกสอบหมายถึง 'ส่งเสริม'" },
+  { w:"adequate", pos:"adj.", th:"เพียงพอ / พอเหมาะ", cat:"desc", hint:"ad + equate = ทำให้เท่าเทียม", ex:"The funding was not <em>adequate</em> to complete the project.", tip:"ใกล้เคียง sufficient แต่ adequate = 'พอใช้ได้' ไม่ถึงกับเกิน" },
+  { w:"ambiguous", pos:"adj.", th:"กำกวม / ไม่ชัดเจน", cat:"desc", hint:"ambi = สองทาง", ex:"The instructions were <em>ambiguous</em> and confusing.", tip:"ambi = both/two → สองความหมาย = กำกวม" },
+  { w:"controversial", pos:"adj.", th:"ก่อให้เกิดข้อโต้แย้ง", cat:"desc", hint:"contro + vers = หันสวนทาง", ex:"The new law is highly <em>controversial</em>.", tip:"controversy ที่ออกข่าวบ่อย = ถกเถียงกันมาก" },
+  { w:"elaborate", pos:"adj./v.", th:"ละเอียด / อธิบายเพิ่มเติม", cat:"desc", hint:"e + labor = ทำงานอย่างประณีต", ex:"Please <em>elaborate</em> on your proposal.", tip:"มี 'labor' อยู่ข้างใน = ทำงานมาก = ละเอียด" },
+  { w:"excessive", pos:"adj.", th:"มากเกินไป / เกินขอบเขต", cat:"desc", hint:"ex + ceed = เกินออกไป", ex:"<em>Excessive</em> spending led to budget shortfalls.", tip:"exceed, excess, excessive — ตระกูลเดียวกัน = เกิน" },
+  { w:"fundamental", pos:"adj.", th:"พื้นฐาน / สำคัญมาก", cat:"desc", hint:"fund = ฐานราก (foundation)", ex:"Education is a <em>fundamental</em> right.", tip:"foundation, fund, fundamental — รากศัพท์เดียว = ฐาน" },
+  { w:"inevitable", pos:"adj.", th:"หลีกเลี่ยงไม่ได้", cat:"desc", hint:"in + evit = ไม่อาจหนีได้", ex:"Change is <em>inevitable</em> in any organization.", tip:"in- (ไม่) + evitable (หลีกเลี่ยงได้) = หลีกไม่ได้" },
+  { w:"prevalent", pos:"adj.", th:"แพร่หลาย / พบบ่อย", cat:"desc", hint:"prev + al = มีชัยชนะทั่วไป", ex:"Corruption is still <em>prevalent</em> in some sectors.", tip:"prevail (มีชัย) → prevalent = มีอยู่ทั่วไป" },
+  { w:"sufficient", pos:"adj.", th:"เพียงพอ (ครบถ้วน)", cat:"desc", hint:"suf + ficient = ทำจนพอ", ex:"Is the evidence <em>sufficient</em> to make a decision?", tip:"sufficient > adequate ในด้านปริมาณ" },
+  { w:"anticipate", pos:"v.", th:"คาดการณ์ / คาดหมาย", cat:"think", hint:"anti = ก่อน + cipate = จับ", ex:"We <em>anticipate</em> delays due to the storm.", tip:"anti = ล่วงหน้า → จับเหตุการณ์ล่วงหน้า" },
+  { w:"comprehend", pos:"v.", th:"เข้าใจ / ซึมซาบ", cat:"think", hint:"com + prehend = จับให้หมด", ex:"Students must <em>comprehend</em> the main idea of each passage.", tip:"comprehensive = ครอบคลุม — ตระกูลเดียวกัน" },
+  { w:"estimate", pos:"v./n.", th:"ประมาณการ", cat:"think", hint:"estim = ตีราคา", ex:"Experts <em>estimate</em> the cost at 10 million baht.", tip:"estimate (v) ≠ exact — เป็นการ 'เดาอย่างมีเหตุผล'" },
+  { w:"imply", pos:"v.", th:"บอกเป็นนัย / นัยยะ", cat:"think", hint:"im + ply = พับซ่อนอยู่ข้างใน", ex:"Her silence <em>implies</em> that she disagrees.", tip:"imply ≠ infer — imply = ผู้พูดบอกนัย, infer = ผู้ฟังสรุป" },
+  { w:"maintain", pos:"v.", th:"รักษา / คงไว้", cat:"think", hint:"main + tain = ถือไว้ด้วยมือหลัก", ex:"It is important to <em>maintain</em> accurate records.", tip:"maintenance (การบำรุงรักษา) — ตระกูลเดียว" },
+  { w:"obtain", pos:"v.", th:"ได้รับ / ได้มา", cat:"think", hint:"ob + tain = เข้าถึงและจับ", ex:"You must <em>obtain</em> a permit before starting construction.", tip:"obtain = ได้มาอย่างเป็นทางการ ≠ get (ทั่วไป)" },
+  { w:"perspective", pos:"n.", th:"มุมมอง", cat:"think", hint:"per + spect = มองผ่านมุมหนึ่ง", ex:"Consider this issue from a different <em>perspective</em>.", tip:"spectacle, inspect, perspective — spect = มอง" },
+  { w:"relevant", pos:"adj.", th:"เกี่ยวข้อง / สอดคล้อง", cat:"think", hint:"relev = ยกขึ้นมาเชื่อมโยง", ex:"Please provide only <em>relevant</em> information.", tip:"ตรงข้าม irrelevant — ข้อสอบชอบถาม relevant vs irrelevant" },
+  { w:"resolve", pos:"v.", th:"แก้ไข / คลี่คลาย", cat:"think", hint:"re + solve = แก้ซ้ำจนสำเร็จ", ex:"The conflict was finally <em>resolved</em> through mediation.", tip:"solution, solve, resolve — ตระกูลเดียวกัน = แก้ปัญหา" },
+  { w:"substitute", pos:"v./n.", th:"แทนที่ / ตัวแทน", cat:"think", hint:"sub + stitute = ตั้งไว้แทน", ex:"You can <em>substitute</em> honey for sugar in this recipe.", tip:"sub = ใต้/แทน → substitute = วางแทนที่" },
+  { w:"priority", pos:"n.", th:"ลำดับความสำคัญ", cat:"work", hint:"prior = ก่อน, สำคัญกว่า", ex:"Public health is the government's top <em>priority</em>.", tip:"prior = before → priority = สิ่งที่ต้องทำก่อน" },
+  { w:"obstacle", pos:"n.", th:"อุปสรรค", cat:"think", hint:"ob + stacle = ยืนขวางหน้า", ex:"Language barriers can be an <em>obstacle</em> to communication.", tip:"obstruct (ขวาง) = ตระกูลเดียวกัน" },
+  { w:"eliminate", pos:"v.", th:"กำจัด / ตัดออก", cat:"change", hint:"e + limin = กวาดออกจากเส้น", ex:"We need to <em>eliminate</em> unnecessary steps in the process.", tip:"elimination round ในกีฬา = ตัดออก = eliminate" },
+  { w:"consequence", pos:"n.", th:"ผลที่ตามมา", cat:"think", hint:"con + sequent = ตามมาพร้อมกัน", ex:"Failure to comply may have serious <em>consequences</em>.", tip:"sequence (ลำดับ) → consequence = สิ่งที่ตามมาในลำดับถัดไป" },
+  { w:"voluntary", pos:"adj.", th:"โดยสมัครใจ", cat:"desc", hint:"volunt = ใจสมัคร", ex:"Participation in the survey is <em>voluntary</em>.", tip:"volunteer (อาสาสมัคร) = ตระกูลเดียวกัน" },
+  { w:"acknowledge", pos:"v.", th:"ยอมรับ / รับทราบ", cat:"think", hint:"ac + knowledge = รับเอาความรู้", ex:"The report <em>acknowledges</em> the limitations of the study.", tip:"acknowledge ≠ agree — แค่รับทราบ ไม่ได้แปลว่าเห็นด้วย" },
+  { w:"sustainable", pos:"adj.", th:"ยั่งยืน / ทำต่อได้", cat:"desc", hint:"sustain + able = รักษาไว้ได้ต่อเนื่อง", ex:"Sustainable development balances economic growth and environment.", tip:"SDGs ที่เราได้ยินบ่อย = Sustainable Development Goals" }
+];
+
+const cats = { all:"ทั้งหมด", work:"การทำงาน", change:"การเปลี่ยนแปลง", desc:"คุณลักษณะ", think:"การคิด" };
+let curCat = "all";
+let curIdx = 0;
+let filtered = [...vocab];
+let quizData = [];
+let quizIdx = 0;
+let score = 0;
+let answered = false;
+
+function getFiltered() {
+  return curCat === "all" ? vocab : vocab.filter(v => v.cat === curCat);
+}
+
+function buildCatFilter() {
+  const el = document.getElementById("cat-filter");
+  el.innerHTML = Object.entries(cats).map(([k,v]) =>
+    `<button class="cat-btn ${k===curCat?'sel':''}" onclick="setCat('${k}')">${v}</button>`
+  ).join('');
+}
+
+function setCat(cat) {
+  curCat = cat;
+  curIdx = 0;
+  filtered = getFiltered();
+  document.getElementById("card-inner").classList.remove("flipped");
+  buildCatFilter();
+  renderCard();
+}
+
+function renderCard() {
+  filtered = getFiltered();
+  if (!filtered.length) return;
+  const v = filtered[curIdx];
+  document.getElementById("cf-word").textContent = v.w;
+  document.getElementById("cf-pos").textContent = v.pos;
+  document.getElementById("cf-hint").textContent = "💡 " + v.hint;
+  document.getElementById("cb-meaning").textContent = v.th;
+  document.getElementById("cb-example").innerHTML = v.ex;
+  document.getElementById("cb-tip").textContent = "🧪 " + v.tip;
+  document.getElementById("prog-label").textContent = `คำที่ ${curIdx+1} / ${filtered.length}`;
+  document.getElementById("prog-fill").style.width = `${((curIdx+1)/filtered.length)*100}%`;
+  document.getElementById("card-inner").classList.remove("flipped");
+}
+
+function flipCard() {
+  document.getElementById("card-inner").classList.toggle("flipped");
+}
+
+function nextCard() {
+  filtered = getFiltered();
+  curIdx = (curIdx + 1) % filtered.length;
+  renderCard();
+}
+
+function prevCard() {
+  filtered = getFiltered();
+  curIdx = (curIdx - 1 + filtered.length) % filtered.length;
+  renderCard();
+}
+
+function shuffle(arr) {
+  return [...arr].sort(() => Math.random() - 0.5);
+}
+
+function buildQuiz() {
+  quizData = shuffle(vocab).slice(0, 10);
+  quizIdx = 0;
+  score = 0;
+  renderQuizQ();
+}
+
+function renderQuizQ() {
+  const area = document.getElementById("quiz-area");
+  if (quizIdx >= quizData.length) {
+    renderScore(area); return;
+  }
+  const v = quizData[quizIdx];
+  const wrongs = shuffle(vocab.filter(x => x.w !== v.w)).slice(0, 3).map(x => x.th);
+  const opts = shuffle([v.th, ...wrongs]);
+  answered = false;
+  area.innerHTML = `
+    <div class="quiz-card">
+      <div class="quiz-meta">ข้อ ${quizIdx+1} / ${quizData.length} &nbsp;|&nbsp; คะแนน: ${score}</div>
+      <div class="quiz-q">"${v.w}" (${v.pos}) หมายความว่าอะไร?</div>
+      <div class="quiz-sentence">${v.ex}</div>
+      <div class="options" id="opts">
+        ${opts.map(o => `<button class="opt-btn" onclick="checkAns(this,'${o.replace(/'/g,"\\'")}','${v.th.replace(/'/g,"\\'")}','${v.w}','${v.tip.replace(/'/g,"\\'")}')">${o}</button>`).join('')}
+      </div>
+      <div class="explain" id="explain"></div>
+    </div>
+    <div class="nav-row" id="quiz-nav" style="display:none">
+      <button class="nav-btn primary" onclick="nextQ()">ข้อถัดไป →</button>
+    </div>
+  `;
+}
+
+function checkAns(btn, chosen, correct, word, tip) {
+  if (answered) return;
+  answered = true;
+  const btns = document.querySelectorAll(".opt-btn");
+  btns.forEach(b => {
+    b.disabled = true;
+    if (b.textContent === correct) b.classList.add("correct");
+  });
+  const explain = document.getElementById("explain");
+  if (chosen === correct) {
+    score++;
+    btn.classList.add("correct");
+    explain.innerHTML = `✓ ถูกต้อง! <strong>${word}</strong> = ${correct}<br>${tip}`;
+  } else {
+    btn.classList.add("wrong");
+    explain.innerHTML = `✗ คำตอบที่ถูกคือ: <strong>${correct}</strong><br>${tip}`;
+  }
+  explain.classList.add("show");
+  document.getElementById("quiz-nav").style.display = "flex";
+}
+
+function nextQ() {
+  quizIdx++;
+  renderQuizQ();
+}
+
+function renderScore(area) {
+  const pct = Math.round((score / quizData.length) * 100);
+  let msg = pct >= 80 ? "เยี่ยมมาก! พร้อมสอบจริงแล้ว 💪" :
+            pct >= 60 ? "ดีเลย! ทบทวนคำที่ยังสับสนอีกครั้ง 📖" :
+            "ฝึกแฟลชการ์ดอีกรอบแล้วกลับมาลองใหม่ ไม่ยอมแพ้! 🔥";
+  area.innerHTML = `
+    <div class="score-box">
+      <div class="score-big">${score}/${quizData.length}</div>
+      <div class="score-label">${pct}% ถูกต้อง</div>
+      <div class="score-msg">${msg}</div>
+      <button class="nav-btn primary" onclick="buildQuiz()" style="margin:0 auto">ทำใหม่อีกรอบ ↺</button>
+    </div>
+    <div class="tip-section">
+      <div class="section-title">🧪 เทคนิคลับ Vocabulary ก.พ.</div>
+      <div class="tip-card">
+        <div class="tip-title">ทริค 1 — อ่านรากศัพท์ ไม่ต้องจำทุกคำ</div>
+        <div class="tip-body">รู้ว่า <span>de-</span> = ลดลง, <span>in-</span> = ไม่/เข้าใน, <span>pro-</span> = ก้าวหน้า, <span>sub-</span> = ใต้/แทน ก็เดาคำใหม่ได้เกิน 70%</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-title">ทริค 2 — ตัดตัวเลือกด้วย Part of Speech</div>
+        <div class="tip-body">ถ้าช่องว่างอยู่หลัง "to" → ต้องเป็น verb รูปกริยาช่อง 1 ตัดตัวเลือกที่เป็น noun/adj ออกได้ทันที</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-title">ทริค 3 — จับ Tone ของประโยค</div>
+        <div class="tip-body">ถ้าประโยค Negative (<span>not, lack, without</span>) → คำตอบมักเป็น negative word ด้วย เช่น diminish, obstacle, eliminate</div>
+      </div>
+    </div>
+  `;
+}
+
+function buildWordGrid() {
+  const grid = document.getElementById("word-grid");
+  grid.innerHTML = vocab.map(v =>
+    `<div class="word-chip cat-${v.cat}" onclick="goFlash('${v.w}')">
+      <div class="w">${v.w}</div>
+      <div class="m">${v.th}</div>
+    </div>`
+  ).join('');
+}
+
+function goFlash(word) {
+  const idx = vocab.findIndex(v => v.w === word);
+  if (idx < 0) return;
+  curCat = "all";
+  filtered = vocab;
+  curIdx = idx;
+  switchTab('flash');
+  buildCatFilter();
+  renderCard();
+}
+
+function switchTab(tab) {
+  document.getElementById("tab-flash").style.display = tab === 'flash' ? '' : 'none';
+  document.getElementById("tab-quiz").style.display = tab === 'quiz' ? '' : 'none';
+  document.getElementById("tab-list").style.display = tab === 'list' ? '' : 'none';
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    b.classList.toggle('active', ['flash','quiz','list'][i] === tab);
+  });
+  if (tab === 'quiz' && quizData.length === 0) buildQuiz();
+  if (tab === 'list') buildWordGrid();
+}
+
+buildCatFilter();
+renderCard();
+</script>

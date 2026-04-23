@@ -15,6 +15,15 @@ function shuffle<T>(arr: T[]): T[] {
   return [...arr].sort(() => Math.random() - 0.5);
 }
 
+function resolveAnswer(q: ExamQuestion) {
+  let actualAnsText = String(q.ans);
+  if (!q.opts.some(o => String(o) === String(q.ans))) {
+    const i = Number(q.ans) - 1;
+    if (i >= 0 && i < q.opts.length) actualAnsText = String(q.opts[i]);
+  }
+  return actualAnsText;
+}
+
 export default function Exam() {
   const { topicId } = useParams<{ topicId: string }>();
   const navigate = useNavigate();
@@ -28,13 +37,38 @@ export default function Exam() {
 
   const examQ: ExamQuestion[] = topic?.exam ?? [];
 
-  // Build question state whenever idx changes
+  if (!topic) { navigate('/'); return null; }
+
+  if (!examQ.length) {
+    return (
+      <main className="page-shell-narrow">
+        <button onClick={() => navigate(`/topic/${topicId}`)}
+                className="ghost-action mb-4 cursor-pointer bg-transparent">
+          ← {topic.title}
+        </button>
+
+        <section className="exam-panel p-6 text-center">
+          <div className="section-kicker">Timed room</div>
+          <h2 className="display-title mt-2 text-3xl font-bold">ยังไม่มีข้อสอบจำลองสำหรับหมวดนี้</h2>
+          <p className="muted-copy mt-3 text-[0.92rem] leading-[1.8]">
+            ตอนนี้หมวดนี้ถูกออกแบบให้เริ่มจากบทเรียนก่อน เมื่อพร้อมแล้วค่อยต่อยอดด้วยแบบฝึกหรือข้อสอบในภายหลัง
+          </p>
+          <div className="mt-5 flex justify-center">
+            <button onClick={() => navigate(`/topic/${topicId}/lessons`)}
+                    className="primary-action border-none cursor-pointer">
+              กลับไปบทเรียน →
+            </button>
+          </div>
+        </section>
+      </main>
+    );
+  }
+
   useEffect(() => {
     if (!examQ[idx]) return;
     setQState({ shuffled: shuffle(examQ[idx].opts), answered: false, selected: null });
   }, [idx]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Timer
   useEffect(() => {
     const id = setInterval(() => setElapsed((s) => s + 1), 1000);
     return () => clearInterval(id);
@@ -43,11 +77,7 @@ export default function Exam() {
   const handleAnswer = useCallback((val: string) => {
     if (!qState || qState.answered) return;
     const q = examQ[idx];
-    let actualAnsText = String(q.ans);
-    if (!q.opts.some(o => String(o) === String(q.ans))) {
-      const i = Number(q.ans) - 1;
-      if (i >= 0 && i < q.opts.length) actualAnsText = String(q.opts[i]);
-    }
+    const actualAnsText = resolveAnswer(q);
     const ok = val === actualAnsText;
     if (ok) setCorrect((c) => c + 1);
     else setWrong((w) => w + 1);
@@ -57,128 +87,129 @@ export default function Exam() {
   function next() {
     if (idx + 1 >= examQ.length) {
       navigate(`/topic/${topicId}/result`, {
-        state: { correct, wrong, total: examQ.length, elapsed: elapsed + (qState?.answered ? 0 : 0) },
+        state: { correct, wrong, total: examQ.length, elapsed },
       });
     } else {
       setIdx((i) => i + 1);
     }
   }
 
-  if (!topic || !examQ.length || !qState) { if (!topic) navigate('/'); return null; }
+  if (!qState) { return null; }
 
   const q = examQ[idx];
   const fmt = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
-
-  // Resolve the string text of the correct answer
-  let actualAnsText = String(q.ans);
-  if (!q.opts.some(o => String(o) === String(q.ans))) {
-    const i = Number(q.ans) - 1;
-    if (i >= 0 && i < q.opts.length) actualAnsText = String(q.opts[i]);
-  }
+  const actualAnsText = resolveAnswer(q);
+  const progress = ((idx + 1) / examQ.length) * 100;
 
   return (
-    <main className="max-w-[860px] mx-auto px-4 py-8 pb-16 animate-fade-in">
+    <main className="page-shell-narrow">
       <button onClick={() => navigate(`/topic/${topicId}`)}
-              className="text-white/55 text-[.82rem] cursor-pointer mb-1 hover:text-white
-                         transition-colors flex items-center gap-1.5 bg-transparent border-none">
+              className="ghost-action mb-4 cursor-pointer bg-transparent">
         ← {topic.title}
       </button>
 
-      <div className="mb-4 mt-1">
-        <h2 className="text-2xl font-bold mb-1">🎯 จำลองข้อสอบ</h2>
-        <p className="text-[.88rem] text-white/55">{examQ.length} ข้อ · จับเวลา · ทำเหมือนสอบจริง (ไม่มีใบ้)</p>
-      </div>
-
-      {/* Progress bar */}
-      <div className="bg-white/10 rounded-full h-2 mb-1.5 overflow-hidden">
-        <div className="h-full bg-gradient-to-r from-pri to-sec rounded-full transition-[width] duration-500"
-             style={{ width: `${(idx / examQ.length) * 100}%` }} />
-      </div>
-      <div className="flex justify-between text-[.79rem] text-white/55 mb-5">
-        <span>ข้อ {idx + 1}/{examQ.length} | ✅{correct} ❌{wrong}</span>
-        <span>⏱ {fmt(elapsed)}</span>
-      </div>
-
-      {/* Question card */}
-      <div className="bg-white/[0.07] border border-white/[0.12] rounded-[19px] p-6 animate-fade-in">
-        <div className="inline-flex items-center gap-1 text-[.72rem] font-bold bg-pri/13 border border-pri/27
-                        rounded-full px-3 py-0.5 text-[#c3b1ff] uppercase tracking-wide mb-3">
-          {q.tp}
+      <header className="exam-panel mb-4 p-5">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <div className="section-kicker">Timed room</div>
+            <h2 className="display-title mt-1 text-3xl font-bold">🎯 จำลองข้อสอบ</h2>
+            <p className="muted-copy mt-2 text-[.9rem]">{examQ.length} ข้อ · จับเวลา · ทำเหมือนสอบจริง (ไม่มีใบ้)</p>
+          </div>
+          <div className="grid grid-cols-3 gap-2 text-center">
+            <div className="stat-tile min-h-0 px-3 py-2">
+              <span className="stat-value text-xl">✅{correct}</span>
+              <div className="stat-label mt-1">ถูก</div>
+            </div>
+            <div className="stat-tile min-h-0 px-3 py-2">
+              <span className="stat-value text-xl">✕{wrong}</span>
+              <div className="stat-label mt-1">ผิด</div>
+            </div>
+            <div className="stat-tile min-h-0 px-3 py-2">
+              <span className="stat-value text-xl">{fmt(elapsed)}</span>
+              <div className="stat-label mt-1">เวลา</div>
+            </div>
+          </div>
         </div>
+        <div className="progress-track mt-5">
+          <div className="progress-fill" style={{ width: `${progress}%` }} />
+        </div>
+        <div className="mt-2 flex justify-between text-[.78rem] font-semibold text-[rgba(248,239,216,0.58)]">
+          <span>ข้อ {idx + 1}/{examQ.length}</span>
+          <span>{Math.round(progress)}%</span>
+        </div>
+      </header>
+
+      <section className="exam-panel p-5 md:p-6 animate-fade-in">
+        <div className="exam-badge mb-4">{q.tp}</div>
+
         {q.tableHtml && (
-          <div className="mb-3 rounded-xl overflow-hidden border border-white/[0.1] bg-white/[0.03] px-3 pt-2.5 pb-1"
+          <div className="content-table mb-4 overflow-hidden border border-[rgba(248,239,216,0.1)] bg-[rgba(248,239,216,0.03)] px-3 pt-2.5 pb-1"
                dangerouslySetInnerHTML={{ __html: q.tableHtml }} />
         )}
+
         {q.instr ? (
-          /* Word-problem layout */
-          <div className="bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3.5 mb-5
-                          text-[.93rem] leading-[1.8] whitespace-pre-wrap">
+          <div className="border-l-4 border-[rgba(255,209,102,0.72)] bg-[rgba(255,209,102,0.06)] px-4 py-3.5 mb-5
+                          text-[.94rem] leading-[1.85] whitespace-pre-wrap">
             {q.instr}
           </div>
         ) : (
-          /* Sequence layout */
           <>
-            <div className="text-[.98rem] font-medium mb-4">จงหาพจน์ที่หายไปในอนุกรมต่อไปนี้</div>
+            <div className="mb-4 text-[.98rem] font-semibold">จงหาพจน์ที่หายไปในอนุกรมต่อไปนี้</div>
             <div className="flex flex-wrap gap-1.5 items-center justify-center my-3 mb-5">
               {q.seq.map((v, i) => (
                 <span key={i} className="flex items-center gap-1">
-                  {i > 0 && <span className="text-white/22">›</span>}
-                  <div className={`rounded-[9px] w-[50px] h-[50px] flex items-center justify-center
-                                  text-base font-bold border-[1.5px]
-                                  ${v === '?' ? 'border-dashed border-white/26 bg-white/[0.03] text-white/28 animate-blink-border'
-                                              : 'border-white/13 bg-white/[0.08]'}`}>
+                  {i > 0 && <span className="text-[rgba(248,239,216,0.28)]">›</span>}
+                  <span className={`seq-token ${v === '?' ? 'is-blank animate-blink-border' : ''}`}>
                     {v}
-                  </div>
+                  </span>
                 </span>
               ))}
             </div>
           </>
         )}
 
-        {/* Options */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
           {qState.shuffled.map((v, i) => {
             const val = String(v);
             const isCorrect = val === actualAnsText;
             const isSelected = val === qState.selected;
-            let cls = 'bg-white/[0.05] border-white/10 hover:-translate-y-0.5 hover:bg-pri/20 hover:border-pri';
+            let cls = 'answer-option cursor-pointer';
             if (qState.answered) {
-              if (isCorrect) cls = 'bg-ok/15 border-ok';
-              else if (isSelected) cls = 'bg-err/15 border-err';
-              else cls = 'bg-white/[0.05] border-white/10 opacity-50';
+              if (isCorrect) cls += ' border-ok bg-ok/15';
+              else if (isSelected) cls += ' border-err bg-err/15';
+              else cls += ' opacity-55';
             }
+
             return (
               <button key={i} disabled={qState.answered}
                       onClick={() => handleAnswer(val)}
-                      className={`border-[1.5px] rounded-xl p-3 font-sarabun text-[.93rem] font-medium
-                                  flex items-center gap-2 transition-all duration-200 text-left
-                                  disabled:cursor-default ${cls}`}>
-                <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[.76rem]
-                                 font-bold flex-shrink-0 transition-colors
-                                 ${qState.answered && isCorrect ? 'bg-ok text-black'
-                                 : qState.answered && isSelected ? 'bg-err text-white'
-                                 : 'bg-white/10'}`}>
+                      className={`${cls} disabled:cursor-default`}>
+                <span className={`answer-letter
+                  ${qState.answered && isCorrect ? 'bg-ok text-[#101410]'
+                    : qState.answered && isSelected ? 'bg-err text-white'
+                    : ''}`}>
                   {LETTERS[i]}
-                </div>
+                </span>
                 <span>{String(v).replace(/^[1-4]\)\s*/, '')}</span>
               </button>
             );
           })}
         </div>
 
-        {/* Feedback */}
         {qState.answered && (
           <div className="mt-4 animate-fade-in">
-            <div className={`flex items-center gap-2.5 px-4 py-3 rounded-t-[11px]
+            <div className={`border-l-4 px-4 py-3
               ${qState.selected === actualAnsText
-                ? 'bg-ok/10 border border-ok/27' : 'bg-err/10 border border-err/27'}`}>
-              <span className="text-2xl">{qState.selected === actualAnsText ? '🎉' : '😅'}</span>
-              <div>
-                <div className="text-[.92rem] font-semibold">
-                  {qState.selected === actualAnsText ? 'ถูกต้อง! 🎉' : `ยังไม่ใช่ — คำตอบคือ ${actualAnsText.replace(/^[1-4]\)\s*/, '')}`}
-                </div>
-                <div className="text-[.74rem] text-white/55">
-                  {qState.selected === actualAnsText ? 'ดูวิธีคิดด้านล่างเพื่อความแม่นยำ' : 'ทบทวนวิธีคิดได้ด้านล่าง'}
+                ? 'border-ok bg-ok/10' : 'border-err bg-err/10'}`}>
+              <div className="flex items-start gap-3">
+                <span className="text-2xl">{qState.selected === actualAnsText ? '🎉' : '😅'}</span>
+                <div>
+                  <div className="text-[.94rem] font-bold">
+                    {qState.selected === actualAnsText ? 'ถูกต้อง! 🎉' : `ยังไม่ใช่ — คำตอบคือ ${actualAnsText.replace(/^[1-4]\)\s*/, '')}`}
+                  </div>
+                  <div className="muted-copy mt-1 text-[.76rem]">
+                    {qState.selected === actualAnsText ? 'ดูวิธีคิดด้านล่างเพื่อความแม่นยำ' : 'ทบทวนวิธีคิดได้ด้านล่าง'}
+                  </div>
                 </div>
               </div>
             </div>
@@ -189,14 +220,14 @@ export default function Exam() {
               const blankRegex = /_{3,}/;
               const lineWithBlank = lines.find(l => blankRegex.test(l));
               if (!lineWithBlank) return null;
-              
+
               const cleanAnsText = String(actualAnsText).replace(/^[1-4]\)\s*/, '');
               const parts = lineWithBlank.split(blankRegex);
-              
+
               return (
-                <div className="bg-white/[0.04] border border-white/[0.07] border-t-0 px-4 py-3 text-[.88rem] leading-[1.6]">
+                <div className="border-x border-[rgba(248,239,216,0.07)] bg-[rgba(248,239,216,0.035)] px-4 py-3 text-[.88rem] leading-[1.7]">
                   <strong>💡 ประโยคที่สมบูรณ์:</strong>
-                  <div className="mt-1.5 p-2.5 bg-black/20 rounded-lg text-white/90 font-medium italic border-l-[3px] border-ok/60">
+                  <div className="mt-2 border-l-4 border-ok/70 bg-black/20 p-3 text-white/90 font-medium italic">
                     {parts.map((part, i) => (
                       <span key={i}>
                         {part}
@@ -212,24 +243,20 @@ export default function Exam() {
               );
             })()}
 
-            <div className="bg-white/[0.04] border border-white/[0.07] border-t-0 px-4 py-3 text-[.83rem] leading-[1.75] whitespace-pre-wrap">
+            <div className="border-x border-t border-[rgba(248,239,216,0.07)] bg-[rgba(248,239,216,0.035)] px-4 py-3 text-[.84rem] leading-[1.8] whitespace-pre-wrap">
               <strong>📐 วิธีคิด:</strong> {q.expl}
             </div>
-            <div className="bg-ac2/[0.06] border border-ac2/17 border-t-0 rounded-b-[11px]
-                            px-4 py-3 text-[.83rem] leading-[1.75]">
-              🔮 <strong className="text-ac2">เทคนิค:</strong> {q.tip}
+            <div className="border border-[rgba(255,209,102,0.14)] bg-[rgba(255,209,102,0.06)]
+                            px-4 py-3 text-[.84rem] leading-[1.8]">
+              🔮 <strong className="text-[var(--gold)]">เทคนิค:</strong> {q.tip}
             </div>
           </div>
         )}
-      </div>
+      </section>
 
-      {/* Next button */}
       {qState.answered && (
         <button onClick={next}
-                className="animate-fade-in w-full mt-3.5 py-3 bg-gradient-to-br from-pri to-sec
-                           border-none rounded-xl text-white font-sarabun text-[.93rem] font-semibold
-                           cursor-pointer transition-all hover:-translate-y-0.5
-                           hover:shadow-[0_8px_22px_rgba(108,99,255,.45)]">
+                className="primary-action mt-3.5 w-full border-none cursor-pointer">
           {idx < examQ.length - 1 ? `ข้อถัดไป (${idx + 2}/${examQ.length}) →` : '🏆 ดูผลคะแนน'}
         </button>
       )}

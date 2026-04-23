@@ -1,0 +1,317 @@
+
+<h2 class="sr-only">สื่อการสอน พ.ร.ฎ. บริหารกิจการบ้านเมืองที่ดี สำหรับสอบ ก.พ.</h2>
+
+<style>
+  .tab-btn { background: transparent; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 8px 16px; font-size: 13px; cursor: pointer; color: var(--color-text-secondary); transition: all 0.15s; }
+  .tab-btn.active { background: var(--color-background-info); color: var(--color-text-info); border-color: var(--color-border-info); font-weight: 500; }
+  .tab-btn:hover:not(.active) { background: var(--color-background-secondary); color: var(--color-text-primary); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .law-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 12px; }
+  .principle-badge { display: inline-block; padding: 3px 10px; border-radius: var(--border-radius-md); font-size: 12px; font-weight: 500; margin-bottom: 8px; }
+  .quiz-opt { background: transparent; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 10px 14px; font-size: 14px; cursor: pointer; color: var(--color-text-primary); text-align: left; width: 100%; margin-bottom: 8px; transition: all 0.15s; display: block; }
+  .quiz-opt:hover:not(:disabled) { background: var(--color-background-secondary); }
+  .quiz-opt.correct { background: var(--color-background-success); border-color: var(--color-border-success); color: var(--color-text-success); font-weight: 500; }
+  .quiz-opt.wrong { background: var(--color-background-danger); border-color: var(--color-border-danger); color: var(--color-text-danger); }
+  .explain-box { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 12px 14px; font-size: 13px; color: var(--color-text-secondary); margin-top: 8px; border-left: 3px solid var(--color-border-info); }
+  .progress-bar-wrap { background: var(--color-background-secondary); border-radius: 99px; height: 6px; margin-bottom: 6px; }
+  .progress-bar-fill { height: 6px; border-radius: 99px; background: #1D9E75; transition: width 0.4s; }
+  .chip { display: inline-block; padding: 2px 8px; border-radius: var(--border-radius-md); font-size: 11px; font-weight: 500; }
+  .score-circle { width: 80px; height: 80px; border-radius: 50%; border: 3px solid #1D9E75; display: flex; align-items: center; justify-content: center; flex-direction: column; margin: 0 auto 12px; }
+</style>
+
+<div style="padding: 1rem 0;">
+
+  <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 200px;">
+      <p style="font-size: 11px; color: var(--color-text-tertiary); margin: 0 0 2px;">วิชาสอบ ก.พ. ภาค ก</p>
+      <p style="font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin: 0;">พ.ร.ฎ. บริหารกิจการบ้านเมืองที่ดี</p>
+      <p style="font-size: 12px; color: var(--color-text-secondary); margin: 4px 0 0;">พ.ศ. 2546 (แก้ไขเพิ่มเติม พ.ศ. 2562) · ออกสอบ 6 ข้อ</p>
+    </div>
+    <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+      <span class="chip" style="background: #E1F5EE; color: #0F6E56;">7 หลักการ</span>
+      <span class="chip" style="background: #FAEEDA; color: #854F0B;">6 ข้อสอบ</span>
+      <span class="chip" style="background: #EEEDFE; color: #534AB7;">ทริคจำ + โจทย์</span>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;">
+    <button class="tab-btn active" onclick="switchTab('overview')">ภาพรวมกฎหมาย</button>
+    <button class="tab-btn" onclick="switchTab('principles')">7 หลักการสำคัญ</button>
+    <button class="tab-btn" onclick="switchTab('trick')">ทริคลับจำกฎหมาย</button>
+    <button class="tab-btn" onclick="switchTab('quiz')">แบบฝึกหัด 6 ข้อ</button>
+  </div>
+
+  <!-- TAB: OVERVIEW -->
+  <div id="tab-overview" class="tab-panel active">
+    <div class="law-card">
+      <p style="font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 10px;">เกี่ยวกับกฎหมายฉบับนี้</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px;">
+        <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px;">
+          <p style="font-size: 11px; color: var(--color-text-tertiary); margin: 0 0 2px;">ชื่อเต็ม</p>
+          <p style="font-size: 12px; color: var(--color-text-primary); margin: 0; line-height: 1.5;">พระราชกฤษฎีกาว่าด้วยหลักเกณฑ์และวิธีการบริหารกิจการบ้านเมืองที่ดี</p>
+        </div>
+        <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px;">
+          <p style="font-size: 11px; color: var(--color-text-tertiary); margin: 0 0 2px;">ปีที่ออก</p>
+          <p style="font-size: 20px; font-weight: 500; color: var(--color-text-primary); margin: 0;">2546</p>
+          <p style="font-size: 11px; color: var(--color-text-secondary); margin: 0;">แก้ไข ปี 2562</p>
+        </div>
+        <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px;">
+          <p style="font-size: 11px; color: var(--color-text-tertiary); margin: 0 0 2px;">ผู้บังคับใช้</p>
+          <p style="font-size: 13px; color: var(--color-text-primary); margin: 0;">ส่วนราชการทุกแห่ง</p>
+        </div>
+        <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px;">
+          <p style="font-size: 11px; color: var(--color-text-tertiary); margin: 0 0 2px;">เป้าหมายหลัก</p>
+          <p style="font-size: 13px; color: var(--color-text-primary); margin: 0;">ประโยชน์สุขของประชาชน</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="law-card">
+      <p style="font-size: 13px; font-weight: 500; margin: 0 0 10px; color: var(--color-text-primary);">โครงสร้างกฎหมาย (หมวดสำคัญ)</p>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="display: flex; gap: 10px; align-items: flex-start;">
+          <span style="background: #EEEDFE; color: #534AB7; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; flex-shrink: 0; margin-top: 1px;">1</span>
+          <div><p style="margin: 0; font-size: 13px; font-weight: 500; color: var(--color-text-primary);">หมวด 1 · การบริหารกิจการบ้านเมืองที่ดี</p><p style="margin: 2px 0 0; font-size: 12px; color: var(--color-text-secondary);">นิยาม, เป้าหมาย, หลักการ 7 ประการ</p></div>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: flex-start;">
+          <span style="background: #E1F5EE; color: #0F6E56; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; flex-shrink: 0; margin-top: 1px;">2</span>
+          <div><p style="margin: 0; font-size: 13px; font-weight: 500; color: var(--color-text-primary);">หมวด 2 · การบริหารราชการเพื่อประโยชน์สุขของประชาชน</p><p style="margin: 2px 0 0; font-size: 12px; color: var(--color-text-secondary);">การรับฟังความคิดเห็น, การตอบสนองความต้องการ</p></div>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: flex-start;">
+          <span style="background: #FAEEDA; color: #854F0B; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; flex-shrink: 0; margin-top: 1px;">3</span>
+          <div><p style="margin: 0; font-size: 13px; font-weight: 500; color: var(--color-text-primary);">หมวด 3 · การบริหารราชการเพื่อให้เกิดผลสัมฤทธิ์ต่อภารกิจรัฐ</p><p style="margin: 2px 0 0; font-size: 12px; color: var(--color-text-secondary);">แผนปฏิบัติราชการ, ตัวชี้วัด, การประเมินผล</p></div>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: flex-start;">
+          <span style="background: #FAECE7; color: #993C1D; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; flex-shrink: 0; margin-top: 1px;">4</span>
+          <div><p style="margin: 0; font-size: 13px; font-weight: 500; color: var(--color-text-primary);">หมวด 4 · การบริหารราชการอย่างมีประสิทธิภาพและคุ้มค่า</p><p style="margin: 2px 0 0; font-size: 12px; color: var(--color-text-secondary);">การลดขั้นตอน, ความคุ้มค่า, ลดต้นทุน</p></div>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: flex-start;">
+          <span style="background: #E6F1FB; color: #185FA5; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; flex-shrink: 0; margin-top: 1px;">5</span>
+          <div><p style="margin: 0; font-size: 13px; font-weight: 500; color: var(--color-text-primary);">หมวด 7 · การติดตาม ตรวจสอบ และประเมินผลการปฏิบัติราชการ</p><p style="margin: 2px 0 0; font-size: 12px; color: var(--color-text-secondary);">การตรวจสอบ, รายงาน ก.พ.ร.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <button class="quiz-opt" style="text-align: center; margin-top: 4px;" onclick="switchTab('principles')">ไปดู 7 หลักการสำคัญ →</button>
+  </div>
+
+  <!-- TAB: PRINCIPLES -->
+  <div id="tab-principles" class="tab-panel">
+    <p style="font-size: 13px; color: var(--color-text-secondary); margin: 0 0 12px;">การบริหารกิจการบ้านเมืองที่ดีมี <strong>7 เป้าหมาย</strong> ตามมาตรา 6-8</p>
+
+    <div id="principles-list"></div>
+    <button class="quiz-opt" style="text-align: center; margin-top: 4px;" onclick="switchTab('trick')">ไปดูทริคลับจำ 7 หลัก →</button>
+  </div>
+
+  <!-- TAB: TRICK -->
+  <div id="tab-trick" class="tab-panel">
+    <div class="law-card" style="border-left: 3px solid #1D9E75;">
+      <p style="font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 6px;">ทริคลับ: จำ 7 หลักด้วยประโยค "ประ-ผล-ประ-ไม่-ปรับ-ประ-ประ"</p>
+      <p style="font-size: 12px; color: var(--color-text-secondary); margin: 0 0 12px;">ตัวย่อตัวแรกของแต่ละหลักการ จำเป็นเสียงท่อง!</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;">
+        <span style="background: #E1F5EE; color: #0F6E56; padding: 4px 10px; border-radius: var(--border-radius-md); font-size: 13px; font-weight: 500;">ประ</span>
+        <span style="color: var(--color-text-tertiary); display: flex; align-items: center; font-size: 12px;">ประโยชน์สุข</span>
+        <span style="background: #EEEDFE; color: #534AB7; padding: 4px 10px; border-radius: var(--border-radius-md); font-size: 13px; font-weight: 500;">ผล</span>
+        <span style="color: var(--color-text-tertiary); display: flex; align-items: center; font-size: 12px;">ผลสัมฤทธิ์</span>
+        <span style="background: #FAEEDA; color: #854F0B; padding: 4px 10px; border-radius: var(--border-radius-md); font-size: 13px; font-weight: 500;">ประ</span>
+        <span style="color: var(--color-text-tertiary); display: flex; align-items: center; font-size: 12px;">ประสิทธิภาพ</span>
+        <span style="background: #FAECE7; color: #993C1D; padding: 4px 10px; border-radius: var(--border-radius-md); font-size: 13px; font-weight: 500;">ไม่</span>
+        <span style="color: var(--color-text-tertiary); display: flex; align-items: center; font-size: 12px;">ไม่มีขั้นตอนเกิน</span>
+        <span style="background: #E6F1FB; color: #185FA5; padding: 4px 10px; border-radius: var(--border-radius-md); font-size: 13px; font-weight: 500;">ปรับ</span>
+        <span style="color: var(--color-text-tertiary); display: flex; align-items: center; font-size: 12px;">ปรับภารกิจทันสถานการณ์</span>
+        <span style="background: #EAF3DE; color: #3B6D11; padding: 4px 10px; border-radius: var(--border-radius-md); font-size: 13px; font-weight: 500;">ประ</span>
+        <span style="color: var(--color-text-tertiary); display: flex; align-items: center; font-size: 12px;">ประชาชนอำนวยความสะดวก</span>
+        <span style="background: #FBEAF0; color: #993556; padding: 4px 10px; border-radius: var(--border-radius-md); font-size: 13px; font-weight: 500;">ประ</span>
+        <span style="color: var(--color-text-tertiary); display: flex; align-items: center; font-size: 12px;">ประเมินผลสม่ำเสมอ</span>
+      </div>
+      <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px;">
+        <p style="font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 4px;">ท่องซ้ำ 3 รอบ:</p>
+        <p style="font-size: 14px; color: var(--color-text-primary); margin: 0; letter-spacing: 1px;">"ประ · ผล · ประ · ไม่ · ปรับ · ประ · ประ"</p>
+      </div>
+    </div>
+
+    <div class="law-card">
+      <p style="font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 10px;">เรื่องที่ออกสอบบ่อยมาก (เน้นพิเศษ)</p>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="display: flex; gap: 8px; align-items: flex-start;">
+          <span style="background: #FCEBEB; color: #A32D2D; font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: var(--border-radius-md); flex-shrink: 0; margin-top: 1px;">HOT</span>
+          <p style="margin: 0; font-size: 13px; color: var(--color-text-primary);">แผนปฏิบัติราชการต้องมีระยะเวลา <strong>5 ปี</strong> (ตามแผนยุทธศาสตร์ชาติ)</p>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: flex-start;">
+          <span style="background: #FCEBEB; color: #A32D2D; font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: var(--border-radius-md); flex-shrink: 0; margin-top: 1px;">HOT</span>
+          <p style="margin: 0; font-size: 13px; color: var(--color-text-primary);">ลดขั้นตอนที่ไม่จำเป็น — ต้องทบทวนทุก <strong>ปีงบประมาณ</strong></p>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: flex-start;">
+          <span style="background: #FCEBEB; color: #A32D2D; font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: var(--border-radius-md); flex-shrink: 0; margin-top: 1px;">HOT</span>
+          <p style="margin: 0; font-size: 13px; color: var(--color-text-primary);">การประกาศผลการปฏิบัติราชการ — เปิดเผยต่อ<strong>สาธารณะ</strong>ได้</p>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: flex-start;">
+          <span style="background: #FAEEDA; color: #854F0B; font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: var(--border-radius-md); flex-shrink: 0; margin-top: 1px;">จำ</span>
+          <p style="margin: 0; font-size: 13px; color: var(--color-text-primary);">กรณีสถานการณ์ฉุกเฉิน ยังต้องปฏิบัติตามกฎหมายนี้ — ห้ามละเว้น</p>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: flex-start;">
+          <span style="background: #FAEEDA; color: #854F0B; font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: var(--border-radius-md); flex-shrink: 0; margin-top: 1px;">จำ</span>
+          <p style="margin: 0; font-size: 13px; color: var(--color-text-primary);">ก.พ.ร. = คณะกรรมการพัฒนาระบบราชการ คือ ผู้กำกับดูแลการบังคับใช้</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="law-card" style="border-left: 3px solid #534AB7;">
+      <p style="font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 8px;">เทคนิคตัดตัวเลือกในห้องสอบ</p>
+      <p style="font-size: 13px; color: var(--color-text-secondary); margin: 0 0 6px;">เจอข้อสอบถาม "ข้อใดถูก/ผิด" เกี่ยวกับ พ.ร.ฎ. นี้ ให้ระวังกับดัก 3 ข้อนี้:</p>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="background: var(--color-background-danger); border-radius: var(--border-radius-md); padding: 8px 10px;">
+          <p style="margin: 0; font-size: 12px; color: var(--color-text-danger);">กับดัก 1: บอกว่า "ก.พ." กำกับดูแล — ผิด! ต้องเป็น "ก.พ.ร."</p>
+        </div>
+        <div style="background: var(--color-background-danger); border-radius: var(--border-radius-md); padding: 8px 10px;">
+          <p style="margin: 0; font-size: 12px; color: var(--color-text-danger);">กับดัก 2: บอกว่าแผนปฏิบัติราชการ 4 ปี — ผิด! ต้องเป็น 5 ปี</p>
+        </div>
+        <div style="background: var(--color-background-danger); border-radius: var(--border-radius-md); padding: 8px 10px;">
+          <p style="margin: 0; font-size: 12px; color: var(--color-text-danger);">กับดัก 3: บอกว่าเฉพาะราชการส่วนกลางเท่านั้น — ผิด! ใช้ทุกส่วนราชการ</p>
+        </div>
+      </div>
+    </div>
+
+    <button class="quiz-opt" style="text-align: center; margin-top: 4px;" onclick="switchTab('quiz')">พร้อมแล้ว! ไปทำแบบฝึกหัด 6 ข้อ →</button>
+  </div>
+
+  <!-- TAB: QUIZ -->
+  <div id="tab-quiz" class="tab-panel">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <p style="font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin: 0;">แบบฝึกหัด — จำลองข้อสอบ ก.พ.</p>
+      <span id="score-display" style="font-size: 12px; color: var(--color-text-secondary);">0 / 6 ข้อ</span>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-fill" style="width: 0%;"></div></div>
+    <p style="font-size: 11px; color: var(--color-text-tertiary); margin: 0 0 16px;" id="progress-label">ทำไปแล้ว 0 ข้อ</p>
+
+    <div id="quiz-container"></div>
+
+    <div id="quiz-summary" style="display: none;">
+      <div class="law-card" style="text-align: center;">
+        <div class="score-circle" id="summary-circle">
+          <span style="font-size: 22px; font-weight: 500; color: #1D9E75;" id="summary-score">0</span>
+          <span style="font-size: 11px; color: var(--color-text-tertiary);">/ 6</span>
+        </div>
+        <p style="font-size: 15px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 4px;" id="summary-msg">สรุปผล</p>
+        <p style="font-size: 13px; color: var(--color-text-secondary); margin: 0 0 16px;" id="summary-sub"></p>
+        <button class="quiz-opt" style="text-align: center;" onclick="resetQuiz()">ทำใหม่อีกรอบ (เรียบเรียงใหม่)</button>
+        <button class="quiz-opt" style="text-align: center; margin-top: 0;" onclick="sendPrompt('ฉันทำแบบฝึกหัด พ.ร.ฎ. บริหารกิจการบ้านเมืองที่ดีเสร็จแล้ว ช่วยให้ภารกิจต่อไปหน่อย ↗')">ภารกิจถัดไป ↗</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const principles = [
+  { num: 1, title: "ประโยชน์สุขของประชาชน", detail: "การบริหารราชการต้องเป็นไปเพื่อประโยชน์สุขของประชาชน โดยให้มีการประเมินผลความคุ้มค่าในเชิงภารกิจด้วย", color: "#E1F5EE", text: "#0F6E56" },
+  { num: 2, title: "ผลสัมฤทธิ์ต่อภารกิจของรัฐ", detail: "ส่วนราชการต้องจัดทำแผนปฏิบัติราชการ กำหนดเป้าหมาย ตัวชี้วัด ผลสัมฤทธิ์ และงบประมาณที่ต้องใช้", color: "#EEEDFE", text: "#534AB7" },
+  { num: 3, title: "ประสิทธิภาพและคุ้มค่า", detail: "ต้องใช้วิธีการบริหารที่มีประสิทธิภาพ ไม่สิ้นเปลือง ใช้ทรัพยากรให้เกิดประโยชน์สูงสุด", color: "#FAEEDA", text: "#854F0B" },
+  { num: 4, title: "ไม่มีขั้นตอนเกินความจำเป็น", detail: "ต้องลดขั้นตอนและระยะเวลาการปฏิบัติราชการที่ไม่จำเป็น เพื่ออำนวยความสะดวกแก่ประชาชน", color: "#FAECE7", text: "#993C1D" },
+  { num: 5, title: "ปรับภารกิจทันสถานการณ์", detail: "ต้องปรับปรุงภารกิจของส่วนราชการให้ทันต่อสถานการณ์ และตรวจสอบความจำเป็นของภารกิจอยู่เสมอ", color: "#E6F1FB", text: "#185FA5" },
+  { num: 6, title: "ประชาชนได้รับการอำนวยความสะดวก", detail: "ประชาชนได้รับการอำนวยความสะดวกและได้รับการตอบสนองความต้องการ รวมถึงมีช่องทางรับเรื่องร้องเรียน", color: "#EAF3DE", text: "#3B6D11" },
+  { num: 7, title: "ประเมินผลการปฏิบัติราชการ", detail: "ต้องมีการประเมินผลการปฏิบัติราชการอย่างสม่ำเสมอ เพื่อนำผลมาปรับปรุงการปฏิบัติราชการ", color: "#FBEAF0", text: "#993556" }
+];
+
+const allQuestions = [
+  { q: "ข้อใดคือเป้าหมายหลักสูงสุดของการบริหารกิจการบ้านเมืองที่ดีตาม พ.ร.ฎ. ฉบับนี้?", opts: ["การเพิ่มรายได้ให้รัฐ", "ประโยชน์สุขของประชาชน", "การลดงบประมาณรัฐ", "การเพิ่มอำนาจข้าราชการ"], ans: 1, explain: "มาตรา 6 กำหนดให้เป้าหมายสูงสุดคือ 'ประโยชน์สุขของประชาชน' เป็นหลักการแรกในหลักการ 7 ประการ" },
+  { q: "หน่วยงานใดทำหน้าที่กำกับและดูแลการปฏิบัติตาม พ.ร.ฎ. บริหารกิจการบ้านเมืองที่ดี?", opts: ["ก.พ. (คณะกรรมการข้าราชการพลเรือน)", "ก.พ.ร. (คณะกรรมการพัฒนาระบบราชการ)", "สำนักงบประมาณ", "กระทรวงการคลัง"], ans: 1, explain: "ก.พ.ร. หรือ 'คณะกรรมการพัฒนาระบบราชการ' คือผู้มีหน้าที่กำกับดูแลตามกฎหมายนี้ ระวังสับกับ ก.พ. ที่ดูแลเรื่องระบบราชการและข้าราชการ" },
+  { q: "แผนปฏิบัติราชการที่ส่วนราชการต้องจัดทำตาม พ.ร.ฎ. นี้มีระยะเวลากี่ปี?", opts: ["1 ปี", "3 ปี", "5 ปี", "10 ปี"], ans: 2, explain: "แผนปฏิบัติราชการมีระยะเวลา 5 ปี ตามแนวทางแผนยุทธศาสตร์ชาติ (แก้ไขปี 2562)" },
+  { q: "ข้อใดกล่าวถูกต้องเกี่ยวกับการลดขั้นตอนการปฏิบัติราชการ?", opts: ["ทำเพียงครั้งเดียวเมื่อมีคำสั่งพิเศษ", "ต้องทบทวนและปรับปรุงในทุกปีงบประมาณ", "ขึ้นอยู่กับดุลยพินิจผู้บังคับบัญชา", "ทำเมื่อมีเรื่องร้องเรียนเท่านั้น"], ans: 1, explain: "กฎหมายกำหนดให้ส่วนราชการต้องทบทวนและลดขั้นตอนที่ไม่จำเป็นในทุกปีงบประมาณ ไม่ใช่รอให้มีคำสั่ง" },
+  { q: "ข้อใดไม่ใช่หลักการของการบริหารกิจการบ้านเมืองที่ดีตาม พ.ร.ฎ.?", opts: ["มีประสิทธิภาพและเกิดความคุ้มค่า", "ปรับปรุงภารกิจให้ทันสถานการณ์", "เพิ่มจำนวนข้าราชการให้เพียงพอ", "ไม่มีขั้นตอนการปฏิบัติเกินความจำเป็น"], ans: 2, explain: "'เพิ่มจำนวนข้าราชการ' ไม่ใช่หลักการตามกฎหมายนี้ 7 หลักการมุ่งเน้นประสิทธิภาพ ไม่ได้กำหนดเรื่องจำนวนบุคลากร" },
+  { q: "ผลการปฏิบัติราชการที่ประเมินแล้วตามกฎหมายนี้ สามารถดำเนินการอย่างไรได้?", opts: ["เป็นความลับ ห้ามเปิดเผย", "เปิดเผยต่อสาธารณชนได้", "เปิดเผยเฉพาะผู้บริหารระดับสูง", "เปิดเผยได้เฉพาะเมื่อ ก.พ.ร. สั่ง"], ans: 1, explain: "กฎหมายสนับสนุนความโปร่งใส — ผลการปฏิบัติราชการสามารถเปิดเผยต่อสาธารณชนได้ เพื่อให้ประชาชนตรวจสอบได้" }
+];
+
+let answered = 0;
+let score = 0;
+let shuffledQ = [];
+
+function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
+
+function renderPrinciples() {
+  const c = document.getElementById('principles-list');
+  if (!c) return;
+  c.innerHTML = principles.map(p => `
+    <div class="law-card" style="border-left: 3px solid ${p.text};">
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+        <span style="background: ${p.color}; color: ${p.text}; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; flex-shrink: 0;">${p.num}</span>
+        <p style="margin: 0; font-size: 14px; font-weight: 500; color: var(--color-text-primary);">${p.title}</p>
+      </div>
+      <p style="margin: 0; font-size: 12px; color: var(--color-text-secondary); padding-left: 36px;">${p.detail}</p>
+    </div>
+  `).join('');
+}
+
+function renderQuiz() {
+  shuffledQ = shuffle(allQuestions);
+  answered = 0; score = 0;
+  document.getElementById('quiz-summary').style.display = 'none';
+  document.getElementById('progress-fill').style.width = '0%';
+  document.getElementById('progress-label').textContent = 'ทำไปแล้ว 0 ข้อ';
+  document.getElementById('score-display').textContent = '0 / 6 ข้อ';
+  const c = document.getElementById('quiz-container');
+  c.innerHTML = shuffledQ.map((q, i) => `
+    <div class="law-card" id="q-card-${i}" style="margin-bottom: 16px;">
+      <p style="font-size: 13px; color: var(--color-text-tertiary); margin: 0 0 4px;">ข้อที่ ${i+1}</p>
+      <p style="font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 12px; line-height: 1.6;">${q.q}</p>
+      ${q.opts.map((opt, j) => `<button class="quiz-opt" id="opt-${i}-${j}" onclick="checkAnswer(${i}, ${j})">${['ก','ข','ค','ง'][j]}. ${opt}</button>`).join('')}
+      <div id="explain-${i}" class="explain-box" style="display:none;"></div>
+    </div>
+  `).join('');
+}
+
+function checkAnswer(qi, oi) {
+  const q = shuffledQ[qi];
+  const buttons = document.querySelectorAll(`[id^="opt-${qi}-"]`);
+  buttons.forEach(b => b.disabled = true);
+  buttons[oi].classList.add(oi === q.ans ? 'correct' : 'wrong');
+  buttons[q.ans].classList.add('correct');
+  const exp = document.getElementById(`explain-${qi}`);
+  exp.innerHTML = (oi === q.ans ? '<strong style="color:var(--color-text-success)">ถูกต้อง!</strong> ' : '<strong style="color:var(--color-text-danger)">ผิด!</strong> ') + q.explain;
+  exp.style.display = 'block';
+  if (oi === q.ans) score++;
+  answered++;
+  const pct = Math.round((answered / 6) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = `ทำไปแล้ว ${answered} ข้อ`;
+  document.getElementById('score-display').textContent = `${score} / 6 ข้อ`;
+  if (answered === 6) showSummary();
+}
+
+function showSummary() {
+  setTimeout(() => {
+    document.getElementById('quiz-summary').style.display = 'block';
+    document.getElementById('summary-score').textContent = score;
+    const msgs = [
+      [0,2, "ยังต้องเสริมพื้นฐานนะ!", "กลับไปทบทวน 7 หลักการ แล้วลองใหม่ได้เลย"],
+      [3,4, "พอใช้ได้ แต่ยังไม่ปลอดภัย", "เน้นทริคกับดัก 3 ข้อ แล้วจะแน่นขึ้นมาก"],
+      [5,5, "เยี่ยม! แทบจะผ่านแล้ว", "ขาดอีกนิดเดียว ทำอีกรอบให้ได้ 6/6!"],
+      [6,6, "เป๊ะมาก! ได้คะแนนเต็ม!", "พร้อมสอบจริงแล้ว ไปพิชิตหมวดต่อไปได้เลย!"]
+    ];
+    const m = msgs.find(([a,b]) => score >= a && score <= b);
+    document.getElementById('summary-msg').textContent = m[2];
+    document.getElementById('summary-sub').textContent = m[3];
+    document.getElementById('summary-circle').style.borderColor = score >= 5 ? '#1D9E75' : score >= 3 ? '#BA7517' : '#E24B4A';
+    document.getElementById('summary-score').style.color = score >= 5 ? '#1D9E75' : score >= 3 ? '#BA7517' : '#E24B4A';
+    document.getElementById('quiz-summary').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 400);
+}
+
+function resetQuiz() {
+  document.getElementById('quiz-summary').style.display = 'none';
+  renderQuiz();
+}
+
+function switchTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  const btns = document.querySelectorAll('.tab-btn');
+  const map = { overview: 0, principles: 1, trick: 2, quiz: 3 };
+  btns[map[id]].classList.add('active');
+}
+
+renderPrinciples();
+renderQuiz();
+</script>

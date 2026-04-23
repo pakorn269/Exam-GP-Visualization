@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conversation Bootcamp — ก.พ. ภาค ก</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,600&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F3EADA;
+    --cream-2:#EADFC9;
+    --ink:#1B1A17;
+    --ink-soft:#3B3A35;
+    --tomato:#D94B2B;
+    --tomato-dark:#A83416;
+    --mustard:#E8A838;
+    --forest:#285943;
+    --forest-light:#4A8E6E;
+    --sky:#2E5EAA;
+    --line:#1B1A17;
+    --paper: #FBF6EC;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{background:var(--cream); color:var(--ink); font-family:'IBM Plex Sans Thai', system-ui, sans-serif; font-size:16px; line-height:1.55;}
+  body{
+    background-image:
+      radial-gradient(circle at 10% 0%, rgba(232,168,56,0.18), transparent 45%),
+      radial-gradient(circle at 90% 12%, rgba(217,75,43,0.14), transparent 40%),
+      radial-gradient(circle at 50% 100%, rgba(46,94,170,0.08), transparent 40%);
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  /* subtle grain */
+  body::before{
+    content:"";
+    position:fixed; inset:0; pointer-events:none; z-index:1000;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.07 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    mix-blend-mode:multiply; opacity:.6;
+  }
+
+  .serif{font-family:'Fraunces', 'Georgia', serif; font-weight:900; letter-spacing:-0.01em;}
+  .mono{font-family:'JetBrains Mono', monospace;}
+
+  .container{max-width:1180px; margin:0 auto; padding:0 28px;}
+
+  /* ====== TOP BANNER ====== */
+  .topbar{
+    border-bottom:2px solid var(--ink);
+    background:var(--ink);
+    color:var(--cream);
+    padding:10px 0;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    overflow:hidden;
+    white-space:nowrap;
+  }
+  .ticker{display:flex; gap:40px; animation: scroll 45s linear infinite;}
+  .ticker span{display:inline-flex; align-items:center; gap:12px;}
+  .ticker .dot{width:6px; height:6px; background:var(--mustard); border-radius:50%;}
+  @keyframes scroll{
+    from{transform:translateX(0)}
+    to{transform:translateX(-50%)}
+  }
+
+  /* ====== HERO ====== */
+  .hero{
+    padding:60px 0 40px;
+    border-bottom:2px solid var(--ink);
+    position:relative;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1fr 260px;
+    gap:40px;
+    align-items:end;
+  }
+  .kicker{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--ink);
+    background:var(--mustard);
+    padding:6px 12px;
+    border:2px solid var(--ink);
+    border-radius:999px;
+    margin-bottom:22px;
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+  h1.hero-title{
+    font-family:'Fraunces', serif;
+    font-weight:900;
+    font-size: clamp(54px, 9vw, 128px);
+    line-height:0.88;
+    letter-spacing:-0.035em;
+    color:var(--ink);
+  }
+  .hero-title .italic{
+    font-style:italic;
+    font-weight:600;
+    color:var(--tomato);
+  }
+  .hero-title .under{
+    display:inline-block;
+    position:relative;
+  }
+  .hero-title .under::after{
+    content:"";
+    position:absolute; left:-4px; right:-4px; bottom:8px; height:14px;
+    background:var(--mustard);
+    z-index:-1;
+    transform:skewX(-8deg);
+  }
+  .hero-sub{
+    margin-top:26px;
+    max-width:620px;
+    font-size:19px;
+    color:var(--ink-soft);
+  }
+  .hero-badge{
+    justify-self:end;
+    border:2px solid var(--ink);
+    background:var(--paper);
+    padding:18px 20px;
+    box-shadow: 6px 6px 0 var(--ink);
+    transform:rotate(2deg);
+  }
+  .hero-badge .num{font-family:'Fraunces',serif; font-size:62px; line-height:1; font-weight:900;}
+  .hero-badge .label{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; margin-top:4px;}
+  .hero-badge .tag{
+    display:inline-block; margin-top:10px;
+    background:var(--tomato); color:var(--paper);
+    padding:2px 8px; font-size:11px; font-family:'JetBrains Mono',monospace; letter-spacing:0.1em;
+    border-radius:4px;
+  }
+
+  /* ====== SECTION ====== */
+  section{padding:56px 0; border-bottom:2px solid var(--ink);}
+  .sec-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    gap:20px; flex-wrap:wrap;
+    margin-bottom:32px;
+  }
+  .sec-num{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px; letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--tomato-dark);
+  }
+  h2{
+    font-family:'Fraunces', serif;
+    font-weight:900;
+    font-size: clamp(34px, 5vw, 56px);
+    line-height:1;
+    letter-spacing:-0.02em;
+  }
+  h2 .sw{color:var(--tomato); font-style:italic; font-weight:600;}
+  .sec-desc{
+    max-width:520px;
+    font-size:15px;
+    color:var(--ink-soft);
+    text-align:right;
+  }
+
+  /* ====== TECHNIQUE CARDS ====== */
+  .tricks{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:0;
+    border:2px solid var(--ink);
+    background:var(--paper);
+  }
+  .trick{
+    padding:28px 22px;
+    border-right:2px solid var(--ink);
+    position:relative;
+    min-height:260px;
+    display:flex; flex-direction:column; justify-content:space-between;
+    transition: background .3s ease;
+  }
+  .trick:last-child{border-right:none;}
+  .trick:hover{background:var(--cream-2);}
+  .trick-num{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px; letter-spacing:0.15em;
+    background:var(--ink); color:var(--cream);
+    padding:3px 8px; display:inline-block;
+    align-self:flex-start;
+  }
+  .trick h3{
+    font-family:'Fraunces', serif;
+    font-weight:900;
+    font-size:24px;
+    line-height:1.1;
+    margin-top:16px;
+    letter-spacing:-0.01em;
+  }
+  .trick p{margin-top:10px; font-size:14px; color:var(--ink-soft);}
+  .trick .emoji{font-size:32px; align-self:flex-end; opacity:.9;}
+
+  /* ====== SCENARIOS (TABS) ====== */
+  .tabs{display:flex; flex-wrap:wrap; gap:0; border:2px solid var(--ink); background:var(--paper);}
+  .tab-btn{
+    flex:1; min-width:140px;
+    padding:14px 16px;
+    font-family:'IBM Plex Sans Thai', sans-serif; font-weight:600;
+    background:var(--paper);
+    border:none;
+    border-right:2px solid var(--ink);
+    cursor:pointer;
+    font-size:14px;
+    transition: all .2s;
+    color:var(--ink);
+    text-align:center;
+  }
+  .tab-btn:last-child{border-right:none;}
+  .tab-btn:hover{background:var(--mustard);}
+  .tab-btn.active{background:var(--ink); color:var(--cream);}
+  .tab-btn .tb-em{display:block; font-size:22px; margin-bottom:4px;}
+
+  .tab-panels{margin-top:28px;}
+  .panel{display:none; animation: fadeUp .4s ease;}
+  .panel.active{display:block;}
+  @keyframes fadeUp{
+    from{opacity:0; transform:translateY(8px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  .panel-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+  }
+  .dialogue{
+    border:2px solid var(--ink);
+    background:var(--paper);
+    padding:20px 22px;
+    box-shadow: 5px 5px 0 var(--ink);
+    position:relative;
+  }
+  .dialogue h4{
+    font-family:'Fraunces', serif; font-weight:600; font-style:italic;
+    font-size:20px;
+    margin-bottom:14px;
+    color:var(--tomato-dark);
+  }
+  .line{
+    display:flex; gap:10px;
+    padding:8px 0;
+    border-bottom:1px dashed rgba(27,26,23,0.2);
+  }
+  .line:last-child{border-bottom:none;}
+  .who{
+    font-family:'JetBrains Mono', monospace;
+    font-weight:700;
+    font-size:12px;
+    min-width:26px;
+    color:var(--tomato);
+  }
+  .who.b{color:var(--sky);}
+  .utter{flex:1;}
+  .utter .th{display:block; font-size:13px; color:var(--ink-soft); margin-top:3px;}
+
+  .phrasebox{
+    border:2px solid var(--ink);
+    background:var(--cream-2);
+    padding:20px 22px;
+  }
+  .phrasebox h4{
+    font-family:'Fraunces', serif; font-weight:900;
+    font-size:22px;
+    margin-bottom:14px;
+  }
+  .phrase-row{
+    display:flex; justify-content:space-between; gap:12px;
+    padding:9px 0;
+    border-bottom:1px solid rgba(27,26,23,0.18);
+    font-size:14px;
+  }
+  .phrase-row:last-child{border-bottom:none;}
+  .phrase-row .eng{font-weight:600; color:var(--ink);}
+  .phrase-row .thai{color:var(--ink-soft); font-size:13px; text-align:right; min-width:40%;}
+
+  /* ====== FLASHCARDS ====== */
+  .flash-wrap{
+    display:flex; align-items:center; justify-content:center; gap:24px;
+    flex-wrap:wrap;
+  }
+  .flashcard{
+    width:min(520px, 100%);
+    height:280px;
+    perspective:1200px;
+    cursor:pointer;
+  }
+  .flash-inner{
+    position:relative;
+    width:100%; height:100%;
+    transform-style:preserve-3d;
+    transition: transform .6s cubic-bezier(.4,.2,.2,1);
+  }
+  .flashcard.flipped .flash-inner{transform:rotateY(180deg);}
+  .flash-face{
+    position:absolute; inset:0;
+    backface-visibility:hidden;
+    border:2px solid var(--ink);
+    padding:28px;
+    display:flex; flex-direction:column; justify-content:space-between;
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .flash-front{
+    background:var(--paper);
+  }
+  .flash-back{
+    transform:rotateY(180deg);
+    background:var(--ink);
+    color:var(--cream);
+  }
+  .flash-back .flash-hint-top{color:var(--mustard);}
+  .flash-hint-top{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px; letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--tomato);
+  }
+  .flash-content{
+    font-family:'Fraunces', serif;
+    font-weight:600; font-style:italic;
+    font-size:28px;
+    line-height:1.25;
+  }
+  .flash-content.en{font-style:normal; font-weight:900; font-size:32px;}
+  .flash-hint-bot{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px; letter-spacing:0.12em;
+    opacity:.7;
+  }
+
+  .flash-controls{
+    display:flex; align-items:center; gap:16px;
+    width:min(520px, 100%);
+    justify-content:space-between;
+    margin-top:18px;
+  }
+  .flash-btn{
+    border:2px solid var(--ink);
+    background:var(--paper);
+    padding:10px 16px;
+    cursor:pointer;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px; letter-spacing:0.1em;
+    text-transform:uppercase;
+    transition: all .2s;
+  }
+  .flash-btn:hover{background:var(--mustard); transform:translate(-1px,-1px); box-shadow:2px 2px 0 var(--ink);}
+  .flash-count{font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--ink-soft);}
+
+  /* ====== QUIZ ====== */
+  .quiz-intro{
+    background:var(--ink); color:var(--cream);
+    padding:24px 28px;
+    border:2px solid var(--ink);
+    margin-bottom:28px;
+    display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:16px;
+  }
+  .quiz-intro h3{font-family:'Fraunces',serif; font-weight:900; font-size:28px; letter-spacing:-0.01em;}
+  .quiz-intro p{font-size:14px; opacity:.85; max-width:480px; margin-top:4px;}
+  .quiz-badge{
+    background:var(--mustard); color:var(--ink);
+    padding:6px 14px;
+    font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:0.15em;
+    border-radius:999px;
+    border:2px solid var(--mustard);
+  }
+
+  .q-card{
+    border:2px solid var(--ink);
+    background:var(--paper);
+    padding:22px 24px;
+    margin-bottom:20px;
+    box-shadow: 5px 5px 0 var(--ink);
+  }
+  .q-head{
+    display:flex; gap:14px; align-items:baseline;
+    margin-bottom:14px;
+  }
+  .q-num{
+    font-family:'Fraunces',serif; font-weight:900;
+    font-size:38px; line-height:1;
+    color:var(--tomato);
+  }
+  .q-text{
+    font-size:16px;
+    line-height:1.5;
+  }
+  .q-text .spk{
+    font-family:'JetBrains Mono', monospace;
+    font-weight:700; font-size:13px;
+    color:var(--sky);
+    margin-right:6px;
+  }
+  .q-text .spk.a{color:var(--tomato);}
+  .q-text .blank{
+    display:inline-block;
+    background:var(--mustard);
+    padding:1px 14px;
+    border-bottom:3px solid var(--ink);
+    font-family:'JetBrains Mono', monospace; font-weight:700;
+    margin:0 2px;
+  }
+
+  .choices{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px;}
+  @media (max-width:640px){.choices{grid-template-columns:1fr;}}
+  .choice{
+    border:2px solid var(--ink);
+    background:var(--paper);
+    padding:12px 14px;
+    cursor:pointer;
+    font-size:14px;
+    text-align:left;
+    font-family:'IBM Plex Sans Thai', sans-serif;
+    transition: all .18s;
+    display:flex; gap:10px; align-items:flex-start;
+    line-height:1.4;
+  }
+  .choice:hover:not(.locked){background:var(--cream-2); transform: translate(-2px,-2px); box-shadow:3px 3px 0 var(--ink);}
+  .choice .letter{
+    font-family:'JetBrains Mono', monospace;
+    font-weight:700; font-size:12px;
+    background:var(--ink); color:var(--cream);
+    padding:2px 7px;
+    flex-shrink:0;
+  }
+  .choice.correct{background:var(--forest-light); color:var(--paper); border-color:var(--forest);}
+  .choice.correct .letter{background:var(--forest);}
+  .choice.wrong{background:var(--tomato); color:var(--paper); border-color:var(--tomato-dark);}
+  .choice.wrong .letter{background:var(--tomato-dark);}
+  .choice.reveal-correct{background:var(--forest-light); color:var(--paper); border-color:var(--forest);}
+  .choice.reveal-correct .letter{background:var(--forest);}
+  .choice.locked{cursor:default;}
+
+  .explain{
+    margin-top:14px;
+    padding:14px 16px;
+    background:var(--cream-2);
+    border-left:4px solid var(--forest);
+    font-size:14px;
+    display:none;
+    animation: fadeUp .3s ease;
+  }
+  .explain.show{display:block;}
+  .explain strong{color:var(--forest); font-family:'Fraunces',serif; font-style:italic;}
+
+  /* ====== RESULT ====== */
+  .result{
+    display:none;
+    margin-top:30px;
+    border:2px solid var(--ink);
+    background:var(--mustard);
+    padding:28px 30px;
+    box-shadow: 6px 6px 0 var(--ink);
+    text-align:center;
+  }
+  .result.show{display:block;}
+  .result h3{
+    font-family:'Fraunces', serif; font-weight:900;
+    font-size:42px; line-height:1;
+    margin-bottom:10px;
+  }
+  .score-big{
+    font-family:'Fraunces', serif; font-weight:900;
+    font-size:100px; line-height:1;
+    color:var(--tomato-dark);
+    letter-spacing:-0.04em;
+  }
+  .score-big .total{color:var(--ink); opacity:.5; font-size:60px;}
+  .result p{font-size:15px; margin-top:8px;}
+  .result .msg{font-family:'Fraunces',serif; font-style:italic; font-size:22px; margin-top:14px;}
+
+  .btn-reset{
+    margin-top:18px;
+    border:2px solid var(--ink);
+    background:var(--ink); color:var(--cream);
+    padding:12px 22px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px; letter-spacing:0.15em; text-transform:uppercase;
+    cursor:pointer;
+    transition: all .2s;
+  }
+  .btn-reset:hover{background:var(--tomato); transform: translate(-2px,-2px); box-shadow: 3px 3px 0 var(--ink);}
+
+  /* ====== HOMEWORK ====== */
+  .hw{
+    display:grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap:0;
+    border:2px solid var(--ink);
+    background:var(--paper);
+  }
+  .hw-left{padding:32px 34px; border-right:2px solid var(--ink);}
+  .hw-right{padding:32px 34px; background:var(--ink); color:var(--cream);}
+  .hw-left h3, .hw-right h3{
+    font-family:'Fraunces',serif; font-weight:900;
+    font-size:28px; margin-bottom:16px;
+    letter-spacing:-0.01em;
+  }
+  .hw ul{list-style:none; padding:0;}
+  .hw li{
+    padding:10px 0 10px 32px;
+    position:relative;
+    border-bottom:1px dashed rgba(27,26,23,0.2);
+    font-size:15px;
+  }
+  .hw-right li{border-bottom:1px dashed rgba(243,234,218,0.2);}
+  .hw li:last-child{border-bottom:none;}
+  .hw li::before{
+    content:"";
+    position:absolute; left:6px; top:16px;
+    width:16px; height:16px;
+    border:2px solid var(--ink);
+    background:var(--paper);
+  }
+  .hw-right li::before{border-color:var(--cream); background:var(--ink);}
+  .hw li.star::before{
+    content:"★"; border:none; background:transparent;
+    color:var(--mustard); font-size:18px; top:11px; left:3px;
+  }
+
+  /* ====== FOOTER ====== */
+  footer{
+    padding:40px 0;
+    text-align:center;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px; letter-spacing:0.15em; text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  footer .sig{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:600;
+    font-size:24px; text-transform:none; letter-spacing:0;
+    color:var(--ink); margin-bottom:10px;
+  }
+
+  /* ====== RESPONSIVE ====== */
+  @media (max-width: 900px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-badge{justify-self:start;}
+    .tricks{grid-template-columns:repeat(2, 1fr);}
+    .trick:nth-child(2){border-right:none;}
+    .trick:nth-child(1),.trick:nth-child(2){border-bottom:2px solid var(--ink);}
+    .panel-grid{grid-template-columns:1fr;}
+    .hw{grid-template-columns:1fr;}
+    .hw-left{border-right:none; border-bottom:2px solid var(--ink);}
+  }
+  @media (max-width: 560px){
+    .tricks{grid-template-columns:1fr;}
+    .trick{border-right:none; border-bottom:2px solid var(--ink);}
+    .trick:last-child{border-bottom:none;}
+    .tab-btn{min-width:100%; border-right:none; border-bottom:2px solid var(--ink);}
+    .tab-btn:last-child{border-bottom:none;}
+    .sec-desc{text-align:left;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Ticker -->
+<div class="topbar">
+  <div class="ticker">
+    <span><span class="dot"></span> ก.พ. ภาค ก — 69</span>
+    <span><span class="dot"></span> Conversation · 5 ข้อ · เก็บให้หมด</span>
+    <span><span class="dot"></span> ผ่าน 13/25 = 50%</span>
+    <span><span class="dot"></span> Daily Mission</span>
+    <span><span class="dot"></span> ก.พ. ภาค ก — 69</span>
+    <span><span class="dot"></span> Conversation · 5 ข้อ · เก็บให้หมด</span>
+    <span><span class="dot"></span> ผ่าน 13/25 = 50%</span>
+    <span><span class="dot"></span> Daily Mission</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="kicker">● Bootcamp · English Part 01</div>
+        <h1 class="hero-title">
+          Conversation<br>
+          <span class="italic">ไม่ใช่ฟลุก —</span><br>
+          <span class="under">มันมีสูตร.</span>
+        </h1>
+        <p class="hero-sub">
+          เลิกเดาบทสนทนาแบบลูกครึ่งโชคดี วันนี้พี่จะแกะวิธีคิด + ทริคตัดตัวเลือก + วลีที่ออกสอบซ้ำทุกปี
+          ให้กลายเป็นวิชาง่ายสุดของพาร์ทอังกฤษ
+        </p>
+      </div>
+      <div class="hero-badge">
+        <div class="num">5<span style="opacity:.3;">/25</span></div>
+        <div class="label">ข้อ Conversation</div>
+        <div class="tag">คะแนนฟรี</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SECTION 1 · TECHNIQUES -->
+<section>
+  <div class="container">
+    <div class="sec-head">
+      <div>
+        <div class="sec-num">§ 01 — TACTICS</div>
+        <h2>เทคนิคลับ <span class="sw">สี่ข้อ</span> ที่ต้องจำก่อนอ่านอะไรทั้งนั้น</h2>
+      </div>
+      <p class="sec-desc">กฎเหล็กของพี่ — ก่อนจะไปเจาะฉากจริง ทุกข้อ Conversation ใช้ 4 ทริคนี้ตัดตัวเลือกได้เกินครึ่ง</p>
+    </div>
+
+    <div class="tricks">
+      <div class="trick">
+        <div>
+          <span class="trick-num">TRICK 01</span>
+          <h3>ดูประเภทคำถามก่อน</h3>
+          <p><strong>Wh-</strong> (What/When/Where/Why/How) ต้องตอบ<u>เนื้อหา</u> ไม่ใช่ Yes/No — ถ้าเห็นตัวเลือกที่ขึ้น "Yes, I…" หรือ "No, I…" ในข้อ Wh- ตัดทิ้งได้เลย</p>
+        </div>
+        <div class="emoji">🎯</div>
+      </div>
+
+      <div class="trick">
+        <div>
+          <span class="trick-num">TRICK 02</span>
+          <h3>"Do you mind…?" = ต้อง No</h3>
+          <p>คำถามแนว Mind / Would you mind ถ้าอยากอนุญาต ต้องตอบ <em>"No, not at all."</em> (ไม่ถือสาเลย) ไม่ใช่ Yes นะ ออกชัวร์ทุกปี</p>
+        </div>
+        <div class="emoji">🧠</div>
+      </div>
+
+      <div class="trick">
+        <div>
+          <span class="trick-num">TRICK 03</span>
+          <h3>จับ Context ของฉาก</h3>
+          <p>ดู<u>สถานที่/คำสัญญาณ</u> เช่น "Check, please" = ร้านอาหาร, "Hold on" = โทรศัพท์ ตัวเลือกที่คนละฉากตัดทิ้งก่อนเลย</p>
+        </div>
+        <div class="emoji">🗺️</div>
+      </div>
+
+      <div class="trick">
+        <div>
+          <span class="trick-num">TRICK 04</span>
+          <h3>ที่แปลตรง ≠ ที่ถูก</h3>
+          <p>ข้อสอบชอบวางตัวเลือกที่แปลตรงตัวดูใช่ แต่เจ้าของภาษาไม่พูด เช่น "Yes, I am Tom." แทน "This is Tom."  —  เลือกที่<u>ฟังเป็นธรรมชาติ</u></p>
+        </div>
+        <div class="emoji">✨</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2 · SCENARIOS -->
+<section>
+  <div class="container">
+    <div class="sec-head">
+      <div>
+        <div class="sec-num">§ 02 — SCENARIOS</div>
+        <h2><span class="sw">6 ฉาก</span> ที่ข้อสอบวนไปวนมา</h2>
+      </div>
+      <p class="sec-desc">กดแท็บเพื่อดูบทสนทนาตัวอย่าง + คลังวลีที่ต้องจำให้ได้ แต่ละฉากเจอในข้อสอบจริงเกือบทุกปี</p>
+    </div>
+
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" data-tab="t1"><span class="tb-em">👋</span>Greetings</button>
+      <button class="tab-btn" data-tab="t2"><span class="tb-em">🙏</span>Apology & Thanks</button>
+      <button class="tab-btn" data-tab="t3"><span class="tb-em">🤝</span>Requests & Offers</button>
+      <button class="tab-btn" data-tab="t4"><span class="tb-em">🎉</span>Invitations</button>
+      <button class="tab-btn" data-tab="t5"><span class="tb-em">🍜</span>Restaurant</button>
+      <button class="tab-btn" data-tab="t6"><span class="tb-em">🗺️</span>Directions</button>
+    </div>
+
+    <div class="tab-panels">
+      <!-- Greetings -->
+      <div class="panel active" id="t1">
+        <div class="panel-grid">
+          <div class="dialogue">
+            <h4>ตัวอย่างบทสนทนา — Small Talk</h4>
+            <div class="line"><span class="who">A:</span><div class="utter">Hi, how's it going?<span class="th">เป็นไงบ้าง</span></div></div>
+            <div class="line"><span class="who b">B:</span><div class="utter">Pretty good, thanks. And you?<span class="th">ก็ดีนะ ขอบคุณ แล้วเธอล่ะ</span></div></div>
+            <div class="line"><span class="who">A:</span><div class="utter">Can't complain. Long time no see!<span class="th">ไม่มีอะไรให้บ่น นานๆ เจอกันที</span></div></div>
+            <div class="line"><span class="who b">B:</span><div class="utter">Yeah, it's been ages. What have you been up to?<span class="th">ใช่ นานมากแล้ว ช่วงนี้ทำอะไรอยู่</span></div></div>
+          </div>
+          <div class="phrasebox">
+            <h4>Must-know phrases</h4>
+            <div class="phrase-row"><span class="eng">How's it going?</span><span class="thai">เป็นไงบ้าง</span></div>
+            <div class="phrase-row"><span class="eng">Long time no see.</span><span class="thai">ไม่ได้เจอกันนานเลย</span></div>
+            <div class="phrase-row"><span class="eng">What's up?</span><span class="thai">เป็นไงบ้าง (กันเอง)</span></div>
+            <div class="phrase-row"><span class="eng">Not much, you?</span><span class="thai">ไม่มีอะไร เธอล่ะ</span></div>
+            <div class="phrase-row"><span class="eng">Nice to meet you.</span><span class="thai">ยินดีที่ได้รู้จัก</span></div>
+            <div class="phrase-row"><span class="eng">Likewise. / Same here.</span><span class="thai">เช่นกัน</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Apology & Thanks -->
+      <div class="panel" id="t2">
+        <div class="panel-grid">
+          <div class="dialogue">
+            <h4>ตัวอย่างบทสนทนา — Sorry, My Bad</h4>
+            <div class="line"><span class="who">A:</span><div class="utter">I'm so sorry I broke your mug.<span class="th">ขอโทษจริงๆ ที่ทำแก้วแตก</span></div></div>
+            <div class="line"><span class="who b">B:</span><div class="utter">Never mind, it happens.<span class="th">ไม่เป็นไร มันเกิดขึ้นได้</span></div></div>
+            <div class="line"><span class="who">A:</span><div class="utter">Thanks for being so understanding.<span class="th">ขอบคุณที่เข้าใจนะ</span></div></div>
+            <div class="line"><span class="who b">B:</span><div class="utter">Don't mention it.<span class="th">ไม่ต้องพูดถึงเลย</span></div></div>
+          </div>
+          <div class="phrasebox">
+            <h4>Must-know phrases</h4>
+            <div class="phrase-row"><span class="eng">My apologies.</span><span class="thai">ขออภัย (ทางการ)</span></div>
+            <div class="phrase-row"><span class="eng">Never mind. / No worries.</span><span class="thai">ไม่เป็นไร</span></div>
+            <div class="phrase-row"><span class="eng">It's all right.</span><span class="thai">ไม่เป็นไรหรอก</span></div>
+            <div class="phrase-row"><span class="eng">Don't mention it.</span><span class="thai">ไม่ต้องพูดถึงเลย (ตอบขอบคุณ)</span></div>
+            <div class="phrase-row"><span class="eng">My pleasure.</span><span class="thai">ด้วยความยินดี</span></div>
+            <div class="phrase-row"><span class="eng">You're welcome.</span><span class="thai">ด้วยความยินดี (คลาสสิก)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Requests & Offers -->
+      <div class="panel" id="t3">
+        <div class="panel-grid">
+          <div class="dialogue">
+            <h4>ตัวอย่างบทสนทนา — Can you help?</h4>
+            <div class="line"><span class="who">A:</span><div class="utter">Could you pass me the salt, please?<span class="th">ช่วยส่งเกลือให้หน่อยได้ไหม</span></div></div>
+            <div class="line"><span class="who b">B:</span><div class="utter">Sure, here you are.<span class="th">ได้เลย นี่ครับ</span></div></div>
+            <div class="line"><span class="who">A:</span><div class="utter">Would you like some coffee?<span class="th">รับกาแฟไหม</span></div></div>
+            <div class="line"><span class="who b">B:</span><div class="utter">Yes, I'd love some. Thanks!<span class="th">เอาสิ ขอบคุณนะ</span></div></div>
+          </div>
+          <div class="phrasebox">
+            <h4>Must-know phrases</h4>
+            <div class="phrase-row"><span class="eng">Could you…, please?</span><span class="thai">ช่วย…หน่อยได้ไหม (สุภาพ)</span></div>
+            <div class="phrase-row"><span class="eng">Would you mind + V-ing?</span><span class="thai">รังเกียจจะ…ไหม</span></div>
+            <div class="phrase-row"><span class="eng">No, not at all.</span><span class="thai">ไม่เลย (ยินดีช่วย)</span></div>
+            <div class="phrase-row"><span class="eng">Would you like…?</span><span class="thai">รับ…ไหม</span></div>
+            <div class="phrase-row"><span class="eng">Yes, I'd love some.</span><span class="thai">เอา / ดีเลย (ของ)</span></div>
+            <div class="phrase-row"><span class="eng">Yes, I'd love to.</span><span class="thai">ดีเลย (ไปทำ)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Invitations -->
+      <div class="panel" id="t4">
+        <div class="panel-grid">
+          <div class="dialogue">
+            <h4>ตัวอย่างบทสนทนา — Let's Hang Out</h4>
+            <div class="line"><span class="who">A:</span><div class="utter">How about going to the movies tonight?<span class="th">ไปดูหนังกันคืนนี้เป็นไง</span></div></div>
+            <div class="line"><span class="who b">B:</span><div class="utter">That sounds great! What time?<span class="th">เยี่ยมเลย กี่โมง</span></div></div>
+            <div class="line"><span class="who">A:</span><div class="utter">Why don't we meet at seven?<span class="th">เจอกันเจ็ดโมงเย็นดีไหม</span></div></div>
+            <div class="line"><span class="who b">B:</span><div class="utter">I'd love to, but I have to work late.<span class="th">อยากไปนะ แต่ต้องทำงานดึก</span></div></div>
+          </div>
+          <div class="phrasebox">
+            <h4>Must-know phrases</h4>
+            <div class="phrase-row"><span class="eng">How about + V-ing?</span><span class="thai">…เป็นไง</span></div>
+            <div class="phrase-row"><span class="eng">Why don't we…?</span><span class="thai">ทำไมเราไม่…</span></div>
+            <div class="phrase-row"><span class="eng">Shall we…?</span><span class="thai">ไหม (ชวนแบบสุภาพ)</span></div>
+            <div class="phrase-row"><span class="eng">That sounds great.</span><span class="thai">เยี่ยมไปเลย (ตอบรับ)</span></div>
+            <div class="phrase-row"><span class="eng">I'd love to, but…</span><span class="thai">อยากไปนะ แต่… (ปฏิเสธสุภาพ)</span></div>
+            <div class="phrase-row"><span class="eng">Sorry, I can't make it.</span><span class="thai">ขอโทษ ไปไม่ได้</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Restaurant -->
+      <div class="panel" id="t5">
+        <div class="panel-grid">
+          <div class="dialogue">
+            <h4>ตัวอย่างบทสนทนา — Eating Out</h4>
+            <div class="line"><span class="who">A:</span><div class="utter">Are you ready to order?<span class="th">พร้อมสั่งหรือยัง</span></div></div>
+            <div class="line"><span class="who b">B:</span><div class="utter">Yes, I'll have the steak, medium rare.<span class="th">ค่ะ ขอสเต๊ก สุกกลางเลือด</span></div></div>
+            <div class="line"><span class="who">A:</span><div class="utter">Anything to drink?<span class="th">รับเครื่องดื่มอะไรดี</span></div></div>
+            <div class="line"><span class="who b">B:</span><div class="utter">Just water, thanks. Could we have the check, please?<span class="th">ขอแค่น้ำเปล่าพอค่ะ ขอเช็คบิลด้วยนะ</span></div></div>
+          </div>
+          <div class="phrasebox">
+            <h4>Must-know phrases</h4>
+            <div class="phrase-row"><span class="eng">Are you ready to order?</span><span class="thai">พร้อมสั่งหรือยัง</span></div>
+            <div class="phrase-row"><span class="eng">I'll have the…</span><span class="thai">ขอ… (สั่งอาหาร)</span></div>
+            <div class="phrase-row"><span class="eng">What do you recommend?</span><span class="thai">มีอะไรแนะนำ</span></div>
+            <div class="phrase-row"><span class="eng">How would you like it?</span><span class="thai">เอาแบบไหน (สเต๊ก, ไข่)</span></div>
+            <div class="phrase-row"><span class="eng">Check / Bill, please.</span><span class="thai">เช็คบิลด้วย</span></div>
+            <div class="phrase-row"><span class="eng">It's on me.</span><span class="thai">เดี๋ยวเราเลี้ยงเอง</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Directions -->
+      <div class="panel" id="t6">
+        <div class="panel-grid">
+          <div class="dialogue">
+            <h4>ตัวอย่างบทสนทนา — Lost on the Street</h4>
+            <div class="line"><span class="who">A:</span><div class="utter">Excuse me, could you tell me the way to the station?<span class="th">ขอโทษค่ะ ช่วยบอกทางไปสถานีหน่อยได้ไหม</span></div></div>
+            <div class="line"><span class="who b">B:</span><div class="utter">Sure. Go straight, then turn left at the corner.<span class="th">ได้ค่ะ เดินตรงไป เลี้ยวซ้ายตรงมุมถนน</span></div></div>
+            <div class="line"><span class="who">A:</span><div class="utter">Is it far from here?<span class="th">ไกลจากตรงนี้ไหม</span></div></div>
+            <div class="line"><span class="who b">B:</span><div class="utter">No, it's just a five-minute walk.<span class="th">ไม่ แค่เดินห้านาที</span></div></div>
+          </div>
+          <div class="phrasebox">
+            <h4>Must-know phrases</h4>
+            <div class="phrase-row"><span class="eng">Could you tell me the way to…?</span><span class="thai">บอกทางไป…หน่อย</span></div>
+            <div class="phrase-row"><span class="eng">How do I get to…?</span><span class="thai">ไป…ยังไง</span></div>
+            <div class="phrase-row"><span class="eng">Go straight / Turn left/right.</span><span class="thai">ตรงไป / เลี้ยวซ้าย/ขวา</span></div>
+            <div class="phrase-row"><span class="eng">It's on your right.</span><span class="thai">อยู่ทางขวามือ</span></div>
+            <div class="phrase-row"><span class="eng">I'm a stranger here too.</span><span class="thai">ผมก็ไม่ใช่คนแถวนี้ (ไม่รู้)</span></div>
+            <div class="phrase-row"><span class="eng">You can't miss it.</span><span class="thai">มองพลาดไม่ได้หรอก</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3 · FLASHCARDS -->
+<section>
+  <div class="container">
+    <div class="sec-head">
+      <div>
+        <div class="sec-num">§ 03 — FLASHCARDS</div>
+        <h2>ท่อง <span class="sw">คู่ตอบ-ไม่ตอบ</span> วลีสุดคลาสสิก</h2>
+      </div>
+      <p class="sec-desc">คลิกที่การ์ดเพื่อพลิกดูคำตอบที่เป็นธรรมชาติที่สุด — กด Next เพื่อไปการ์ดถัดไป</p>
+    </div>
+
+    <div class="flash-wrap">
+      <div style="width:min(520px,100%);">
+        <div class="flashcard" id="flashcard">
+          <div class="flash-inner">
+            <div class="flash-face flash-front">
+              <div class="flash-hint-top">Prompt · คลิกเพื่อดูคำตอบ</div>
+              <div class="flash-content" id="flash-q"></div>
+              <div class="flash-hint-bot">↻ TAP TO FLIP</div>
+            </div>
+            <div class="flash-face flash-back">
+              <div class="flash-hint-top">Natural Reply</div>
+              <div class="flash-content en" id="flash-a"></div>
+              <div class="flash-hint-bot" id="flash-note"></div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-controls">
+          <button class="flash-btn" id="prevCard">← PREV</button>
+          <div class="flash-count" id="flashCount">1 / 6</div>
+          <button class="flash-btn" id="nextCard">NEXT →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4 · QUIZ -->
+<section>
+  <div class="container">
+    <div class="sec-head">
+      <div>
+        <div class="sec-num">§ 04 — MISSION QUIZ</div>
+        <h2>ลงสนาม: <span class="sw">7 ข้อ</span> แนว ก.พ. ของจริง</h2>
+      </div>
+      <p class="sec-desc">เลือกคำตอบได้ข้อละ 1 ครั้ง ระบบจะแสดงเฉลย + เหตุผลทันที สุดท้ายรวมคะแนนให้</p>
+    </div>
+
+    <div class="quiz-intro">
+      <div>
+        <h3>🎯 Your Mission</h3>
+        <p>ทำให้ได้ 5/7 ขึ้นไป = แปลว่าในห้องสอบจริง น่าจะเก็บ 4–5 ข้อใน 5 ข้อสบายๆ</p>
+      </div>
+      <div class="quiz-badge" id="progress">0 / 7</div>
+    </div>
+
+    <div id="quiz"></div>
+
+    <div class="result" id="result">
+      <h3>🏁 Mission Complete</h3>
+      <div class="score-big"><span id="score">0</span><span class="total">/7</span></div>
+      <p class="msg" id="resultMsg">—</p>
+      <button class="btn-reset" id="resetBtn">↻ ลองอีกครั้ง</button>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5 · HOMEWORK -->
+<section style="border-bottom:none;">
+  <div class="container">
+    <div class="sec-head">
+      <div>
+        <div class="sec-num">§ 05 — DAILY MISSION</div>
+        <h2>สรุป + <span class="sw">การบ้าน</span> ของวันนี้</h2>
+      </div>
+      <p class="sec-desc">ทำตามนี้ได้ภายใน 60–90 นาที — ถ้าวันไหนเวลาน้อย ข้ามไปทำแค่ ★ ก็พอ</p>
+    </div>
+
+    <div class="hw">
+      <div class="hw-left">
+        <h3>📝 วันนี้เราเรียนอะไรไปบ้าง</h3>
+        <ul>
+          <li>4 เทคนิคลับในการตัดตัวเลือก Conversation</li>
+          <li>6 ฉากที่ออกสอบบ่อย พร้อม phrasebook ครบชุด</li>
+          <li>คู่ Q &amp; A ที่เจ้าของภาษาใช้จริง (ไม่ใช่แปลตรงๆ)</li>
+          <li>ฝึกทำโจทย์ 7 ข้อ + เฉลยพร้อมเหตุผล</li>
+        </ul>
+      </div>
+      <div class="hw-right">
+        <h3>🎯 การบ้านพรุ่งนี้</h3>
+        <ul>
+          <li class="star">ท่อง phrasebook ซ้ำ 15 นาที — เน้นกลุ่ม Mind / Requests</li>
+          <li class="star">ทำ Quiz ด้านบนซ้ำให้ได้ 7/7 โดยไม่ดูเฉลย</li>
+          <li>หา 1 คลิป YouTube "English conversation for beginners" ดู 5 นาที แล้วจดวลีใหม่ 5 วลี</li>
+          <li>ลองแต่งบทสนทนาของตัวเอง 1 ฉาก (4–6 บรรทัด) ในหัวข้อ "ที่ทำงาน"</li>
+          <li>พรุ่งนี้มารบพาร์ท <em style="color:var(--mustard); font-family:'Fraunces',serif;">Vocabulary</em> กันต่อ — คุ้มกว่าเยอะเพราะ 10 ข้อ!</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="sig">Keep grinding — สอบ ก.พ. ไม่ได้วัดคนฉลาดที่สุด มันวัดคนที่ซ้อมบ่อยที่สุด.</div>
+    <div>CONVERSATION BOOTCAMP · BUILT FOR FUTURE CIVIL SERVANTS</div>
+  </div>
+</footer>
+
+<script>
+// ===== TABS =====
+const tabBtns = document.querySelectorAll('.tab-btn');
+const panels = document.querySelectorAll('.panel');
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    tabBtns.forEach(b => b.classList.remove('active'));
+    panels.forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ===== FLASHCARDS =====
+const flashcards = [
+  { q: "I'm really sorry I'm late.", a: "Never mind, it happens.", note: "Never mind / No worries = สุภาพ ใช้ได้ทั่วไป" },
+  { q: "Would you like some tea?", a: "Yes, I'd love some.", note: "ของกิน/ดื่ม → love some · ถ้าไปทำกิจกรรม → love to" },
+  { q: "Do you mind if I sit here?", a: "No, not at all.", note: "Do you mind → No = อนุญาต / Yes = ไม่อนุญาต" },
+  { q: "Thanks a lot for your help.", a: "Don't mention it.", note: "คลังคำตอบ: You're welcome / My pleasure / Any time" },
+  { q: "How about grabbing lunch?", a: "That sounds great!", note: "เสียง natural สุดเวลาตอบรับชวน" },
+  { q: "Could you tell me the way to the post office?", a: "Sorry, I'm a stranger here too.", note: "ทริค: ถ้าไม่รู้ ก็ตอบแบบสุภาพ ไม่ต้องตอบเนื้อหา" },
+];
+let flashIndex = 0;
+const flashcard = document.getElementById('flashcard');
+const flashQ = document.getElementById('flash-q');
+const flashA = document.getElementById('flash-a');
+const flashNote = document.getElementById('flash-note');
+const flashCount = document.getElementById('flashCount');
+
+function renderFlash() {
+  flashcard.classList.remove('flipped');
+  setTimeout(() => {
+    flashQ.textContent = '"' + flashcards[flashIndex].q + '"';
+    flashA.textContent = '"' + flashcards[flashIndex].a + '"';
+    flashNote.textContent = flashcards[flashIndex].note;
+    flashCount.textContent = (flashIndex + 1) + ' / ' + flashcards.length;
+  }, 150);
+}
+flashcard.addEventListener('click', () => flashcard.classList.toggle('flipped'));
+document.getElementById('nextCard').addEventListener('click', (e) => {
+  e.stopPropagation();
+  flashIndex = (flashIndex + 1) % flashcards.length;
+  renderFlash();
+});
+document.getElementById('prevCard').addEventListener('click', (e) => {
+  e.stopPropagation();
+  flashIndex = (flashIndex - 1 + flashcards.length) % flashcards.length;
+  renderFlash();
+});
+renderFlash();
+
+// ===== QUIZ =====
+const quizData = [
+  {
+    prompt: [
+      { spk: "A", text: "I'm sorry, I broke your favorite mug." },
+      { spk: "B", text: "____________", blank: true }
+    ],
+    choices: [
+      "You're welcome.",
+      "Never mind, it happens.",
+      "Don't say that, please.",
+      "Yes, you did.",
+    ],
+    correct: 1,
+    explain: "คำขอโทษต้องตอบแบบ ปลอบ/ยกโทษ → 'Never mind, it happens.' เป็นสูตรสุภาพตลอดกาล ส่วน 'You're welcome.' ใช้ตอบ 'Thank you' ไม่ใช่ 'Sorry'"
+  },
+  {
+    prompt: [
+      { spk: "A", text: "Would you like some coffee?" },
+      { spk: "B", text: "____________", blank: true }
+    ],
+    choices: [
+      "Yes, I'd love to.",
+      "Yes, I do.",
+      "Yes, I'd love some.",
+      "Yes, please do.",
+    ],
+    correct: 2,
+    explain: "'Would you like some + ของ' → ตอบด้วย 'love SOME' (ของ) · ถ้าเป็น 'Would you like to + V' ถึงจะตอบ 'love TO' (กริยา) — จำกฎ some = some, to = to"
+  },
+  {
+    prompt: [
+      { spk: "A", text: "Do you mind if I open the window?" },
+      { spk: "B", text: "____________ It's a bit stuffy in here.", blank: true }
+    ],
+    choices: [
+      "Yes, please.",
+      "No, not at all.",
+      "Yes, I do.",
+      "OK, I mind.",
+    ],
+    correct: 1,
+    explain: "'Do you mind…?' แปลว่า 'คุณรังเกียจมั้ย' — ถ้า ไม่รังเกียจ = อนุญาต ต้องตอบ 'No' · Trick 02 ของพี่ พูดไว้แล้ว ❤️"
+  },
+  {
+    prompt: [
+      { spk: "A", text: "How about going to the cinema tonight?" },
+      { spk: "B", text: "____________ What shall we see?", blank: true }
+    ],
+    choices: [
+      "I'm sounds great.",
+      "Yes, I do that.",
+      "No, thank you.",
+      "That sounds great!",
+    ],
+    correct: 3,
+    explain: "'How about + V-ing' = ชวน → ตอบรับด้วย 'That sounds great / good / fun' · ส่วน 'I'm sounds great' ผิดไวยากรณ์ 100%"
+  },
+  {
+    prompt: [
+      { spk: "A", text: "Hello, this is Tom. Could I speak to Mary, please?" },
+      { spk: "B", text: "____________", blank: true }
+    ],
+    choices: [
+      "Yes, I am Tom.",
+      "Mary is speaking now.",
+      "Hold on a moment, please. I'll get her.",
+      "She's busy, goodbye.",
+    ],
+    correct: 2,
+    explain: "ฉาก = โทรศัพท์ (signal: 'this is', 'speak to') · คำตอบคลาสสิกคือ 'Hold on…' · 'I am Tom' ไม่ใช้ในโทรศัพท์ (ใช้ 'This is Tom') · 'She's busy, goodbye' หยาบเกินไป"
+  },
+  {
+    prompt: [
+      { spk: "A", text: "Your presentation was fantastic!" },
+      { spk: "B", text: "____________", blank: true }
+    ],
+    choices: [
+      "No, it wasn't.",
+      "Thank you. I'm glad you liked it.",
+      "Yes, I know.",
+      "Don't say that.",
+    ],
+    correct: 1,
+    explain: "รับคำชมแบบสุภาพ = ขอบคุณก่อนเสมอ · 'No, it wasn't' ถ่อมเกิน (เหมือนเถียง) · 'Yes, I know' หยิ่งไป · 'Don't say that' ปฏิเสธคำชม ไม่ natural"
+  },
+  {
+    prompt: [
+      { spk: "A", text: "Excuse me, could you tell me the way to the train station?" },
+      { spk: "B", text: "____________", blank: true }
+    ],
+    choices: [
+      "No problem at all.",
+      "You must go now.",
+      "Sorry, I'm a stranger here too.",
+      "It's my pleasure.",
+    ],
+    correct: 2,
+    explain: "ถามทาง → คำตอบต้องเป็น (1) บอกทาง หรือ (2) บอกว่าไม่รู้อย่างสุภาพ · 'I'm a stranger here too' = ผมก็ไม่ใช่คนแถวนี้ · 'No problem' ใช้ตอบเวลาคนขอบคุณ/ขอโทษ ไม่ใช่ถามทาง"
+  },
+];
+
+const quizContainer = document.getElementById('quiz');
+const progressEl = document.getElementById('progress');
+const resultEl = document.getElementById('result');
+const scoreEl = document.getElementById('score');
+const resultMsg = document.getElementById('resultMsg');
+
+let answered = 0;
+let score = 0;
+
+function renderQuiz() {
+  quizContainer.innerHTML = '';
+  answered = 0;
+  score = 0;
+  progressEl.textContent = `0 / ${quizData.length}`;
+  resultEl.classList.remove('show');
+
+  quizData.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    const promptHtml = q.prompt.map(p => {
+      const spkClass = p.spk === 'A' ? 'spk a' : 'spk';
+      const text = p.blank ? `<span class="blank">?</span>` : p.text;
+      return `<div><span class="${spkClass}">${p.spk}:</span>${text}</div>`;
+    }).join('');
+
+    card.innerHTML = `
+      <div class="q-head">
+        <div class="q-num">${String(qi + 1).padStart(2, '0')}</div>
+        <div class="q-text">${promptHtml}</div>
+      </div>
+      <div class="choices" data-qi="${qi}">
+        ${q.choices.map((c, ci) => `
+          <button class="choice" data-ci="${ci}">
+            <span class="letter">${String.fromCharCode(65 + ci)}</span>
+            <span>${c}</span>
+          </button>
+        `).join('')}
+      </div>
+      <div class="explain" id="exp-${qi}"><strong>เฉลย:</strong> ${q.explain}</div>
+    `;
+    quizContainer.appendChild(card);
+  });
+
+  // Bind
+  document.querySelectorAll('.choices').forEach(group => {
+    group.addEventListener('click', (e) => {
+      const btn = e.target.closest('.choice');
+      if (!btn || btn.classList.contains('locked')) return;
+      const qi = parseInt(group.dataset.qi);
+      const ci = parseInt(btn.dataset.ci);
+      const correctIdx = quizData[qi].correct;
+
+      // Lock all
+      group.querySelectorAll('.choice').forEach(c => c.classList.add('locked'));
+
+      if (ci === correctIdx) {
+        btn.classList.add('correct');
+        score++;
+      } else {
+        btn.classList.add('wrong');
+        // Reveal correct
+        group.querySelector(`.choice[data-ci="${correctIdx}"]`).classList.add('reveal-correct');
+      }
+
+      document.getElementById(`exp-${qi}`).classList.add('show');
+      answered++;
+      progressEl.textContent = `${answered} / ${quizData.length}`;
+
+      if (answered === quizData.length) {
+        setTimeout(showResult, 400);
+      }
+    });
+  });
+}
+
+function showResult() {
+  scoreEl.textContent = score;
+  let msg = '';
+  if (score === 7) msg = "🔥 เทพแล้ว! ไปพาร์ทถัดไปได้เลย Conversation คุณรอดแน่";
+  else if (score >= 5) msg = "💪 ดีมาก! ถ้าในสนามสอบได้เท่านี้ ผ่านฉลุยแน่";
+  else if (score >= 3) msg = "✏️ ไปได้สวย แต่ต้องกลับไปท่อง phrasebook อีกนิด — เน้นกลุ่ม Mind กับ Requests";
+  else msg = "🌱 ไม่เป็นไร ทุกคนเริ่มจากศูนย์ · พี่แนะนำให้ไล่ดู flashcard ซ้ำ + ท่อง 6 ฉากด้านบน แล้วกลับมา quiz อีกครั้งนะ";
+  resultMsg.textContent = msg;
+  resultEl.classList.add('show');
+  resultEl.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  renderQuiz();
+  document.getElementById('quiz').scrollIntoView({behavior:'smooth', block:'start'});
+});
+
+renderQuiz();
+</script>
+
+</body>
+</html>

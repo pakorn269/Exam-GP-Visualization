@@ -1,0 +1,372 @@
+
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font-sans)}
+  .wrap{padding:1.5rem 0;max-width:680px}
+  .hero{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:1.25rem 1.5rem;margin-bottom:1.5rem;border:0.5px solid var(--color-border-tertiary)}
+  .hero h1{font-size:20px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+  .hero p{font-size:14px;color:var(--color-text-secondary);line-height:1.6}
+  .badge{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;margin-right:6px;margin-bottom:6px}
+  .badge-teal{background:#E1F5EE;color:#0F6E56}
+  .badge-amber{background:#FAEEDA;color:#854F0B}
+  .badge-purple{background:#EEEDFE;color:#3C3489}
+  .section-label{font-size:11px;font-weight:500;letter-spacing:.06em;color:var(--color-text-secondary);text-transform:uppercase;margin-bottom:.75rem}
+  .card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem;margin-bottom:1rem}
+  .tip-box{background:#EEEDFE;border-left:3px solid #534AB7;border-radius:0 var(--border-radius-md) var(--border-radius-md) 0;padding:1rem 1.25rem;margin-bottom:1rem}
+  .tip-box p{font-size:14px;color:#26215C;line-height:1.7}
+  .tip-box .tip-title{font-size:13px;font-weight:500;color:#3C3489;margin-bottom:4px}
+  .passage-box{background:var(--color-background-secondary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:1rem 1.25rem;font-size:14px;line-height:1.9;color:var(--color-text-primary);margin-bottom:1rem}
+  .passage-box .sent-num{font-size:11px;font-weight:500;color:var(--color-text-secondary);margin-right:4px}
+  .q-block{margin-bottom:1.25rem}
+  .q-block .q-text{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:.5rem;line-height:1.6}
+  .opt{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;border-radius:var(--border-radius-md);cursor:pointer;font-size:13.5px;line-height:1.5;color:var(--color-text-primary);border:0.5px solid var(--color-border-tertiary);margin-bottom:6px;transition:background .15s}
+  .opt:hover{background:var(--color-background-secondary)}
+  .opt.selected{border-color:#534AB7;background:#EEEDFE;color:#26215C}
+  .opt.correct{border-color:#0F6E56;background:#E1F5EE;color:#04342C}
+  .opt.wrong{border-color:#993C1D;background:#FAECE7;color:#4A1B0C}
+  .opt-key{font-weight:500;min-width:18px;font-size:13px}
+  .btn{display:inline-flex;align-items:center;gap:6px;background:transparent;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:8px 18px;font-size:13.5px;font-weight:500;color:var(--color-text-primary);cursor:pointer;transition:background .15s}
+  .btn:hover{background:var(--color-background-secondary)}
+  .btn:active{transform:scale(.98)}
+  .btn-primary{background:#534AB7;color:#fff;border-color:#534AB7}
+  .btn-primary:hover{background:#3C3489}
+  .result-box{border-radius:var(--border-radius-md);padding:1rem 1.25rem;font-size:14px;line-height:1.7;display:none;margin-top:.75rem}
+  .result-correct{background:#E1F5EE;border:0.5px solid #5DCAA5;color:#04342C}
+  .result-wrong{background:#FAECE7;border:0.5px solid #F0997B;color:#4A1B0C}
+  .tab-bar{display:flex;gap:4px;margin-bottom:1.25rem;border-bottom:0.5px solid var(--color-border-tertiary);padding-bottom:0}
+  .tab{padding:8px 16px;font-size:13.5px;color:var(--color-text-secondary);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;font-weight:400;border-radius:0}
+  .tab.active{color:#534AB7;border-bottom-color:#534AB7;font-weight:500}
+  .tab-content{display:none}
+  .tab-content.active{display:block}
+  .score-row{display:flex;gap:12px;margin-bottom:1rem}
+  .score-card{flex:1;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.75rem 1rem;text-align:center}
+  .score-card .sc-num{font-size:22px;font-weight:500;color:var(--color-text-primary)}
+  .score-card .sc-label{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+  .step-grid{display:grid;grid-template-columns:28px 1fr;gap:6px 12px;align-items:start}
+  .step-num{width:28px;height:28px;border-radius:50%;background:#EEEDFE;color:#3C3489;font-size:13px;font-weight:500;display:flex;align-items:center;justify-content:center}
+  .step-text{font-size:14px;color:var(--color-text-primary);line-height:1.6;padding-top:4px}
+  .highlight{background:#FAEEDA;border-radius:3px;padding:1px 4px;color:#412402;font-weight:500}
+  .divider{border:none;border-top:0.5px solid var(--color-border-tertiary);margin:1.25rem 0}
+  .tag-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem}
+</style>
+
+<div class="wrap">
+  <h2 class="sr-only" style="display:none">สื่อการเรียน Reading ภาษาอังกฤษ ก.พ.</h2>
+
+  <div class="hero">
+    <div class="tag-row">
+      <span class="badge badge-purple">ภาษาอังกฤษ</span>
+      <span class="badge badge-teal">Reading</span>
+      <span class="badge badge-amber">5 ข้อ / 10 คะแนน</span>
+    </div>
+    <h1>Reading Masterclass — ก.พ. 69</h1>
+    <p>เรียนรู้ทริคอ่านเร็ว · วิเคราะห์ข้อสอบ · ฝึกทำโจทย์จริง พร้อมเฉลย</p>
+  </div>
+
+  <div class="tab-bar">
+    <div class="tab active" onclick="switchTab('strategy')">กลยุทธ์</div>
+    <div class="tab" onclick="switchTab('types')">ประเภทคำถาม</div>
+    <div class="tab" onclick="switchTab('practice')">แบบฝึกหัด</div>
+    <div class="tab" onclick="switchTab('vocab')">ศัพท์สำคัญ</div>
+  </div>
+
+  <!-- TAB 1: Strategy -->
+  <div class="tab-content active" id="tab-strategy">
+    <div class="section-label">ทริคลับประจำวันนี้</div>
+    <div class="tip-box">
+      <div class="tip-title">🔑 SQRR Method — อ่านเร็วแต่ไม่พลาด</div>
+      <p><strong style="color:#3C3489">S</strong>can คำถามก่อน → <strong style="color:#3C3489">Q</strong>uestion ถามอะไร → <strong style="color:#3C3489">R</strong>ead เฉพาะส่วน → <strong style="color:#3C3489">R</strong>echeck ก่อนตอบ<br>อ่านคำถามก่อนอ่าน passage เสมอ — ประหยัดเวลาได้ 30-40 วินาที!</p>
+    </div>
+
+    <div class="card">
+      <div class="section-label">ขั้นตอน 5 ข้อในเวลา 7 นาที</div>
+      <div class="step-grid">
+        <div class="step-num">1</div><div class="step-text">อ่านคำถามทุกข้อ (ไม่อ่านตัวเลือก) — รู้ว่าต้องหาอะไร <span class="highlight">~1 นาที</span></div>
+        <div class="step-num">2</div><div class="step-text">อ่าน passage บรรทัดแรก–ท้ายของแต่ละย่อหน้า (skim) — จับ structure <span class="highlight">~1 นาที</span></div>
+        <div class="step-num">3</div><div class="step-text">ตอบ Main Idea / Title ก่อน — มักอยู่ในย่อหน้าแรก <span class="highlight">~1 นาที</span></div>
+        <div class="step-num">4</div><div class="step-text">หาคำตอบ Detail questions โดย scan หา keyword จากคำถาม <span class="highlight">~3 นาที</span></div>
+        <div class="step-num">5</div><div class="step-text">ข้อ Inference/Vocabulary — ใช้บริบทรอบข้าง อย่าพึ่งความรู้ล้วน ๆ <span class="highlight">~1 นาที</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">罠 กับดักที่ออกสอบบ่อย</div>
+      <div style="display:grid;gap:10px">
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <span style="font-size:16px;min-width:24px">⚠</span>
+          <div><span style="font-size:13.5px;font-weight:500;color:var(--color-text-primary)">Almost True Trap</span><br><span style="font-size:13px;color:var(--color-text-secondary)">ตัวเลือกที่ "ถูกเกือบทั้งหมด" แต่มีคำ 1-2 คำผิด เช่น "always" / "never" / "all" — มักเป็นตัวเลือก distracter</span></div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <span style="font-size:16px;min-width:24px">⚠</span>
+          <div><span style="font-size:13.5px;font-weight:500;color:var(--color-text-primary)">Synonym Swap</span><br><span style="font-size:13px;color:var(--color-text-secondary)">เฉลยมักไม่ใช้คำเดิมใน passage แต่เปลี่ยนเป็น synonym — อย่าหาคำเหมือนกัน 100%</span></div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <span style="font-size:16px;min-width:24px">⚠</span>
+          <div><span style="font-size:13.5px;font-weight:500;color:var(--color-text-primary)">Out of Scope</span><br><span style="font-size:13px;color:var(--color-text-secondary)">ตัวเลือกที่ดูถูกแต่ passage ไม่ได้พูดถึง — ข้อ Inference ต้องอ้างอิงได้จาก text เท่านั้น</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: Question Types -->
+  <div class="tab-content" id="tab-types">
+    <div class="section-label">ประเภทคำถาม Reading ก.พ. (5 แบบหลัก)</div>
+    <div id="type-cards"></div>
+    <button class="btn" onclick="sendPrompt('ช่วยออกตัวอย่างโจทย์ Reading แบบ Inference ให้ฝึกหน่อยได้ไหม')">ขอตัวอย่างโจทย์ Inference เพิ่มเติม ↗</button>
+  </div>
+
+  <!-- TAB 3: Practice -->
+  <div class="tab-content" id="tab-practice">
+    <div class="section-label">แบบฝึกหัด — Passage 1</div>
+    <div class="passage-box" id="passage-text"></div>
+    <div id="questions-container"></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:1rem">
+      <button class="btn btn-primary" onclick="checkAll()">ตรวจคำตอบทั้งหมด</button>
+      <button class="btn" onclick="resetAll()">เริ่มใหม่</button>
+    </div>
+    <div id="score-summary" style="display:none;margin-top:1rem">
+      <div class="score-row" id="score-row"></div>
+      <div class="card" id="score-feedback"></div>
+    </div>
+  </div>
+
+  <!-- TAB 4: Vocab -->
+  <div class="tab-content" id="tab-vocab">
+    <div class="section-label">คำศัพท์ Reading ที่ออกบ่อย</div>
+    <div class="tip-box">
+      <div class="tip-title">ทริคจำ: จัดกลุ่มตาม "หน้าที่ในประโยค"</div>
+      <p>แทนที่จะจำทีละคำ ให้จำว่า "คำนี้มักบอกอะไร" เช่น คำ signal เพิ่มเติม vs คำ signal ขัดแย้ง</p>
+    </div>
+    <div id="vocab-grid"></div>
+    <hr class="divider">
+    <div class="section-label">Transition Words — ขาดไม่ได้!</div>
+    <div id="transition-grid"></div>
+  </div>
+</div>
+
+<script>
+const types = [
+  {label:"Main Idea / Title",color:"badge-purple",freq:"ออกทุกปี",tip:"มักอยู่ย่อหน้าแรก หรือประโยคสรุปท้าย — ระวัง detail ที่กว้างเกินหรือแคบเกินไป",q:'คำถามที่เจอ: "What is the passage mainly about?" / "The best title for this passage is..."'},
+  {label:"Detail / Fact",color:"badge-teal",freq:"2-3 ข้อ",tip:"หา keyword จากคำถาม แล้ว scan หาใน passage — เฉลยมักใช้ synonym ไม่ใช่คำเดิม",q:'คำถามที่เจอ: "According to the passage..." / "Which of the following is stated..."'},
+  {label:"Inference / Implied",color:"badge-amber",freq:"1-2 ข้อ",tip:"ต้องอ้างอิงได้จาก text — ห้าม assume นอกเหนือข้อมูล ตัวเลือกที่ดูสมเหตุสมผลแต่ passage ไม่ได้บอก = ผิด",q:'คำถามที่เจอ: "It can be inferred that..." / "The author implies..."'},
+  {label:"Vocabulary in Context",color:"badge-purple",freq:"1 ข้อ",tip:"ดูบริบทรอบข้างคำนั้น ไม่ใช่ความหมายทั่วไปของคำ — คำเดียวกันอาจมีความหมายต่างกัน",q:'คำถามที่เจอ: "The word X in line Y is closest in meaning to..."'},
+  {label:"Author\'s Purpose / Tone",color:"badge-teal",freq:"1 ข้อ",tip:"ดูว่าผู้เขียนอยากให้ผู้อ่าน 'รู้สึก' หรือ 'ทำ' อะไร — Informative vs Persuasive vs Critical",q:'คำถามที่เจอ: "The author\'s purpose is to..." / "The tone of the passage is..."'}
+];
+
+const typeContainer = document.getElementById('type-cards');
+types.forEach(t => {
+  const d = document.createElement('div');
+  d.className = 'card';
+  d.style.marginBottom = '10px';
+  d.innerHTML = `<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span class="badge ${t.color}">${t.label}</span><span style="font-size:12px;color:var(--color-text-secondary)">${t.freq}</span></div><p style="font-size:13.5px;color:var(--color-text-primary);line-height:1.6;margin-bottom:6px">${t.tip}</p><p style="font-size:12.5px;color:var(--color-text-secondary);font-style:italic">${t.q}</p>`;
+  typeContainer.appendChild(d);
+});
+
+const passage = `Remote work, once considered a privilege reserved for a select few, has become a mainstream phenomenon following the global disruptions of recent years. Companies worldwide have been forced to reevaluate traditional office-based structures, leading to a fundamental shift in how work is organized and performed. While many employees report higher levels of satisfaction due to increased flexibility and reduced commuting time, organizations face new challenges in maintaining team cohesion and company culture. Studies suggest that productivity among remote workers is generally comparable to—and in some cases exceeds—that of their office-based counterparts, though results vary considerably by industry and individual work style. However, the lack of clear boundaries between personal and professional life remains a significant concern, with many workers reporting difficulty in "switching off" even after working hours.`;
+
+const sentences = passage.split(/(?<=[.!?])\s+/);
+const passageEl = document.getElementById('passage-text');
+sentences.forEach((s, i) => {
+  const span = document.createElement('span');
+  span.innerHTML = `<span class="sent-num">(${i+1})</span>${s} `;
+  passageEl.appendChild(span);
+});
+
+const questions = [
+  {
+    id: 0,
+    text: "1. What is the passage mainly about?",
+    opts: [
+      "The reasons why companies prefer remote work over office work",
+      "The widespread adoption and challenges of remote working",
+      "How remote work increases employee productivity",
+      "The negative effects of working from home on mental health"
+    ],
+    answer: 1,
+    explain: "Passage พูดถึงภาพรวมทั้งหมดของ remote work — การแพร่หลาย (mainstream), ผลดีต่อพนักงาน, ความท้าทายขององค์กร และปัญหาขอบเขตชีวิต ตัวเลือก A, C, D พูดถึงแค่ด้านใดด้านหนึ่งเท่านั้น"
+  },
+  {
+    id: 1,
+    text: "2. According to the passage, which of the following is TRUE about remote workers?",
+    opts: [
+      "They always produce better results than office workers",
+      "They often struggle to separate work from personal life",
+      "They universally prefer remote work to office environments",
+      "Their productivity has been proven to be lower than office workers"
+    ],
+    answer: 1,
+    explain: "ประโยค (5): 'many workers reporting difficulty in \"switching off\"' ตรงกับตัวเลือก B โดยตรง ตัวเลือก A ผิดเพราะ passage บอกว่า 'in some cases' ไม่ใช่ 'always'"
+  },
+  {
+    id: 2,
+    text: "3. The word 'counterparts' (sentence 4) is closest in meaning to:",
+    opts: [
+      "supervisors",
+      "competitors",
+      "equivalents",
+      "colleagues in the same team"
+    ],
+    answer: 2,
+    explain: "'Counterparts' = คู่เทียบ/ผู้ที่อยู่ในฐานะเดียวกันในอีกกลุ่ม ใน context นี้คือ office-based workers ที่เทียบกับ remote workers ตัวเลือก C (equivalents) ใกล้เคียงที่สุด"
+  },
+  {
+    id: 3,
+    text: "4. It can be inferred from the passage that remote work:",
+    opts: [
+      "will eventually replace all traditional office environments",
+      "is not suitable for creative industries",
+      "requires organizations to adapt their management approaches",
+      "has been proven to improve work-life balance for all employees"
+    ],
+    answer: 2,
+    explain: "บรรทัด 2-3 บอกว่าองค์กรต้องประเมิน structure ใหม่ และ 'face new challenges' — สรุปได้ว่าต้องปรับวิธีบริหาร ตัวเลือก A/B/D เกินกว่าที่ passage บอก (Out of Scope)"
+  },
+  {
+    id: 4,
+    text: "5. The author's main purpose in writing this passage is to:",
+    opts: [
+      "persuade companies to adopt remote work policies",
+      "criticize employees who cannot manage remote work",
+      "provide a balanced overview of remote work trends",
+      "argue that remote work harms organizational culture"
+    ],
+    answer: 2,
+    explain: "ผู้เขียนนำเสนอทั้งด้านบวก (satisfaction, flexibility, productivity) และด้านลบ (challenges, no clear boundaries) — เป็น tone แบบ informative/balanced ไม่ใช่การ persuade หรือ criticize"
+  }
+];
+
+const container = document.getElementById('questions-container');
+const userAnswers = new Array(questions.length).fill(null);
+
+questions.forEach((q, qi) => {
+  const block = document.createElement('div');
+  block.className = 'q-block';
+  block.innerHTML = `<div class="q-text">${q.text}</div>`;
+  q.opts.forEach((opt, oi) => {
+    const keys = ['A','B','C','D'];
+    const optEl = document.createElement('div');
+    optEl.className = 'opt';
+    optEl.id = `opt-${qi}-${oi}`;
+    optEl.innerHTML = `<span class="opt-key">${keys[oi]}</span><span>${opt}</span>`;
+    optEl.onclick = () => selectOpt(qi, oi);
+    block.appendChild(optEl);
+  });
+  const resultEl = document.createElement('div');
+  resultEl.className = 'result-box';
+  resultEl.id = `result-${qi}`;
+  block.appendChild(resultEl);
+  container.appendChild(block);
+  if(qi < questions.length-1){
+    const hr = document.createElement('hr');
+    hr.className = 'divider';
+    container.appendChild(hr);
+  }
+});
+
+function selectOpt(qi, oi) {
+  if(userAnswers[qi] !== null && document.getElementById(`opt-${qi}-0`).classList.contains('correct')) return;
+  userAnswers[qi] = oi;
+  ['A','B','C','D'].forEach((_,i) => {
+    const el = document.getElementById(`opt-${qi}-${i}`);
+    el.classList.remove('selected','correct','wrong');
+    if(i === oi) el.classList.add('selected');
+  });
+}
+
+function checkAll() {
+  let correct = 0;
+  questions.forEach((q, qi) => {
+    if(userAnswers[qi] === null) return;
+    const keys = ['A','B','C','D'];
+    keys.forEach((_, oi) => {
+      const el = document.getElementById(`opt-${qi}-${oi}`);
+      el.classList.remove('selected','correct','wrong');
+      if(oi === q.answer) el.classList.add('correct');
+      else if(oi === userAnswers[qi]) el.classList.add('wrong');
+    });
+    const res = document.getElementById(`result-${qi}`);
+    const isCorrect = userAnswers[qi] === q.answer;
+    if(isCorrect) correct++;
+    res.className = `result-box ${isCorrect ? 'result-correct' : 'result-wrong'}`;
+    res.style.display = 'block';
+    res.innerHTML = `<strong>${isCorrect ? 'ถูกต้อง!' : 'ผิด — เฉลยคือ ' + keys[q.answer]}</strong><br>${q.explain}`;
+  });
+  const answered = userAnswers.filter(a => a !== null).length;
+  const summary = document.getElementById('score-summary');
+  const scoreRow = document.getElementById('score-row');
+  const feedback = document.getElementById('score-feedback');
+  summary.style.display = 'block';
+  scoreRow.innerHTML = `
+    <div class="score-card"><div class="sc-num">${correct}/${answered}</div><div class="sc-label">ข้อที่ถูก</div></div>
+    <div class="score-card"><div class="sc-num">${Math.round(correct/Math.max(answered,1)*100)}%</div><div class="sc-label">ความแม่นยำ</div></div>
+    <div class="score-card"><div class="sc-num">${answered < questions.length ? questions.length - answered + ' ข้อ' : 'ครบ!'}</div><div class="sc-label">ยังไม่ได้ตอบ</div></div>
+  `;
+  let fb = '';
+  if(correct >= 4) fb = 'เยี่ยมมาก! Reading ส่วนนี้แน่นแล้ว ลองฝึก passage ยาวขึ้นได้เลย';
+  else if(correct >= 3) fb = 'ดีมาก! ลองทบทวนข้อที่ผิดและดูเทคนิค Inference เพิ่มเติม';
+  else if(correct >= 2) fb = 'เริ่มได้แล้ว! แนะนำให้ทบทวน Strategy Tab และฝึก passage ใหม่อีกรอบ';
+  else fb = 'ไม่เป็นไร! ลองกลับไปอ่าน Strategy และประเภทคำถามก่อนทำใหม่นะ';
+  feedback.innerHTML = `<p style="font-size:14px;color:var(--color-text-primary);line-height:1.6">${fb}</p><button class="btn" style="margin-top:.75rem" onclick="sendPrompt('ขอ passage ใหม่สำหรับฝึก Reading ก.พ. อีกรอบได้ไหม')">ขอ Passage ใหม่ฝึกต่อ ↗</button>`;
+}
+
+function resetAll() {
+  userAnswers.fill(null);
+  questions.forEach((_, qi) => {
+    ['A','B','C','D'].forEach((_,oi) => {
+      const el = document.getElementById(`opt-${qi}-${oi}`);
+      el.classList.remove('selected','correct','wrong');
+    });
+    document.getElementById(`result-${qi}`).style.display = 'none';
+  });
+  document.getElementById('score-summary').style.display = 'none';
+}
+
+const vocab = [
+  {word:'fundamental',meaning:'พื้นฐาน, สำคัญมาก',ex:'a fundamental shift in society'},
+  {word:'cohesion',meaning:'ความเกาะกลุ่ม, ความสามัคคี',ex:'team cohesion suffered'},
+  {word:'comparable',meaning:'พอ ๆ กัน, เทียบเท่าได้',ex:'comparable results'},
+  {word:'phenomenon',meaning:'ปรากฏการณ์',ex:'a widespread phenomenon'},
+  {word:'disruption',meaning:'การรบกวน, การขัดขวาง',ex:'global disruptions'},
+  {word:'mainstream',meaning:'กระแสหลัก',ex:'become mainstream'},
+  {word:'considerably',meaning:'อย่างมาก, มากพอสมควร',ex:'results vary considerably'},
+  {word:'reevaluate',meaning:'ประเมินใหม่',ex:'reevaluate their strategy'},
+];
+
+const vocabGrid = document.getElementById('vocab-grid');
+vocabGrid.style.display = 'grid';
+vocabGrid.style.gridTemplateColumns = 'repeat(auto-fit,minmax(260px,1fr))';
+vocabGrid.style.gap = '10px';
+vocabGrid.style.marginBottom = '1rem';
+vocab.forEach(v => {
+  const c = document.createElement('div');
+  c.className = 'card';
+  c.style.padding = '.75rem 1rem';
+  c.innerHTML = `<div style="font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px">${v.word}</div><div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:4px">${v.meaning}</div><div style="font-size:12px;color:var(--color-text-secondary);font-style:italic">"${v.ex}"</div>`;
+  vocabGrid.appendChild(c);
+});
+
+const transitions = [
+  {group:'เพิ่มเติม (Addition)',words:'furthermore, moreover, in addition, additionally, also',color:'badge-teal'},
+  {group:'ขัดแย้ง (Contrast)',words:'however, nevertheless, on the other hand, despite, although',color:'badge-amber'},
+  {group:'ผล (Result)',words:'therefore, consequently, as a result, thus, hence',color:'badge-purple'},
+  {group:'ยกตัวอย่าง (Example)',words:'for instance, for example, such as, including, namely',color:'badge-teal'},
+  {group:'สรุป (Conclusion)',words:'in conclusion, to summarize, overall, in short, ultimately',color:'badge-amber'},
+];
+const tGrid = document.getElementById('transition-grid');
+transitions.forEach(t => {
+  const c = document.createElement('div');
+  c.className = 'card';
+  c.style.marginBottom = '8px';
+  c.innerHTML = `<span class="badge ${t.color}">${t.group}</span><p style="font-size:13.5px;color:var(--color-text-secondary);margin-top:6px;line-height:1.7">${t.words}</p>`;
+  tGrid.appendChild(c);
+});
+
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  const tabs = ['strategy','types','practice','vocab'];
+  const idx = tabs.indexOf(name);
+  document.querySelectorAll('.tab')[idx].classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+}
+</script>

@@ -1,0 +1,480 @@
+
+<h2 id="civil-law-title" class="sr-only">สื่อการสอน พ.ร.บ. มาตรฐานทางจริยธรรม และ พ.ร.บ. ความรับผิดทางละเมิด สำหรับสอบ ก.พ.</h2>
+<style>
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+body{margin:0;background:#0f1410}
+.civil-law-study,.civil-law-study *{box-sizing:border-box}
+.civil-law-study{
+  --ink:#111610;
+  --panel:#182018;
+  --panel-2:#22291f;
+  --paper:#fff7df;
+  --muted:rgba(255,247,223,.72);
+  --line:rgba(255,247,223,.16);
+  --line-strong:rgba(255,247,223,.28);
+  --gold:#ffd166;
+  --mint:#43b89c;
+  --coral:#ff6b5a;
+  --blue:#7ab8ff;
+  --warn:#ffb45f;
+  --danger:#ff7468;
+  --ok:#58d68d;
+  min-height:100vh;
+  padding:clamp(18px,4vw,44px);
+  overflow-x:hidden;
+  color:var(--paper);
+  font-family:"Sarabun","Noto Sans Thai",system-ui,sans-serif;
+  font-size:15px;
+  line-height:1.68;
+  background:
+    radial-gradient(circle at 10% 7%,rgba(67,184,156,.2),transparent 24rem),
+    radial-gradient(circle at 91% 9%,rgba(255,107,90,.17),transparent 23rem),
+    linear-gradient(145deg,#101510,#172018 54%,#251d19);
+}
+.study-shell{max-width:1120px;min-width:0;margin:0 auto}
+.study-hero{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 320px;
+  gap:18px;
+  align-items:stretch;
+  margin-bottom:18px;
+}
+.hero-main,.hero-meter,.study-card,.q-block,.key-card,.std-card,.letter-box{
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:linear-gradient(180deg,rgba(255,247,223,.12),rgba(255,247,223,.045)),rgba(18,24,18,.88);
+  box-shadow:0 22px 70px rgba(0,0,0,.28);
+}
+.hero-main{position:relative;overflow:hidden;min-width:0;padding:28px}
+.hero-main:after{
+  content:"";
+  position:absolute;
+  right:24px;
+  top:22px;
+  width:118px;
+  height:118px;
+  border:1px solid rgba(255,209,102,.2);
+  transform:rotate(9deg);
+}
+.kicker,.section-kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:var(--gold);
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+.hero-title{
+  max-width:720px;
+  margin:12px 0 10px;
+  font-size:clamp(2.25rem,6vw,4.35rem);
+  line-height:1.05;
+  font-weight:800;
+  letter-spacing:0;
+  color:var(--paper);
+  overflow-wrap:anywhere;
+}
+.hero-copy{max-width:680px;color:var(--muted);font-size:16px;margin:0;overflow-wrap:anywhere}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.pill-btn,.reset-btn{
+  min-height:40px;
+  padding:9px 15px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:rgba(255,247,223,.055);
+  color:var(--paper);
+  cursor:pointer;
+  font-weight:800;
+  transition:transform .16s ease,border-color .16s ease,background .16s ease;
+}
+.pill-btn.primary{
+  border-color:transparent;
+  color:#101510;
+  background:linear-gradient(135deg,var(--gold),#ff9f6e);
+  box-shadow:0 14px 34px rgba(255,159,110,.22);
+}
+.pill-btn:hover,.reset-btn:hover{transform:translateY(-2px);border-color:var(--line-strong);background:rgba(255,247,223,.09)}
+.hero-meter{min-width:0;padding:18px}
+.meter-title{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:12px}
+.meter-icon{display:grid;place-items:center;width:44px;height:44px;border:1px solid rgba(67,184,156,.3);border-radius:8px;background:rgba(67,184,156,.12);font-size:23px}
+.meter-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.meter-cell{min-height:78px;padding:12px;border:1px solid var(--line);border-radius:8px;background:rgba(255,247,223,.055)}
+.meter-value{display:block;font-size:25px;font-weight:900;line-height:1;color:var(--paper)}
+.meter-label{display:block;margin-top:8px;color:var(--muted);font-size:12px;font-weight:800}
+.study-card{min-width:0;padding:18px}
+.tabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-bottom:20px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:rgba(255,247,223,.045);
+  padding:5px;
+  position:sticky;
+  top:8px;
+  z-index:5;
+  backdrop-filter:blur(16px);
+}
+.tab-btn{
+  min-height:46px;
+  padding:10px 14px;
+  border:0;
+  border-radius:8px;
+  background:transparent;
+  color:var(--muted);
+  cursor:pointer;
+  font-size:14px;
+  font-weight:900;
+  transition:background .15s,color .15s,box-shadow .15s;
+}
+.tab-btn.active{background:rgba(255,209,102,.14);color:var(--paper);box-shadow:inset 0 -2px 0 var(--gold)}
+.tab-btn:hover:not(.active){background:rgba(255,247,223,.07);color:var(--paper)}
+.section{display:none}.section.active{display:block}
+.section>h3:first-of-type{margin-top:14px}
+.trick-box{
+  background:linear-gradient(135deg,rgba(255,209,102,.12),rgba(255,107,90,.07));
+  border:1px solid rgba(255,209,102,.24);
+  border-left:4px solid var(--gold);
+  border-radius:8px;
+  padding:14px 16px;
+  margin:16px 0;
+  font-size:14px;
+  color:rgba(255,247,223,.88);
+}
+.trick-title{font-size:13px;font-weight:900;color:var(--gold);margin-bottom:6px}
+.standard-grid{display:grid;grid-template-columns:1fr;gap:9px;margin:16px 0}
+.std-card{padding:13px 14px;box-shadow:none}
+.std-num{font-size:11px;font-weight:900;color:var(--gold);margin-bottom:4px;text-transform:uppercase;letter-spacing:.1em}
+.std-text{font-size:13px;line-height:1.6;color:var(--muted)}
+.std-key{font-size:14px;font-weight:900;color:var(--paper)}
+.std-text,.std-key,.key-val,.q-text,.choice-btn,.explain{overflow-wrap:anywhere}
+.mnemonic{display:grid;grid-template-columns:repeat(7,minmax(76px,1fr));gap:8px;margin:16px 0}
+.letter-box{min-height:98px;padding:11px 8px;text-align:center;box-shadow:none}
+.letter{font-size:30px;font-weight:900;color:var(--gold);line-height:1}
+.letter-sub{font-size:11px;color:var(--muted);margin-top:7px;line-height:1.35}
+.law-key-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}
+.key-card{padding:14px;box-shadow:none}
+.key-label{font-size:11px;font-weight:900;color:var(--gold);margin-bottom:5px;text-transform:uppercase;letter-spacing:.08em}
+.key-val{font-size:13px;color:rgba(255,247,223,.88)}
+.flow-row{display:flex;align-items:center;gap:7px;margin:7px 0;font-size:13px;flex-wrap:wrap}
+.flow-box{background:rgba(255,247,223,.065);border:1px solid var(--line);border-radius:8px;padding:7px 11px;white-space:nowrap;color:rgba(255,247,223,.9);font-weight:700}
+.flow-arr{color:var(--muted)}
+.flow-box.hi{background:rgba(122,184,255,.12);color:var(--blue);border-color:rgba(122,184,255,.3)}
+.flow-box.warn{background:rgba(255,180,95,.12);color:var(--warn);border-color:rgba(255,180,95,.3)}
+.flow-box.danger{background:rgba(255,116,104,.12);color:var(--danger);border-color:rgba(255,116,104,.3)}
+.flow-box.success{background:rgba(88,214,141,.12);color:var(--ok);border-color:rgba(88,214,141,.3)}
+.q-block{padding:16px;margin:12px 0;box-shadow:none}
+.q-head{font-size:12px;font-weight:900;color:var(--gold);margin-bottom:8px;letter-spacing:.03em}
+.q-text{font-size:15px;margin-bottom:12px;line-height:1.75;color:var(--paper);font-weight:700}
+.choices{display:grid;gap:8px;margin-bottom:10px}
+.choice-btn{
+  width:100%;
+  text-align:left;
+  padding:11px 13px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:rgba(255,247,223,.045);
+  cursor:pointer;
+  font-size:14px;
+  line-height:1.55;
+  color:rgba(255,247,223,.88);
+  transition:transform .14s ease,border-color .14s ease,background .14s ease;
+}
+.choice-btn:hover:not(:disabled){transform:translateX(3px);background:rgba(255,209,102,.08);border-color:rgba(255,209,102,.34)}
+.choice-btn:disabled{cursor:default}
+.choice-btn.correct{background:rgba(88,214,141,.14);border-color:rgba(88,214,141,.65);color:#b8ffd2}
+.choice-btn.wrong{background:rgba(255,116,104,.13);border-color:rgba(255,116,104,.62);color:#ffc8c2}
+.explain{font-size:13px;background:rgba(255,247,223,.06);border:1px solid var(--line);border-left:4px solid var(--mint);border-radius:8px;padding:11px 12px;margin-top:9px;display:none;line-height:1.75;color:rgba(255,247,223,.88)}
+.explain.show{display:block}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:4px 10px;border-radius:999px;font-weight:900;margin-bottom:8px;border:1px solid var(--line)}
+.badge-blue{background:rgba(122,184,255,.1);color:#b9d9ff;border-color:rgba(122,184,255,.28)}
+.badge-amber{background:rgba(255,180,95,.1);color:#ffd6a9;border-color:rgba(255,180,95,.28)}
+.score-bar{margin:16px 0;padding:13px 14px;background:rgba(67,184,156,.1);border:1px solid rgba(67,184,156,.28);border-radius:8px;font-size:14px;color:#c9ffe8;font-weight:900}
+.reset-btn{margin-top:10px;background:rgba(255,247,223,.05);color:var(--paper)}
+.divider{border:none;border-top:1px solid var(--line);margin:24px 0}
+.civil-law-study h3{font-size:22px;font-weight:900;line-height:1.25;margin:20px 0 8px;color:var(--paper)}
+.civil-law-study h4{font-size:17px;font-weight:900;margin:16px 0 7px;color:var(--paper)}
+.civil-law-study p{font-size:14px;color:var(--muted);margin:0 0 9px}
+.civil-law-study strong{color:var(--paper)}
+.civil-law-study u{text-decoration-color:var(--gold);text-underline-offset:3px}
+@media (max-width:860px){
+  .civil-law-study{padding:16px}
+  .study-hero{grid-template-columns:1fr}
+  .hero-main{padding:22px}
+  .law-key-grid{grid-template-columns:1fr}
+  .mnemonic{grid-template-columns:repeat(4,minmax(68px,1fr))}
+}
+@media (max-width:520px){
+  .civil-law-study{padding:16px 14px}
+  .hero-main{padding:20px 18px}
+  .hero-main:after{display:none}
+  .hero-title{font-size:2.05rem;line-height:1.12}
+  .tabs{grid-template-columns:1fr;position:static}
+  .meter-grid{grid-template-columns:1fr 1fr}
+  .mnemonic{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .flow-row[style]{margin-left:0!important}
+  .flow-box{white-space:normal}
+}
+</style>
+
+<section class="civil-law-study" aria-labelledby="civil-law-title">
+<div class="study-shell">
+<header class="study-hero">
+  <div class="hero-main">
+    <div class="kicker">Civil service law · ก.พ.</div>
+    <h1 class="hero-title">จริยธรรมและความรับผิดทางละเมิด</h1>
+    <p class="hero-copy">สรุปกฎหมายสองฉบับที่ออกสอบบ่อยแบบอ่านเร็ว จำด้วยภาพ และลองทำข้อสอบทันทีหลังทบทวน</p>
+    <div class="hero-actions">
+      <button class="pill-btn primary" onclick="switchTab('ethics')">เริ่มอ่านจริยธรรม</button>
+      <button class="pill-btn" onclick="switchTab('tort')">ไปหมวดละเมิด</button>
+    </div>
+  </div>
+  <aside class="hero-meter">
+    <div class="meter-title">
+      <div>
+        <div class="kicker">Study map</div>
+        <strong>สนามซ้อมกฎหมาย</strong>
+      </div>
+      <div class="meter-icon">⚖️</div>
+    </div>
+    <div class="meter-grid">
+      <div class="meter-cell"><span class="meter-value">2</span><span class="meter-label">พ.ร.บ.</span></div>
+      <div class="meter-cell"><span class="meter-value">7</span><span class="meter-label">มาตรฐาน</span></div>
+      <div class="meter-cell"><span class="meter-value">5</span><span class="meter-label">ข้อฝึก</span></div>
+      <div class="meter-cell"><span class="meter-value">1</span><span class="meter-label">แผนผังไล่เบี้ย</span></div>
+    </div>
+  </aside>
+</header>
+
+<main class="study-card">
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('ethics')">⚖️ จริยธรรม (3 ข้อ)</button>
+  <button class="tab-btn" onclick="switchTab('tort')">🏛️ ละเมิด (2 ข้อ)</button>
+</div>
+
+<div id="ethics" class="section active">
+  <span class="badge badge-blue">พ.ร.บ. มาตรฐานทางจริยธรรม พ.ศ. 2562</span>
+  <h3>ภาพรวมกฎหมาย</h3>
+  <p>กำหนด <strong>มาตรฐานทางจริยธรรม 7 ประการ</strong> สำหรับเจ้าหน้าที่รัฐทุกประเภท และให้แต่ละองค์กรออก "ประมวลจริยธรรม" ให้สอดคล้อง</p>
+  <div class="law-key-grid">
+    <div class="key-card"><div class="key-label">ใช้บังคับกับ</div><div class="key-val">เจ้าหน้าที่รัฐ ทุกประเภท (ข้าราชการ พนักงานรัฐวิสาหกิจ ฯลฯ)</div></div>
+    <div class="key-card"><div class="key-label">ออกโดย</div><div class="key-val">ก.พ. เป็นผู้กำหนดมาตรฐาน → แต่ละองค์กรออกประมวลจริยธรรมเอง</div></div>
+    <div class="key-card"><div class="key-label">ผู้บังคับใช้</div><div class="key-val">คณะกรรมการมาตรฐานทางจริยธรรม (ก.ม.จ.)</div></div>
+    <div class="key-card"><div class="key-label">บทลงโทษ</div><div class="key-val">ฝ่าฝืน = ผิดวินัย (ต้องดำเนินการทางวินัยตามกฎหมายที่เกี่ยวข้อง)</div></div>
+  </div>
+
+  <hr class="divider">
+  <h3>🧠 ทริคจำ: มาตรฐาน 7 ข้อ — "ยซกคมปด"</h3>
+  <div class="trick-box">
+    <div class="trick-title">🔑 ทริคลับ: จำด้วยประโยค "ยาย ซื่อ กล้า คิด มุ่ง ปฏิบัติ ดำรง"</div>
+    ประโยคนี้ครอบคลุมคำแรกของมาตรฐานทั้ง 7 ข้อ ครบ ไม่ตกหล่น!
+  </div>
+  <div class="mnemonic">
+    <div class="letter-box"><div class="letter">ย</div><div class="letter-sub">ยึดมั่น<br>สถาบัน</div></div>
+    <div class="letter-box"><div class="letter">ซ</div><div class="letter-sub">ซื่อสัตย์<br>รับผิดชอบ</div></div>
+    <div class="letter-box"><div class="letter">ก</div><div class="letter-sub">กล้าเสนอ<br>สิ่งถูกต้อง</div></div>
+    <div class="letter-box"><div class="letter">ค</div><div class="letter-sub">คิดถึง<br>ส่วนรวม</div></div>
+    <div class="letter-box"><div class="letter">ม</div><div class="letter-sub">มุ่งผล<br>โปร่งใส</div></div>
+    <div class="letter-box"><div class="letter">ป</div><div class="letter-sub">ปฏิบัติ<br>เป็นธรรม</div></div>
+    <div class="letter-box"><div class="letter">ด</div><div class="letter-sub">ดำรงตน<br>เป็นแบบอย่าง</div></div>
+  </div>
+
+  <div class="standard-grid" style="grid-template-columns:1fr">
+    <div class="std-card"><div class="std-num">ข้อที่ 1</div><div class="std-key">ยึดมั่นในสถาบันหลัก</div><div class="std-text" style="color:var(--color-text-secondary)">ชาติ ศาสนา พระมหากษัตริย์ และการปกครองระบอบประชาธิปไตยอันมีพระมหากษัตริย์ทรงเป็นประมุข</div></div>
+    <div class="std-card"><div class="std-num">ข้อที่ 2</div><div class="std-key">ซื่อสัตย์สุจริต มีจิตสำนึก รับผิดชอบ</div><div class="std-text" style="color:var(--color-text-secondary)">ประพฤติปฏิบัติอย่างซื่อสัตย์ ไม่แสวงหาประโยชน์โดยมิชอบ</div></div>
+    <div class="std-card"><div class="std-num">ข้อที่ 3</div><div class="std-key">กล้าแสดงออก กล้าเสนอสิ่งที่ถูกต้อง</div><div class="std-text" style="color:var(--color-text-secondary)">กล้าต่อต้านความไม่ถูกต้อง ปกป้องผลประโยชน์ของรัฐ</div></div>
+    <div class="std-card"><div class="std-num">ข้อที่ 4</div><div class="std-key">คิดถึงประโยชน์ส่วนรวมมากกว่าส่วนตน</div><div class="std-text" style="color:var(--color-text-secondary)">วางตัวเป็นกลาง ไม่นำสถานภาพของตนเอียงเอื้อประโยชน์ส่วนตน</div></div>
+    <div class="std-card"><div class="std-num">ข้อที่ 5</div><div class="std-key">มุ่งผลสัมฤทธิ์ โปร่งใส ตรวจสอบได้</div><div class="std-text" style="color:var(--color-text-secondary)">ใช้ทรัพยากรอย่างคุ้มค่า รักษามาตรฐาน คุณภาพ</div></div>
+    <div class="std-card"><div class="std-num">ข้อที่ 6</div><div class="std-key">ปฏิบัติหน้าที่เป็นธรรม ไม่เลือกปฏิบัติ</div><div class="std-text" style="color:var(--color-text-secondary)">ไม่แบ่งแยก ให้บริการประชาชนด้วยความเป็นธรรมเท่าเทียม</div></div>
+    <div class="std-card"><div class="std-num">ข้อที่ 7</div><div class="std-key">ดำรงตนเป็นแบบอย่าง รักษาภาพลักษณ์ราชการ</div><div class="std-text" style="color:var(--color-text-secondary)">ประพฤติตนเหมาะสม ไม่ทำให้เสื่อมเสียเกียรติศักดิ์ของตำแหน่ง</div></div>
+  </div>
+
+  <hr class="divider">
+  <h3>📝 แบบฝึกหัด — จริยธรรม 3 ข้อ</h3>
+  <div id="ethics-score" class="score-bar" style="display:none"></div>
+
+  <div class="q-block">
+    <div class="q-head">ข้อที่ 1 / 3 — ระดับ: รู้จักมาตรฐาน</div>
+    <div class="q-text">ข้อใดต่อไปนี้ <u>ไม่ใช่</u> มาตรฐานทางจริยธรรมสำหรับเจ้าหน้าที่รัฐตาม พ.ร.บ. มาตรฐานทางจริยธรรม พ.ศ. 2562?</div>
+    <div class="choices" id="eq1">
+      <button class="choice-btn" onclick="answer('eq1',this,false,'ข้อนี้ผิด — "ซื่อสัตย์สุจริต" เป็นมาตรฐานข้อที่ 2 จริง ๆ ครับ')">ก. ซื่อสัตย์สุจริต มีจิตสำนึกที่ดี และรับผิดชอบต่อหน้าที่</button>
+      <button class="choice-btn" onclick="answer('eq1',this,false,'ข้อนี้ผิด — "มุ่งผลสัมฤทธิ์ โปร่งใส ตรวจสอบได้" เป็นมาตรฐานข้อที่ 5 ครับ')">ข. มุ่งผลสัมฤทธิ์ของงาน รักษามาตรฐาน คุณภาพ โปร่งใส ตรวจสอบได้</button>
+      <button class="choice-btn" onclick="answer('eq1',this,true,'✅ ถูกต้อง! "แสวงหาผลกำไรสูงสุดในการทำงาน" ไม่ใช่มาตรฐานจริยธรรม — นี่คือหลักการของภาคเอกชน ไม่ใช่ราชการ มาตรฐาน 7 ข้อจำง่ายด้วย ยซกคมปด')">ค. แสวงหาผลกำไรสูงสุดในการปฏิบัติหน้าที่ราชการ</button>
+      <button class="choice-btn" onclick="answer('eq1',this,false,'ข้อนี้ผิด — "ดำรงตนเป็นแบบอย่าง" เป็นมาตรฐานข้อที่ 7 ครับ')">ง. ดำรงตนเป็นแบบอย่างที่ดีและรักษาภาพลักษณ์ของทางราชการ</button>
+    </div>
+    <div class="explain" id="eq1-exp"></div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head">ข้อที่ 2 / 3 — ระดับ: กรณีศึกษา</div>
+    <div class="q-text">นายแดง เจ้าหน้าที่พัสดุ รู้ว่าการจัดซื้อครั้งนี้มีความไม่ถูกต้องในราคา แต่เลือกที่จะเซ็นอนุมัติโดยไม่ทักท้วงเพราะกลัวขัดใจผู้บังคับบัญชา การกระทำของนายแดงขัดต่อมาตรฐานทางจริยธรรมข้อใดชัดเจนที่สุด?</div>
+    <div class="choices" id="eq2">
+      <button class="choice-btn" onclick="answer('eq2',this,false,'ข้อที่ 2 คือซื่อสัตย์สุจริต ซึ่งอาจเกี่ยวข้องบ้าง แต่ไม่ใช่ข้อที่ชัดเจนที่สุดสำหรับกรณีนี้ครับ')">ก. ข้อที่ 2 (ซื่อสัตย์สุจริต)</button>
+      <button class="choice-btn" onclick="answer('eq2',this,true,'✅ ถูกต้อง! ข้อที่ 3 คือ "กล้าแสดงออก กล้าเสนอสิ่งที่ถูกต้อง กล้าต่อต้านความไม่ถูกต้อง" นายแดงรู้ว่าผิดแต่เลือกนิ่งเฉย ซึ่งขัดกับมาตรฐานข้อนี้โดยตรงครับ')">ข. ข้อที่ 3 (กล้าเสนอสิ่งที่ถูกต้อง กล้าต่อต้านความไม่ถูกต้อง)</button>
+      <button class="choice-btn" onclick="answer('eq2',this,false,'ข้อที่ 6 คือไม่เลือกปฏิบัติ ซึ่งในกรณีนี้ไม่ใช่ประเด็นหลักครับ')">ค. ข้อที่ 6 (ปฏิบัติหน้าที่เป็นธรรม ไม่เลือกปฏิบัติ)</button>
+      <button class="choice-btn" onclick="answer('eq2',this,false,'ข้อที่ 7 คือดำรงตนเป็นแบบอย่าง ซึ่งไม่ใช่ประเด็นหลักของกรณีนี้ครับ')">ง. ข้อที่ 7 (ดำรงตนเป็นแบบอย่างที่ดี)</button>
+    </div>
+    <div class="explain" id="eq2-exp"></div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head">ข้อที่ 3 / 3 — ระดับ: โครงสร้างกฎหมาย</div>
+    <div class="q-text">ตาม พ.ร.บ. มาตรฐานทางจริยธรรม พ.ศ. 2562 หน่วยงานใดมีหน้าที่จัดทำ "ประมวลจริยธรรม" ของตนเอง?</div>
+    <div class="choices" id="eq3">
+      <button class="choice-btn" onclick="answer('eq3',this,false,'ก.พ. เป็นผู้กำหนดมาตรฐานกลาง แต่ไม่ได้จัดทำประมวลจริยธรรมให้ทุกหน่วยงานครับ')">ก. สำนักงาน ก.พ. เป็นผู้จัดทำประมวลจริยธรรมให้ทุกหน่วยงาน</button>
+      <button class="choice-btn" onclick="answer('eq3',this,false,'ก.ม.จ. มีหน้าที่กำกับดูแล ไม่ใช่จัดทำประมวลจริยธรรมครับ')">ข. คณะกรรมการมาตรฐานทางจริยธรรม (ก.ม.จ.) จัดทำให้ทุกหน่วยงาน</button>
+      <button class="choice-btn" onclick="answer('eq3',this,true,'✅ ถูกต้อง! กฎหมายกำหนดให้ "แต่ละองค์กร" ต้องจัดทำประมวลจริยธรรมของตนเองโดยให้สอดคล้องกับมาตรฐานกลางที่ ก.พ. กำหนด นี่คือหลักการกระจายอำนาจทางจริยธรรมครับ')">ค. แต่ละองค์กรของรัฐจัดทำประมวลจริยธรรมของตนเอง</button>
+      <button class="choice-btn" onclick="answer('eq3',this,false,'นายกรัฐมนตรีไม่มีหน้าที่ในส่วนนี้โดยตรงครับ')">ง. สำนักนายกรัฐมนตรีจัดทำประมวลจริยธรรมให้ทุกกระทรวง</button>
+    </div>
+    <div class="explain" id="eq3-exp"></div>
+  </div>
+  <button class="reset-btn" onclick="resetQuiz('e')">↺ ทำข้อสอบใหม่</button>
+</div>
+
+<div id="tort" class="section">
+  <span class="badge badge-amber">พ.ร.บ. ความรับผิดทางละเมิดของเจ้าหน้าที่ พ.ศ. 2539</span>
+  <h3>ภาพรวมกฎหมาย</h3>
+  <p>กำหนดหลักเกณฑ์ว่า เมื่อ "เจ้าหน้าที่" ทำละเมิด <u>ในการปฏิบัติหน้าที่</u> ใคร "รับผิด" และใครมีสิทธิ "ไล่เบี้ย"</p>
+
+  <div class="trick-box">
+    <div class="trick-title">🔑 หัวใจของกฎหมายนี้ = "ผู้เสียหายฟ้องใคร?"</div>
+    ถ้าเจ้าหน้าที่ทำละเมิด <strong>ในหน้าที่</strong> → ฟ้อง <strong>หน่วยงาน</strong> (ไม่ใช่ตัวเจ้าหน้าที่โดยตรง)<br>
+    ถ้าเจ้าหน้าที่ทำละเมิด <strong>นอกหน้าที่</strong> → ฟ้อง <strong>ตัวเจ้าหน้าที่</strong> ส่วนตัว
+  </div>
+
+  <h4>แผนผังการรับผิด</h4>
+  <div class="flow-row">
+    <div class="flow-box">เจ้าหน้าที่ทำละเมิด</div>
+    <div class="flow-arr">→</div>
+    <div class="flow-box warn">ในการปฏิบัติหน้าที่?</div>
+  </div>
+  <div class="flow-row" style="margin-left:24px">
+    <div class="flow-box success">ใช่ → หน่วยงานรับผิดต่อผู้เสียหาย</div>
+  </div>
+  <div class="flow-row" style="margin-left:48px">
+    <div class="flow-arr">↓</div>
+  </div>
+  <div class="flow-row" style="margin-left:48px">
+    <div class="flow-box warn">เจ้าหน้าที่จงใจ หรือประมาทเลินเล่ออย่างร้ายแรง?</div>
+  </div>
+  <div class="flow-row" style="margin-left:72px">
+    <div class="flow-box success">ไม่ → หน่วยงานรับผิดเองทั้งหมด ไม่ไล่เบี้ย</div>
+  </div>
+  <div class="flow-row" style="margin-left:72px">
+    <div class="flow-box danger">ใช่ → หน่วยงานจ่ายก่อน แล้วไล่เบี้ยเจ้าหน้าที่</div>
+  </div>
+  <div class="flow-row" style="margin-left:24px">
+    <div class="flow-box danger">ไม่ใช่ → เจ้าหน้าที่รับผิดส่วนตัว (ฟ้องได้โดยตรง)</div>
+  </div>
+
+  <hr class="divider">
+  <h4>จุดสำคัญที่ออกสอบบ่อย</h4>
+  <div class="law-key-grid">
+    <div class="key-card"><div class="key-label">อายุความ (บุคคลภายนอกฟ้องหน่วยงาน)</div><div class="key-val">1 ปี นับแต่รู้เหตุและรู้ผู้รับผิด หรือ 10 ปี นับแต่วันทำละเมิด</div></div>
+    <div class="key-card"><div class="key-label">อายุความ (หน่วยงานไล่เบี้ยเจ้าหน้าที่)</div><div class="key-val">1 ปี นับแต่ชดใช้ค่าสินไหมไปแล้ว</div></div>
+    <div class="key-card"><div class="key-label">ค่าสินไหม (ไล่เบี้ย)</div><div class="key-val">ไม่จำเป็นต้องไล่เบี้ยเต็มจำนวน — ศาลพิจารณาตามส่วนความผิด</div></div>
+    <div class="key-card"><div class="key-label">คณะกรรมการ</div><div class="key-val">มีคณะกรรมการสอบข้อเท็จจริงความรับผิดทางละเมิด (สอบก่อนไล่เบี้ย)</div></div>
+  </div>
+
+  <div class="trick-box">
+    <div class="trick-title">🧪 ทริคลับ: จำ 3 คำ "ใน–จงใจ–ไล่"</div>
+    <b>ใน</b>หน้าที่ → หน่วยงานรับ | <b>จง</b>ใจ/ประมาทร้ายแรง → <b>ไล่</b>เบี้ยได้<br>
+    นอกหน้าที่ → เจ้าหน้าที่รับเอง (ไม่เกี่ยวหน่วยงาน)
+  </div>
+
+  <hr class="divider">
+  <h3>📝 แบบฝึกหัด — ละเมิด 2 ข้อ</h3>
+  <div id="tort-score" class="score-bar" style="display:none"></div>
+
+  <div class="q-block">
+    <div class="q-head">ข้อที่ 1 / 2 — ระดับ: กรณีศึกษา</div>
+    <div class="q-text">นายดำ เจ้าพนักงาน ขับรถราชการไปทำธุระส่วนตัวระหว่างเวลาราชการแล้วชนรถประชาชนเสียหาย ใครต้องรับผิดชดใช้ค่าเสียหายให้แก่ผู้ได้รับบาดเจ็บ?</div>
+    <div class="choices" id="tq1">
+      <button class="choice-btn" onclick="answer('tq1',this,false,'ข้อนี้ผิด เพราะกรณีนี้ไม่ใช่การปฏิบัติหน้าที่ราชการ — นายดำขับไปทำธุระส่วนตัว จึงไม่เข้าเงื่อนไขให้หน่วยงานรับผิดแทนครับ')">ก. หน่วยงานต้นสังกัดรับผิดแทนนายดำ เพราะเกิดขึ้นระหว่างเวลาราชการ</button>
+      <button class="choice-btn" onclick="answer('tq1',this,true,'✅ ถูกต้อง! แม้จะเป็นเวลาราชการ แต่นายดำขับรถไปทำ "ธุระส่วนตัว" จึงไม่ถือว่าปฏิบัติหน้าที่ ผู้เสียหายต้องฟ้องนายดำโดยตรงในฐานะส่วนตัวครับ')">ข. นายดำต้องรับผิดส่วนตัว เพราะเป็นการกระทำนอกหน้าที่ราชการ</button>
+      <button class="choice-btn" onclick="answer('tq1',this,false,'ทั้งคู่รับผิดร่วมกันไม่ใช่หลักการของกฎหมายนี้ครับ กฎหมายแยกชัดว่าใครรับผิดตามประเภทการกระทำ')">ค. ทั้งนายดำและหน่วยงานต้นสังกัดรับผิดร่วมกัน</button>
+      <button class="choice-btn" onclick="answer('tq1',this,false,'กรมบัญชีกลางไม่มีบทบาทในการชดใช้กรณีนี้ครับ')">ง. กรมบัญชีกลางชดใช้ค่าเสียหายแทน</button>
+    </div>
+    <div class="explain" id="tq1-exp"></div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-head">ข้อที่ 2 / 2 — ระดับ: หลักการไล่เบี้ย</div>
+    <div class="q-text">นางสาวขาว เจ้าหน้าที่การเงิน ประมาทเลินเล่ออย่างร้ายแรงในการตรวจสอบเอกสาร ทำให้หน่วยงานต้องจ่ายค่าเสียหายให้แก่เอกชน 500,000 บาท หน่วยงานสามารถไล่เบี้ยนางสาวขาวได้เพียงใด?</div>
+    <div class="choices" id="tq2">
+      <button class="choice-btn" onclick="answer('tq2',this,false,'ข้อนี้ไม่ถูกต้อง — ไม่สามารถไล่เบี้ยได้ถ้าเป็นแค่ประมาทธรรมดา แต่กรณีนี้เป็น "ประมาทเลินเล่ออย่างร้ายแรง" จึงไล่เบี้ยได้ครับ')">ก. ไล่เบี้ยไม่ได้เลย เพราะนางสาวขาวไม่ได้จงใจ</button>
+      <button class="choice-btn" onclick="answer('tq2',this,false,'500,000 บาทเต็มจำนวนไม่ใช่คำตอบที่ถูกต้อง — กฎหมายไม่บังคับให้ไล่เบี้ยเต็มจำนวนเสมอไปครับ')">ข. ไล่เบี้ยได้ 500,000 บาทเต็มจำนวน</button>
+      <button class="choice-btn" onclick="answer('tq2',this,true,'✅ ถูกต้อง! เมื่อเจ้าหน้าที่ "จงใจ" หรือ "ประมาทเลินเล่ออย่างร้ายแรง" หน่วยงานมีสิทธิไล่เบี้ย แต่ศาลพิจารณาตามส่วนความผิดและพฤติการณ์ ไม่ต้องไล่เบี้ยเต็มจำนวนเสมอไปครับ')">ค. ไล่เบี้ยได้ โดยศาลพิจารณาตามส่วนความผิด อาจไม่เต็มจำนวน</button>
+      <button class="choice-btn" onclick="answer('tq2',this,false,'ไล่เบี้ยครึ่งหนึ่งเสมอไม่ใช่หลักกฎหมายที่กำหนดตายตัวครับ — ขึ้นอยู่กับดุลพินิจของศาล')">ง. ไล่เบี้ยได้ครึ่งหนึ่งเสมอ คือ 250,000 บาท</button>
+    </div>
+    <div class="explain" id="tq2-exp"></div>
+  </div>
+  <button class="reset-btn" onclick="resetQuiz('t')">↺ ทำข้อสอบใหม่</button>
+</div>
+</main>
+</div>
+</section>
+
+<script>
+var eScore=0,eTotal=3,eAnswered=0;
+var tScore=0,tTotal=2,tAnswered=0;
+
+function switchTab(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  var activeBtn=document.querySelector(".tab-btn[onclick=\"switchTab('"+id+"')\"]");
+  if(activeBtn)activeBtn.classList.add('active');
+}
+
+function answer(qid,btn,correct,msg){
+  var btns=document.getElementById(qid).querySelectorAll('button');
+  btns.forEach(b=>b.disabled=true);
+  btn.classList.add(correct?'correct':'wrong');
+  var exp=document.getElementById(qid+'-exp');
+  exp.textContent=msg;
+  exp.classList.add('show');
+  var isEthics=qid.startsWith('e');
+  if(isEthics){eAnswered++;if(correct)eScore++;}
+  else{tAnswered++;if(correct)tScore++;}
+  updateScore(isEthics);
+}
+
+function updateScore(isEthics){
+  if(isEthics){
+    if(eAnswered===eTotal){
+      var el=document.getElementById('ethics-score');
+      el.style.display='block';
+      el.innerHTML='คะแนน: '+eScore+'/'+eTotal+' ข้อ — '+(eScore===eTotal?'🎉 เยี่ยมมาก!':eScore>=2?'👍 ดีมาก ทบทวนข้อที่พลาดได้เลย':'📚 ลองอ่านทริคแล้วทำใหม่นะครับ');
+    }
+  } else {
+    if(tAnswered===tTotal){
+      var el=document.getElementById('tort-score');
+      el.style.display='block';
+      el.innerHTML='คะแนน: '+tScore+'/'+tTotal+' ข้อ — '+(tScore===tTotal?'🎉 เยี่ยมมาก!':tScore>=1?'👍 ดีมาก ทบทวนข้อที่พลาดได้เลย':'📚 ลองอ่านทริคแล้วทำใหม่นะครับ');
+    }
+  }
+}
+
+function resetQuiz(which){
+  if(which==='e'){
+    eScore=0;eAnswered=0;
+    ['eq1','eq2','eq3'].forEach(function(qid){resetQ(qid);});
+    var el=document.getElementById('ethics-score');el.style.display='none';
+  } else {
+    tScore=0;tAnswered=0;
+    ['tq1','tq2'].forEach(function(qid){resetQ(qid);});
+    var el=document.getElementById('tort-score');el.style.display='none';
+  }
+}
+
+function resetQ(qid){
+  var btns=document.getElementById(qid).querySelectorAll('button');
+  btns.forEach(function(b){b.disabled=false;b.classList.remove('correct','wrong');});
+  var exp=document.getElementById(qid+'-exp');
+  if(exp){exp.classList.remove('show');exp.textContent='';}
+}
+</script>

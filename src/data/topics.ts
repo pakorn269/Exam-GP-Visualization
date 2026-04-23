@@ -5,7 +5,7 @@ import { table } from "./topics/table";
 import { sym } from "./topics/sym";
 import { logic } from "./topics/logic";
 import { sentences, article } from "./topics/thai";
-import { en_conv, en_gram, en_read } from "./topics/english";
+import { en_conv, en_gram, en_read, en_vocab } from "./topics/english";
 import { law_admin, law_procedure, law_governance, law_ethics } from "./topics/law";
 
 export let TOPICS: Record<string, Topic> = {
@@ -18,6 +18,7 @@ export let TOPICS: Record<string, Topic> = {
       article,
       en_conv,
       en_gram,
+      en_vocab,
       en_read,
       law_admin,
       law_procedure,

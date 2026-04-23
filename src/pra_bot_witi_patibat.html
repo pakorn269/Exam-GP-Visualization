@@ -1,0 +1,339 @@
+
+<h2 class="sr-only">สื่อการสอน พ.ร.บ. วิธีปฏิบัติราชการทางปกครอง พ.ศ. 2539 สำหรับสอบ ก.พ.</h2>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.wrap{padding:1rem 0;font-family:var(--font-sans)}
+.hero{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem 1.5rem;margin-bottom:1.5rem}
+.hero-title{font-size:18px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+.hero-sub{font-size:13px;color:var(--color-text-secondary)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem}
+.tab{padding:6px 14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:13px;font-weight:500;cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary);transition:all 0.15s}
+.tab.active{background:var(--color-background-info);border-color:var(--color-border-info);color:var(--color-text-info)}
+.section{display:none}
+.section.show{display:block}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:1rem}
+.card-title{font-size:15px;font-weight:500;color:var(--color-text-primary);margin-bottom:8px}
+.badge{display:inline-block;font-size:11px;font-weight:500;padding:2px 8px;border-radius:var(--border-radius-md);margin-right:4px;margin-bottom:4px}
+.badge-blue{background:var(--color-background-info);color:var(--color-text-info);border:0.5px solid var(--color-border-info)}
+.badge-green{background:var(--color-background-success);color:var(--color-text-success);border:0.5px solid var(--color-border-success)}
+.badge-warn{background:var(--color-background-warning);color:var(--color-text-warning);border:0.5px solid var(--color-border-warning)}
+.badge-red{background:var(--color-background-danger);color:var(--color-text-danger);border:0.5px solid var(--color-border-danger)}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:1rem}
+.stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:1rem;text-align:center}
+.stat-num{font-size:24px;font-weight:500;color:var(--color-text-primary)}
+.stat-lbl{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+.tip{background:var(--color-background-warning);border:0.5px solid var(--color-border-warning);border-radius:var(--border-radius-md);padding:0.75rem 1rem;margin:0.75rem 0;font-size:13px;color:var(--color-text-warning)}
+.tip-title{font-weight:500;margin-bottom:2px}
+.info{background:var(--color-background-info);border:0.5px solid var(--color-border-info);border-radius:var(--border-radius-md);padding:0.75rem 1rem;margin:0.75rem 0;font-size:13px;color:var(--color-text-info)}
+.ok{background:var(--color-background-success);border:0.5px solid var(--color-border-success);border-radius:var(--border-radius-md);padding:0.75rem 1rem;margin:0.75rem 0;font-size:13px;color:var(--color-text-success)}
+table{width:100%;font-size:13px;border-collapse:collapse}
+td,th{padding:8px 10px;border-bottom:0.5px solid var(--color-border-tertiary);text-align:left;color:var(--color-text-primary)}
+th{font-weight:500;color:var(--color-text-secondary);font-size:12px}
+.flow{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:0.75rem 0}
+.flow-box{background:var(--color-background-secondary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:6px 12px;font-size:13px;font-weight:500;color:var(--color-text-primary);white-space:nowrap}
+.flow-arrow{font-size:14px;color:var(--color-text-tertiary)}
+.q-block{margin-bottom:1.25rem}
+.q-num{font-size:12px;font-weight:500;color:var(--color-text-secondary);margin-bottom:4px}
+.q-text{font-size:14px;color:var(--color-text-primary);margin-bottom:10px;line-height:1.6}
+.opt{display:block;padding:8px 12px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);font-size:13px;cursor:pointer;margin-bottom:6px;background:var(--color-background-primary);color:var(--color-text-primary);text-align:left;width:100%;transition:background 0.1s}
+.opt:hover{background:var(--color-background-secondary)}
+.opt.correct{background:var(--color-background-success);border-color:var(--color-border-success);color:var(--color-text-success)}
+.opt.wrong{background:var(--color-background-danger);border-color:var(--color-border-danger);color:var(--color-text-danger)}
+.explain{font-size:12px;line-height:1.6;margin-top:6px;padding:8px 10px;border-radius:var(--border-radius-md);background:var(--color-background-secondary);color:var(--color-text-secondary);display:none}
+.score-bar{margin:1rem 0}
+.score-track{height:8px;background:var(--color-background-secondary);border-radius:4px;overflow:hidden}
+.score-fill{height:8px;background:var(--color-text-success);border-radius:4px;transition:width 0.5s}
+.score-txt{font-size:13px;color:var(--color-text-secondary);margin-top:4px}
+btn.reset-btn{display:inline-block;margin-top:1rem}
+</style>
+<div class="wrap">
+<div class="hero">
+  <div class="hero-title">พ.ร.บ. วิธีปฏิบัติราชการทางปกครอง พ.ศ. 2539</div>
+  <div class="hero-sub">สื่อการสอนสำหรับสอบ ก.พ. 69 — 6 ข้อ จาก 25 ข้อ (วิชากฎหมาย)</div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="show('overview',this)">ภาพรวม</button>
+  <button class="tab" onclick="show('scope',this)">ขอบเขต</button>
+  <button class="tab" onclick="show('order',this)">คำสั่งทางปกครอง</button>
+  <button class="tab" onclick="show('process',this)">การพิจารณา</button>
+  <button class="tab" onclick="show('appeal',this)">การอุทธรณ์</button>
+  <button class="tab" onclick="show('quiz',this)">แบบทดสอบ</button>
+</div>
+
+<div id="sec-overview" class="section show">
+  <div class="row">
+    <div class="stat"><div class="stat-num">2539</div><div class="stat-lbl">ปีที่ประกาศใช้</div></div>
+    <div class="stat"><div class="stat-num">180</div><div class="stat-lbl">วันก่อนมีผลบังคับ</div></div>
+    <div class="stat"><div class="stat-num">6</div><div class="stat-lbl">ข้อสอบที่ออก</div></div>
+    <div class="stat"><div class="stat-num">15/30</div><div class="stat-lbl">วันอุทธรณ์/พิจารณา</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">กฎหมายนี้คืออะไร?</div>
+    <p style="font-size:14px;line-height:1.7;color:var(--color-text-primary)">กฎหมายนี้กำหนด <strong>วิธีการที่เจ้าหน้าที่รัฐ</strong> ต้องปฏิบัติเมื่อออก <strong>คำสั่งทางปกครอง</strong> หรือดำเนินการที่กระทบสิทธิของประชาชน เพื่อให้การใช้อำนาจรัฐเป็นไปอย่างโปร่งใสและเป็นธรรม</p>
+  </div>
+
+  <div class="tip">
+    <div class="tip-title">ทริคลับ — จำด้วย "วิ-ปกครอง = ขั้นตอน+สิทธิ์"</div>
+    กฎหมายนี้ไม่ได้บอกว่า "ใครมีอำนาจอะไร" แต่บอกว่า "ต้องทำอย่างไรเวลาใช้อำนาจนั้น" → เน้น <strong>กระบวนการ</strong> และ <strong>การคุ้มครองสิทธิ์ประชาชน</strong>
+  </div>
+
+  <div class="card">
+    <div class="card-title">หัวข้อหลักที่ออกสอบบ่อย</div>
+    <div>
+      <span class="badge badge-red">คำสั่งทางปกครอง</span>
+      <span class="badge badge-blue">เจ้าหน้าที่ผู้มีส่วนได้เสีย</span>
+      <span class="badge badge-green">รูปแบบ+เหตุผลคำสั่ง</span>
+      <span class="badge badge-warn">สิทธิโต้แย้ง+ได้รับฟัง</span>
+      <span class="badge badge-red">การอุทธรณ์ 15 วัน</span>
+      <span class="badge badge-blue">การเพิกถอนคำสั่ง</span>
+    </div>
+  </div>
+</div>
+
+<div id="sec-scope" class="section">
+  <div class="card">
+    <div class="card-title">ขอบเขตการบังคับใช้</div>
+    <table>
+      <tr><th>ประเด็น</th><th>รายละเอียด</th></tr>
+      <tr><td>ใครอยู่ภายใต้กฎหมายนี้</td><td>เจ้าหน้าที่ของรัฐทุกประเภท (ราชการ / รัฐวิสาหกิจ / องค์กรของรัฐ)</td></tr>
+      <tr><td>ครอบคลุมอะไร</td><td>การออกคำสั่งทางปกครอง + การพิจารณาทางปกครอง</td></tr>
+      <tr><td>ไม่ครอบคลุม (ข้อยกเว้น)</td><td>รัฐสภา, ศาล, องค์กรอิสระตามรัฐธรรมนูญ (ในส่วนการพิจารณาพิพากษา)</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <div class="card-title">นิยามสำคัญที่ต้องรู้</div>
+    <table>
+      <tr><th>คำ</th><th>ความหมาย</th></tr>
+      <tr><td><strong>เจ้าหน้าที่</strong></td><td>บุคคล/คณะบุคคลที่ใช้อำนาจทางปกครองตามกฎหมาย</td></tr>
+      <tr><td><strong>คู่กรณี</strong></td><td>ผู้ยื่นคำขอ หรือผู้ที่ถูกกระทบสิทธิโดยตรงจากคำสั่ง</td></tr>
+      <tr><td><strong>คำสั่งทางปกครอง</strong></td><td>การใช้อำนาจตามกฎหมายที่มีผลกระทบต่อสิทธิหน้าที่เฉพาะราย</td></tr>
+    </table>
+  </div>
+  <div class="tip">
+    <div class="tip-title">จุดหลุมพราง — ข้อสอบชอบถาม!</div>
+    "ศาลยุติธรรม" ออกคำสั่งถือเป็นคำสั่งทางปกครองหรือไม่? → <strong>ไม่ใช่</strong> เพราะเป็นการพิจารณาพิพากษาคดี ไม่ใช่การใช้อำนาจทางปกครอง
+  </div>
+</div>
+
+<div id="sec-order" class="section">
+  <div class="card">
+    <div class="card-title">รูปแบบของคำสั่งทางปกครอง</div>
+    <div class="ok" style="margin-top:0">หลักทั่วไป: คำสั่งทางปกครองต้องทำเป็น <strong>หนังสือ</strong> พร้อมระบุ <strong>เหตุผล</strong></div>
+    <p style="font-size:14px;line-height:1.7;color:var(--color-text-primary);margin-top:8px">ข้อยกเว้น — ไม่ต้องระบุเหตุผลถ้า:</p>
+    <ul style="font-size:14px;line-height:1.9;color:var(--color-text-primary);padding-left:1.2rem;margin-top:4px">
+      <li>เป็นที่รู้กันอยู่แล้วหรือได้แจ้งให้ทราบเป็นการล่วงหน้า</li>
+      <li>มีความจำเป็นเร่งด่วน</li>
+      <li>เป็นคำสั่งที่ให้คุณประโยชน์แก่คู่กรณีทั้งหมด</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">เจ้าหน้าที่ที่ต้องถอนตัว (ผู้มีส่วนได้เสีย)</div>
+    <p style="font-size:14px;line-height:1.6;color:var(--color-text-secondary);margin-bottom:8px">เจ้าหน้าที่ต้องถอนตัวถ้าเป็น:</p>
+    <table>
+      <tr><td>คู่กรณีเอง</td><td>มีส่วนได้ส่วนเสียส่วนตัวในเรื่องนั้น</td></tr>
+      <tr><td>คู่สมรส / พ่อแม่ / บุตร / พี่น้อง ของคู่กรณี</td><td>ภายใน 3 ชั้น</td></tr>
+      <tr><td>เคยให้คำปรึกษาหรือให้ข้อมูลแก่คู่กรณีในเรื่องเดียวกัน</td><td></td></tr>
+    </table>
+    <div class="tip" style="margin-top:0.75rem">
+      <div class="tip-title">จำง่าย: "3 ชั้น + ส่วนตัว + ให้คำปรึกษา = ถอนตัว"</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">สิทธิโต้แย้งและได้รับฟัง</div>
+    <div class="flow">
+      <div class="flow-box">เจ้าหน้าที่ต้องการออกคำสั่งที่กระทบสิทธิ์</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">แจ้งให้คู่กรณีทราบล่วงหน้า</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">ให้โอกาสโต้แย้งหรือชี้แจง</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">ออกคำสั่ง พร้อมเหตุผล</div>
+    </div>
+    <div class="info">ข้อยกเว้น: ถ้าเร่งด่วน / ถ้าการแจ้งล่วงหน้าจะทำให้ประสงค์ร้ายได้ผล → ไม่ต้องแจ้งก่อนได้</div>
+  </div>
+</div>
+
+<div id="sec-process" class="section">
+  <div class="card">
+    <div class="card-title">การพิจารณาโดยคณะกรรมการ</div>
+    <table>
+      <tr><th>ประเด็น</th><th>รายละเอียด</th></tr>
+      <tr><td>องค์ประชุม</td><td>ต้องมีกรรมการมาประชุม <strong>ไม่น้อยกว่ากึ่งหนึ่ง</strong></td></tr>
+      <tr><td>การออกเสียง</td><td>ใช้เสียงข้างมาก / กรรมการ 1 คน = 1 เสียง</td></tr>
+      <tr><td>ประธานมีเสียงพิเศษ</td><td>ถ้าเสียงเท่ากัน — ประธานออกเสียงชี้ขาดได้อีก 1 เสียง</td></tr>
+      <tr><td>กรรมการมีส่วนได้เสีย</td><td>ต้องถอนตัว / ห้ามออกเสียง</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">ระยะเวลาสำคัญ (ต้องท่อง!)</div>
+    <div class="row">
+      <div class="stat"><div class="stat-num">7</div><div class="stat-lbl">วัน — แจ้งเหตุผลเพิ่มเติม (ถ้าขอ)</div></div>
+      <div class="stat"><div class="stat-num">15</div><div class="stat-lbl">วัน — ยื่นอุทธรณ์</div></div>
+      <div class="stat"><div class="stat-num">30</div><div class="stat-lbl">วัน — พิจารณาอุทธรณ์</div></div>
+      <div class="stat"><div class="stat-num">30</div><div class="stat-lbl">วัน — ขยายเพิ่มได้</div></div>
+    </div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-title">ทริคจำตัวเลข: "7–15–30–30"</div>
+    ร้อง "เจ็ด สิบห้า สามสิบ สามสิบ" เหมือนเพลง 4 จังหวะ — แต่ละตัวเลขเป็นวันในขั้นตอนที่ต่อเนื่องกัน
+  </div>
+</div>
+
+<div id="sec-appeal" class="section">
+  <div class="card">
+    <div class="card-title">ขั้นตอนการอุทธรณ์คำสั่งทางปกครอง</div>
+    <div class="flow" style="flex-direction:column;align-items:flex-start;gap:6px">
+      <div style="display:flex;align-items:center;gap:8px;width:100%">
+        <div class="flow-box" style="background:var(--color-background-info);border-color:var(--color-border-info);color:var(--color-text-info)">ได้รับคำสั่งทางปกครอง</div>
+        <div class="flow-arrow">→ ภายใน <strong>15 วัน</strong></div>
+      </div>
+      <div class="flow-arrow" style="padding-left:8px">↓</div>
+      <div style="display:flex;align-items:center;gap:8px;width:100%">
+        <div class="flow-box">ยื่นอุทธรณ์ต่อเจ้าหน้าที่ผู้ออกคำสั่ง</div>
+        <div class="flow-arrow">→ ส่งให้ผู้บังคับบัญชา</div>
+      </div>
+      <div class="flow-arrow" style="padding-left:8px">↓</div>
+      <div style="display:flex;align-items:center;gap:8px;width:100%">
+        <div class="flow-box">พิจารณา <strong>30 วัน</strong> (ขยายได้อีก 30)</div>
+      </div>
+      <div class="flow-arrow" style="padding-left:8px">↓</div>
+      <div style="display:flex;align-items:center;gap:8px;width:100%">
+        <div class="flow-box" style="background:var(--color-background-success);border-color:var(--color-border-success);color:var(--color-text-success)">ยืน / แก้ไข / เพิกถอน</div>
+        <div class="flow-arrow">หรือ → ฟ้องศาลปกครอง</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">การเพิกถอนคำสั่งทางปกครอง</div>
+    <table>
+      <tr><th>ประเภทคำสั่ง</th><th>การเพิกถอน</th></tr>
+      <tr><td>คำสั่งที่ไม่ชอบด้วยกฎหมาย</td><td>เพิกถอนได้ แต่ต้องระวังผลกระทบ (อาจย้อนหลังหรือไม่ก็ได้)</td></tr>
+      <tr><td>คำสั่งที่ให้คุณประโยชน์แก่ผู้รับ</td><td>เพิกถอนยากกว่า — ต้องคำนึงถึงความเชื่อถือโดยสุจริต</td></tr>
+      <tr><td>คำสั่งที่เป็นโทษ (ไม่ชอบด้วยกฎหมาย)</td><td>เพิกถอนได้โดยไม่มีข้อจำกัดมากนัก</td></tr>
+    </table>
+    <div class="tip" style="margin-top:0.75rem">
+      <div class="tip-title">จำง่าย: "ให้คุณ = เพิกถอนยาก / ให้โทษ = เพิกถอนง่าย"</div>
+      เหตุผล: ประชาชนเชื่อถือคำสั่งที่ให้ประโยชน์ รัฐต้องคุ้มครองความเชื่อถือนั้น
+    </div>
+  </div>
+</div>
+
+<div id="sec-quiz" class="section">
+  <div class="card" style="margin-bottom:0.5rem">
+    <div class="card-title">แบบทดสอบ — 6 ข้อ (เสมือนจริง)</div>
+    <div class="score-bar">
+      <div class="score-track"><div class="score-fill" id="score-fill" style="width:0%"></div></div>
+      <div class="score-txt" id="score-txt">ยังไม่ได้ตอบ</div>
+    </div>
+  </div>
+
+  <div id="q1" class="q-block card">
+    <div class="q-num">ข้อ 1 / 6</div>
+    <div class="q-text">คำสั่งทางปกครองที่ออกโดยวาจา เจ้าหน้าที่ต้องทำอะไรเพิ่มเติมหากคู่กรณีร้องขอ?</div>
+    <button class="opt" onclick="ans('q1',this,false)">ก. ยกเลิกคำสั่งและออกใหม่เป็นหนังสือแทน</button>
+    <button class="opt" onclick="ans('q1',this,true)">ข. ยืนยันคำสั่งนั้นเป็นหนังสือให้แก่คู่กรณี</button>
+    <button class="opt" onclick="ans('q1',this,false)">ค. แจ้งให้ผู้บังคับบัญชาออกคำสั่งเป็นหนังสือแทน</button>
+    <button class="opt" onclick="ans('q1',this,false)">ง. ถือว่าคำสั่งนั้นสิ้นผลทันทีและต้องออกคำสั่งใหม่</button>
+    <div class="explain" id="q1-exp">เฉลย ข: ตาม ม.34 คำสั่งทางปกครองที่กระทำด้วยวาจา หากคู่กรณีร้องขอ เจ้าหน้าที่ต้อง <strong>ยืนยันเป็นหนังสือ</strong> ภายในระยะเวลาที่กำหนด — คำสั่งเดิมยังคงมีผล ไม่ต้องออกใหม่</div>
+  </div>
+
+  <div id="q2" class="q-block card">
+    <div class="q-num">ข้อ 2 / 6</div>
+    <div class="q-text">นายแดงได้รับคำสั่งทางปกครองที่ไม่ชอบด้วยกฎหมาย ต้องการอุทธรณ์ นายแดงมีเวลากี่วัน นับจากวันได้รับแจ้ง?</div>
+    <button class="opt" onclick="ans('q2',this,false)">ก. 7 วัน</button>
+    <button class="opt" onclick="ans('q2',this,true)">ข. 15 วัน</button>
+    <button class="opt" onclick="ans('q2',this,false)">ค. 30 วัน</button>
+    <button class="opt" onclick="ans('q2',this,false)">ง. 60 วัน</button>
+    <div class="explain" id="q2-exp">เฉลย ข: ตาม ม.44 ผู้ได้รับคำสั่งทางปกครองมีสิทธิ์อุทธรณ์ภายใน <strong>15 วัน</strong> นับแต่วันที่ได้รับแจ้งคำสั่ง — ตัวเลขนี้ออกสอบบ่อยมาก!</div>
+  </div>
+
+  <div id="q3" class="q-block card">
+    <div class="q-num">ข้อ 3 / 6</div>
+    <div class="q-text">เจ้าหน้าที่ที่พิจารณาคำสั่งทางปกครองต้องถอนตัว ยกเว้นกรณีใด?</div>
+    <button class="opt" onclick="ans('q3',this,false)">ก. เป็นคู่สมรสของคู่กรณี</button>
+    <button class="opt" onclick="ans('q3',this,false)">ข. เป็นผู้มีประโยชน์ได้เสียในเรื่องนั้นเป็นส่วนตัว</button>
+    <button class="opt" onclick="ans('q3',this,true)">ค. เคยปฏิบัติงานในหน่วยงานเดียวกับคู่กรณีเมื่อ 5 ปีก่อน</button>
+    <button class="opt" onclick="ans('q3',this,false)">ง. เป็นผู้ให้คำปรึกษาคู่กรณีในเรื่องนั้นมาก่อน</button>
+    <div class="explain" id="q3-exp">เฉลย ค: การเคยปฏิบัติงานในหน่วยงานเดียวกัน <strong>ไม่ถือ</strong>เป็นเหตุให้ต้องถอนตัวตามกฎหมาย เหตุที่ต้องถอนตัวคือ ความสัมพันธ์ส่วนตัว (ครอบครัว/คู่สมรส/ญาติ 3 ชั้น), มีส่วนได้เสียโดยตรง, หรือเคยให้คำปรึกษาในเรื่องนั้นโดยตรง</div>
+  </div>
+
+  <div id="q4" class="q-block card">
+    <div class="q-num">ข้อ 4 / 6</div>
+    <div class="q-text">ในการประชุมคณะกรรมการพิจารณาทางปกครอง มีกรรมการทั้งหมด 9 คน ต้องมีกรรมการมาประชุมอย่างน้อยกี่คน จึงจะเป็นองค์ประชุมที่ชอบด้วยกฎหมาย?</div>
+    <button class="opt" onclick="ans('q4',this,false)">ก. 3 คน</button>
+    <button class="opt" onclick="ans('q4',this,false)">ข. 4 คน</button>
+    <button class="opt" onclick="ans('q4',this,true)">ค. 5 คน</button>
+    <button class="opt" onclick="ans('q4',this,false)">ง. 6 คน</button>
+    <div class="explain" id="q4-exp">เฉลย ค: กฎหมายกำหนดองค์ประชุมคือ <strong>ไม่น้อยกว่ากึ่งหนึ่ง</strong> ของจำนวนกรรมการทั้งหมด กึ่งหนึ่งของ 9 คน = 4.5 → ปัดขึ้นเป็น 5 คน</div>
+  </div>
+
+  <div id="q5" class="q-block card">
+    <div class="q-num">ข้อ 5 / 6</div>
+    <div class="q-text">คำสั่งทางปกครองที่ให้คุณประโยชน์แก่ผู้รับ แต่ออกมาโดยไม่ชอบด้วยกฎหมาย เจ้าหน้าที่จะเพิกถอนได้หรือไม่?</div>
+    <button class="opt" onclick="ans('q5',this,false)">ก. เพิกถอนไม่ได้เด็ดขาด เพราะให้คุณประโยชน์แล้ว</button>
+    <button class="opt" onclick="ans('q5',this,true)">ข. เพิกถอนได้ แต่ต้องคำนึงถึงความเชื่อถือโดยสุจริตของผู้รับ</button>
+    <button class="opt" onclick="ans('q5',this,false)">ค. เพิกถอนได้ทันทีโดยไม่มีข้อจำกัดใด ๆ</button>
+    <button class="opt" onclick="ans('q5',this,false)">ง. ต้องรอให้ศาลปกครองมีคำสั่งก่อนจึงเพิกถอนได้</button>
+    <div class="explain" id="q5-exp">เฉลย ข: ตามหลักการคุ้มครองความเชื่อถือโดยสุจริต (Principle of Legitimate Expectation) แม้คำสั่งจะไม่ชอบด้วยกฎหมาย แต่ถ้าผู้รับเชื่อโดยสุจริตและเสียหาย เจ้าหน้าที่ต้องชั่งน้ำหนักก่อนเพิกถอน</div>
+  </div>
+
+  <div id="q6" class="q-block card">
+    <div class="q-num">ข้อ 6 / 6</div>
+    <div class="q-text">ข้อใดต่อไปนี้ เจ้าหน้าที่ไม่จำเป็นต้องระบุเหตุผลในคำสั่งทางปกครอง?</div>
+    <button class="opt" onclick="ans('q6',this,false)">ก. คำสั่งที่กระทบสิทธิของคู่กรณีอย่างร้ายแรง</button>
+    <button class="opt" onclick="ans('q6',this,true)">ข. คำสั่งที่ให้คุณประโยชน์แก่คู่กรณีทุกคนที่เกี่ยวข้อง</button>
+    <button class="opt" onclick="ans('q6',this,false)">ค. คำสั่งที่ออกโดยคณะกรรมการ</button>
+    <button class="opt" onclick="ans('q6',this,false)">ง. คำสั่งที่มีการยื่นอุทธรณ์แล้ว</button>
+    <div class="explain" id="q6-exp">เฉลย ข: หนึ่งในข้อยกเว้นที่ไม่ต้องระบุเหตุผลคือ <strong>คำสั่งที่ให้คุณประโยชน์แก่คู่กรณีทุกคน</strong> เพราะทุกคนได้ประโยชน์จึงไม่มีใครเสียหายจากการขาดเหตุผล ส่วนข้อ ก ค ง ต้องระบุเหตุผลทั้งสิ้น</div>
+  </div>
+
+  <button style="margin-top:0.5rem;padding:8px 20px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);cursor:pointer;font-size:13px;background:var(--color-background-secondary);color:var(--color-text-primary)" onclick="resetQuiz()">เริ่มใหม่</button>
+</div>
+</div>
+
+<script>
+var answered={},correct=0,total=6;
+function show(id,el){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('show'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('show');
+  el.classList.add('active');
+}
+function ans(qid,btn,isCorrect){
+  if(answered[qid])return;
+  answered[qid]=true;
+  var opts=btn.closest('.q-block').querySelectorAll('.opt');
+  opts.forEach(o=>o.disabled=true);
+  if(isCorrect){btn.classList.add('correct');correct++;}
+  else{
+    btn.classList.add('wrong');
+    opts.forEach(o=>{if(o.onclick.toString().includes('true'))o.classList.add('correct');});
+  }
+  document.getElementById(qid+'-exp').style.display='block';
+  updateScore();
+}
+function updateScore(){
+  var done=Object.keys(answered).length;
+  var pct=Math.round((correct/total)*100);
+  document.getElementById('score-fill').style.width=pct+'%';
+  document.getElementById('score-txt').textContent='ตอบแล้ว '+done+'/'+total+' ข้อ — ถูก '+correct+' ข้อ ('+pct+'%)';
+  if(done===total){
+    var msg=pct>=60?'ผ่านเกณฑ์! ':'ยังไม่ผ่าน ';
+    document.getElementById('score-txt').textContent=msg+correct+'/'+total+' ข้อ ('+pct+'%) '+(pct>=60?'ไปได้เลย!':'ลองทำใหม่นะ!');
+  }
+}
+function resetQuiz(){
+  answered={};correct=0;
+  document.querySelectorAll('.opt').forEach(o=>{o.classList.remove('correct','wrong');o.disabled=false;});
+  document.querySelectorAll('.explain').forEach(e=>e.style.display='none');
+  document.getElementById('score-fill').style.width='0%';
+  document.getElementById('score-txt').textContent='ยังไม่ได้ตอบ';
+}
+</script>

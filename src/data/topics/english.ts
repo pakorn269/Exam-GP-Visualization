@@ -218,6 +218,31 @@ export let en_gram: Topic = {
           },
         ]
       };
+export let en_vocab: Topic = {
+        id: 'en_vocab',
+        ico: '🗂️',
+        title: 'คำศัพท์ภาษาอังกฤษ',
+        subtitle: 'English Vocabulary',
+        color: '#3b82f6',
+        desc: 'แยกคลังคำศัพท์ออกมาเป็นหมวดเฉพาะสำหรับฝึกแฟลชการ์ด เลือกหมวดคำ และทบทวนความหมายแบบรวดเร็ว',
+        tag: 'วิชาภาษาอังกฤษ ก.พ.',
+        tagStyle: 'background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);color:#bfdbfe;',
+        lessons: [
+          {
+            id: 'vocab_trainer', template: 'vocab_trainer', ico: '🧠', tt: 'Vocabulary Trainer ก.พ.', sub: 'Flashcards and Quiz Deck', diff: 2,
+            desc: 'ฝึกคำศัพท์ 40 คำที่ออกบ่อยด้วยแฟลชการ์ด แยกหมวดศัพท์ แบบทดสอบ 10 ข้อ และรายการคำศัพท์กดทบทวนได้',
+            seq: ['Flashcards', '→', 'Categories', '→', 'Quiz', '→', 'Review List'], dlbl: 'ศัพท์หลักของพาร์ทอังกฤษ', ans: 'Vocabulary Trainer', vt: 'math',
+            def: 'รวมคำศัพท์ที่พบบ่อยในข้อสอบอังกฤษ ก.พ. พร้อมรากศัพท์ คำใบ้ และตัวอย่างประโยคเพื่อช่วยจำ',
+            rule: 'เริ่มจากจำความหมายกว้าง ๆ แล้วค่อยผูกรากศัพท์กับบริบทประโยค',
+            fm: 'คำศัพท์ = Word + Part of Speech + Root Hint + Example + Memory Tip',
+            tip: 'ถ้าจำคำไม่ได้ ให้เริ่มจากหมวดเดียวก่อน เช่น work หรือ think แล้วค่อยขยายไปครบทั้ง deck',
+            exs: [],
+          },
+        ],
+        practice: [],
+        exam: [],
+      };
+
 export let en_read: Topic = {
         id: 'en_read',
         ico: '📰',
@@ -228,6 +253,16 @@ export let en_read: Topic = {
         tag: 'วิชาภาษาอังกฤษ ก.พ.',
         tagStyle: 'background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);color:#a7f3d0;',
         lessons: [
+          {
+            id: 'read_masterclass', template: 'reading_masterclass', ico: '🧠', tt: 'Reading Masterclass ก.พ. 69', sub: 'Speed Reading Playbook', diff: 2,
+            desc: 'สรุปกลยุทธ์อ่านจับประเด็น ประเภทคำถามที่ออกบ่อย แบบฝึกหัด 5 ข้อพร้อมเฉลย และศัพท์สำคัญในชุดเดียว',
+            seq: ['SQRR', '→', 'Question Types', '→', 'Practice', '→', 'Vocabulary'], dlbl: 'ภาพรวม Reading ทั้งพาร์ท', ans: 'Reading Masterclass', vt: 'math',
+            def: 'รวมเนื้อหา Reading ที่ใช้ได้จริงในสนามสอบ ตั้งแต่การอ่านเร็ว การจับคำถาม ไปจนถึงการตัดช้อยส์หลอก',
+            rule: 'อ่านคำถามก่อน แล้วค่อยเลือกอ่านเฉพาะส่วนที่ตอบคำถามนั้น',
+            fm: 'SQRR = Scan question → Question type → Read targeted lines → Recheck answer',
+            tip: 'เริ่มจากบทนี้ก่อน แล้วค่อยไล่บททักษะย่อยเพื่อเก็บรายละเอียดแต่ละประเภทคำถาม',
+            exs: [],
+          },
           {
             id: 'read_main_topic', ico: '🎯', tt: 'การหาหัวข้อเรื่อง (Main Topic)', sub: 'Finding the Main Idea', diff: 2,
             desc: 'การอ่านแบบกวาดสายตา (Skimming) เพื่อหาว่าบทความทั้งหมดพูดเรื่องอะไร โดยเน้นที่ประโยคแรกของแต่ละย่อหน้า',

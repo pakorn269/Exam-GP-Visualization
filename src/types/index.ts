@@ -9,6 +9,7 @@ export interface Example {
 
 export interface Lesson {
   id: string;
+  template?: 'reading_masterclass' | 'vocab_trainer';
   ico: string;
   tt: string;
   sub: string;
